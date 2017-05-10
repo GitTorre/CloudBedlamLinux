@@ -1,0 +1,36 @@
+﻿using System;
+
+namespace CloudBedlam.Config
+{
+    [Serializable]
+    public class NetworkEmulation : ChaosBase
+    {
+        public NetworkEmProfile EmulationType { get; set; }
+        public uint LatencyDelay { get; set; }
+        public TargetEndpoints TargetEndpoints { get; set; }
+        public double BandwidthUpstreamSpeed { get; set; }
+        public double BandwidthDownstreamSpeed { get; set; }
+        public string ProtocolLayerType { get; set; } = "tcp";
+        public string NetworkLayerType { get; set; } = "ipv4";
+        /*** Loss (packet drop/decay) ***/
+        public LossType LossType { get; set; }
+        //-> periodic loss
+        public uint PeriodicLossPeriod { get; set; } = 10;
+        //-> random loss
+        public double RandomLossRate { get; set; } = 0.5;
+        //-> burst loss
+        public double BurstRate { get; set; } = 0.5;
+        public uint MinimumBurst { get; } = 1;
+        public uint MaximumBurst { get; } = 20;
+        /*** Disconnection ***/
+        public double PeriodicDisconnectionRate { get; set; } = 0.5;
+        public uint ConnectionTime { get; set; } = 5;
+        public uint DisconnectionTime { get; set; } = 15;
+
+        // TODO: Move to NetworkProfile
+        public bool IsValidProfile()
+        {
+            return EmulationType != NetworkEmProfile.Unknown;
+        }
+    }
+}
