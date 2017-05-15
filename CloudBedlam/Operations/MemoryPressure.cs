@@ -20,10 +20,10 @@ namespace CloudBedlam.Operations
 
 		protected override ProcessParams CreateProcessParams()
 		{
-			var filePath = "/bin/bash";
+			var filePath = "stress-ng";
 			//--vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.097;}' < /proc/meminfo)k --vm-keep -m 10
 			//--vm 4 --vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.097;}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout 10s
-			return new ProcessParams(new FileInfo(filePath), @"sudo stress-ng --sequential 0 -t " + _config.DurationInSeconds + "s");
+			return new ProcessParams(new FileInfo(filePath), @"--vm 4 --vm-bytes $(awk '/MemFree/{printf ""%d\n"", $2 * 0." + _config.PressureLevel + ";}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout " + _config.DurationInSeconds + "s");
 		}
 		//TODO: Play with sudo...
 		// FileName = "/usr/bin/sudo";

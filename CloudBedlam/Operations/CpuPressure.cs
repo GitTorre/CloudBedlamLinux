@@ -93,8 +93,8 @@ namespace CloudBedlam.Operations
 
         protected override ProcessParams CreateProcessParams()
         {
-			var filePath = "/bin/bash";
-			return new ProcessParams(new FileInfo(filePath), "-c 'sudo stress-ng --cpu 0 --cpu-method all -t " + _config.DurationInSeconds + "s'");
+			var filePath = "stress-ng";
+			return new ProcessParams(new FileInfo(filePath), "--cpu 0 --cpu-method all -t " + _config.DurationInSeconds + "s");
         }
 
 		//TODO: Play with sudo...

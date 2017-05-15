@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 using CloudBedlam.Config;
 using CloudBedlam.Extensions;
 
@@ -288,6 +290,18 @@ namespace CloudBedlam.Operations
 			processStartInfo.Verb = "RunAs";
 			process.StartInfo = processStartInfo;
 			process.Start();
+		}
+
+		private static IEnumerable<IPAddress> GetIpAddressesForEndpoint(string hostname)
+		{
+			try
+			{
+				return Dns.GetHostEntry(hostname).AddressList;
+			}
+			catch (SocketException)
+			{
+				return null;
+			}
 		}
 
         internal override void Kill()

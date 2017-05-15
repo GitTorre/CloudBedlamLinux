@@ -76,9 +76,8 @@ namespace CloudBedlam.Operations
         {
 			var process = new Process();
 
-			process.StartInfo.FileName = parameters.File.FullName;
+			process.StartInfo.FileName = parameters.File.Name;
 			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.WorkingDirectory = "/home";
 			process.StartInfo.CreateNoWindow = true;
 			process.StartInfo.RedirectStandardError = true;
 			process.StartInfo.RedirectStandardOutput = true;
