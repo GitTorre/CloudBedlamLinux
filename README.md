@@ -2,28 +2,12 @@
 
 #### Simple, configurable, local (VM internal) chaotic operation orchestrator for testing resiliency of Windows-powered cloud services (Linux coming soon). Works on all supported versions of NT-based Windows. Requires .NET 4.5.2. Must be run in Administrator privilege context. Target x64 when you build.
 
-## Using
+
+###Simple to use 
 
 Step 0.
 
-Clone, build...
-
-Step 1.
-
-Open a Command prompt as Administrator.
-
-NOTE: You must install the network driver first. This guarantees no interuption of networking service when you begin your chaos tests (the driver is a kernel mode filter driver and installing it resets the Windows networking stack…)
-
-Run this command:
-
-      [CloudBedlamBuildPath]\ChaosBinaries\NetEm>NetworkEmulator.exe -install
-  
-Step 2.
-
-Now, go to the CloudBedlam root folder ([CloudBedlamBuildPath]) and open the Chaos.config file.
-Note the comments in the file. Read them 😊
-
-Change the file settings to meet your needs, based on the examples in the XML comment section. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation. For example, the below configuration XML runs Network emulation (Disconnect) for 60 seconds, 2 times successively (Repeat=”1”).
+Just change XML settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation. For example, the below configuration XML runs Network emulation (Disconnect) for 60 seconds, 2 times successively (Repeat=”1”).
 <pre><code>
 &lt;ChaosConfiguration Orchestration="Sequential" Duration="60" RunDelay="0" Repeat="1"&gt;
 	&lt;NetworkEmulation RunOrder="0"&gt;
@@ -41,11 +25,11 @@ Change the file settings to meet your needs, based on the examples in the XML co
 &lt;/ChaosConfiguration&gt;
 </code></pre>
 
-Step 3.
+Step 1.
 
-Launch an Admin cmd console, run CloudBedlam:
+Launch CloudBedlam running as sudo:
 
-      [CloudBedlamBuildPath]>CloudBedlam 
+      sudo CloudBedlam
 
 
 Have fun and hopefully this proves useful to you in your service resiliency testing. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance. 
