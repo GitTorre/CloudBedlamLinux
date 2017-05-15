@@ -251,13 +251,12 @@ namespace CloudBedlam.Operations
 		//TODO: Play with sudo...
 		// FileName = "/usr/bin/sudo";
 		// Arguments = "/usr/bin/tc qdisc add dev wlp2s0 root netem delay 1000ms";
-		private Tuple<string, string> RunNetworkEmulation(EmulationConfiguration config)
+		private Tuple<string, string> RunNetworkEmulation()
 		{
 			Process process = new Process();
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = @"/usr/bin/sudo";
-			processStartInfo.WorkingDirectory = @"/tmp";
-			processStartInfo.Arguments = @"/usr/bin/tc qdisc add dev wlp2s0 root netem delay 1000ms";
+			processStartInfo.FileName = "sudo";
+			processStartInfo.Arguments = "tc qdisc add dev wlp2s0 root netem delay 1000ms";
 			processStartInfo.RedirectStandardOutput = true;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.UseShellExecute = false;
@@ -281,9 +280,8 @@ namespace CloudBedlam.Operations
 		{
 			Process process = new Process();
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = @"/usr/bin/sudo";
-			processStartInfo.WorkingDirectory = @"/tmp";
-			processStartInfo.Arguments = "/usr/bin/tc qdisc del dev wlp2s0 root";
+			processStartInfo.FileName = "sudo";
+			processStartInfo.Arguments = "tc qdisc del dev wlp2s0 root";
 			processStartInfo.RedirectStandardOutput = true;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.UseShellExecute = false;

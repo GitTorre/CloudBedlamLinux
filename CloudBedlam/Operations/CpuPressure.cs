@@ -102,9 +102,8 @@ namespace CloudBedlam.Operations
 		{
 			Process process = new Process();
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = "/bin/bash";
-			processStartInfo.WorkingDirectory = "/home";
-			processStartInfo.Arguments = "sudo stress-ng --cpu 0 --cpu-method all -t " + _config.DurationInSeconds + "s";
+			processStartInfo.FileName = "stress-ng";
+			processStartInfo.Arguments = "--cpu 0 --cpu-method all -t " + _config.DurationInSeconds + "s";
 			processStartInfo.RedirectStandardOutput = true;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.UseShellExecute = false;
