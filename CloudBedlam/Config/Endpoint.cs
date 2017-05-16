@@ -4,15 +4,12 @@ using System.Xml.Serialization;
 
 namespace CloudBedlam.Config
 {
-
-    [Serializable]
     public class TargetEndpoints
     {
         [XmlElement("Endpoint")]
         public List<Endpoint> Endpoints { get; set; }
     }
 
-    [Serializable]
     public class Endpoint
     {
         [XmlAttribute("Port")]

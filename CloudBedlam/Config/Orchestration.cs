@@ -2,7 +2,6 @@
 
 namespace CloudBedlam.Config
 {
-    [Serializable]
     public enum Orchestration
     {
         Unknown,

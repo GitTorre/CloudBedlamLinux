@@ -22,7 +22,7 @@ namespace CloudBedlam
         {
             Logger = LogManager.GetLogger(nameof(Program));
 
-            var configPath = Path.Combine(Environment.CurrentDirectory, "Chaos.config");
+            var configPath = Path.Combine(Directory.GetCurrentDirectory(), "Chaos.config");
 
             if (File.Exists(configPath))
             {

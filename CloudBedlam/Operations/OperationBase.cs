@@ -81,7 +81,7 @@ namespace CloudBedlam.Operations
 			process.StartInfo.CreateNoWindow = true;
 			process.StartInfo.RedirectStandardError = true;
 			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+			//process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 			process.StartInfo.Arguments = !string.IsNullOrEmpty(parameters.Arguments) ? parameters.Arguments : string.Empty;
 			process.EnableRaisingEvents = true;
       

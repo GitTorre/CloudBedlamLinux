@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 
 namespace CloudBedlam.Config
 {
-    [Serializable]
     public enum NetworkEmProfile
     {
        [NetEmProfile("bandwidth")]
@@ -23,8 +24,9 @@ namespace CloudBedlam.Config
         {
             return ((NetEmProfileAttribute)
                 typeof(NetworkEmProfile)
-                    .GetMember(profile.ToString())[0]
-                    .GetCustomAttributes(typeof(NetEmProfileAttribute), false)[0]
+                    .GetTypeInfo()
+                    .GetMember(profile.ToString()).First()
+                    .GetCustomAttributes(typeof(NetEmProfileAttribute), false).First()
                 ).Name;
         }
     }

@@ -7,7 +7,7 @@ namespace CloudBedlam.Extensions
     {
         public static string GetSystemDriveLetter()
         {
-            return Path.GetPathRoot(Environment.SystemDirectory).Substring(0, 1);
+            return "C"; //Path.GetPathRoot(Environment.SystemDirectory).Substring(0, 1);
         }
     }
 }

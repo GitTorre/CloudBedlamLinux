@@ -3,7 +3,6 @@ using System.Xml.Serialization;
 
 namespace CloudBedlam.Config
 {
-    [Serializable]
     [XmlRoot("ChaosConfiguration")]
     public class ChaosConfiguration
     {

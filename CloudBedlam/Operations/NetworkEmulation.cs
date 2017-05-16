@@ -262,7 +262,7 @@ namespace CloudBedlam.Operations
 			processStartInfo.RedirectStandardOutput = true;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.UseShellExecute = false;
-			processStartInfo.Verb = "RunAs";
+			//processStartInfo.Verb = "RunAs";
 			process.StartInfo = processStartInfo;
 
 			process.Start();
@@ -287,7 +287,7 @@ namespace CloudBedlam.Operations
 			processStartInfo.RedirectStandardOutput = true;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.UseShellExecute = false;
-			processStartInfo.Verb = "RunAs";
+			//processStartInfo.Verb = "RunAs";
 			process.StartInfo = processStartInfo;
 			process.Start();
 		}
@@ -296,7 +296,7 @@ namespace CloudBedlam.Operations
 		{
 			try
 			{
-				return Dns.GetHostEntry(hostname).AddressList;
+				return Dns.GetHostEntryAsync(hostname).Result.AddressList;
 			}
 			catch (SocketException)
 			{

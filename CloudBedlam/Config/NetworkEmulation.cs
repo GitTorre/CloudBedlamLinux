@@ -2,7 +2,6 @@
 
 namespace CloudBedlam.Config
 {
-    [Serializable]
     public class NetworkEmulation : ChaosBase
     {
         public NetworkEmProfile EmulationType { get; set; }

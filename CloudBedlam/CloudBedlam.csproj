@@ -7,5 +7,7 @@
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.0.0-beta07"/>
     <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0"/>
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0"/>
+    <PackageReference Include="System.Reflection" Version="4.3.0"/>
   </ItemGroup>
 </Project>
