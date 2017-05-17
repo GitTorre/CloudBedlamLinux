@@ -5,11 +5,28 @@
     "args": [],
     "tasks": [
         {
-            "taskName": "build",
+            // build app and corresponding docker images (default: windows)
+            "taskName": "rebuild and start containers",
+            // use bash to run multiple commands at the same time
+            "command": "powershell",
+            "isShellCommand": true,
             "args": [
-                "${workspaceRoot}/CloudBedlam/CloudBedlam.csproj"
+                // restore and build app (put this 2 lines for every app you want to build)
+               "dotnet restore ${workspaceRoot}/CloudBedlam/CloudBedlam.csproj;",
+               "dotnet publish ${workspaceRoot}/CloudBedlam/CloudBedlam.csproj -c Debug;",
+                // rebuild and recreate containers from docker-compose files
+                "docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d --build --force-recreate --remove-orphans"
             ],
+            // command override for linux
+            "linux": {
+                "command": "bash"
+            },
+            // command override for linux
+            "osx": {
+                "command": "bash"
+            },
             "isBuildCommand": true,
+            "echoCommand": true,
             "problemMatcher": "$msCompile"
         }
     ]

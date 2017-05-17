@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  cloudbedlam:
+    image: cloudbedlam:dev
+    build:
+      args:
+        source: ./bin/Debug/netcoreapp1.1/publish
+    volumes:
+      - ~/clrdbg/vsdbg:/vsdbg:ro
+    entrypoint: tail -f /dev/null

@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  cloudbedlam:
+    image: cloudbedlam:latest
+    build:
+      dockerfile: Dockerfile
+      context: ./CloudBedlam
+      args:
+        source: ./bin/Debug/netcoreapp1.1/publish
+    

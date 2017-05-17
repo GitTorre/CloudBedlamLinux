@@ -1,28 +1,58 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": "Docker Debug",
+            // inform VS Code that we are debugging .NET Core app with default request to launch it
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceRoot}/CloudBedlam/bin/Debug/netcoreapp1.1/CloudBedlam.dll",
+            // instruct to run "rebuild and start containers" task before actual launch
+            "preLaunchTask": "rebuild and start containers",
+            // specify there app is located
+            "cwd": "/app",
+            "program": "/app/CloudBedlam.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/CloudBedlam",
-            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
-            "console": "internalConsole",
+            // additional debug config
             "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart"
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "console": "internalConsole",
+            // configure transport pipeline
+            "pipeTransport": {
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceRoot}",
+                "windows": {
+                    "pipeProgram": "powershell",
+                    "pipeArgs": [
+                        "docker",
+                        "exec",
+                        "-i",
+                        "(docker ps -f \"name=cloudbedlam\" -q -n=1)"
+                    ]
+                },
+                "quoteArgs": false,
+                // linux overides
+                "linux": {
+                    "pipeProgram": "bash",
+                    "pipeArgs": [
+                        "docker",
+                        "exec",
+                        "-i",
+                        "$(docker ps -f \"name=cloudbedlam\" -q -n=1)"
+                    ]
+                },
+                // osx overides
+                "osx": {
+                    "pipeProgram": "bash",
+                    "pipeArgs": [
+                        "docker",
+                        "exec",
+                        "-i",
+                        "$(docker ps -f \"name=cloudbedlam\" -q -n=1)"
+                    ]
+                }
+            }
         }
     ]
 }
