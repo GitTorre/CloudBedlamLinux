@@ -3,17 +3,15 @@
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 
 ip=$(host "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" -m 1)
-delay=5000ms
+
 port="$2"
-duration="$3"
+delay="$3"
+duration="$4"
 
 echo "$interface"
 echo "$ip"
 echo "$delay"
 echo "$port"
-
-# delete existing filter rules, etc...
-tc qdisc del root dev $interface
 
 # we'll use iptables to deal with port referencing (see # port section below)...
 iptables -t mangle -F
@@ -28,3 +26,7 @@ iptables -A FORWARD -t mangle -p tcp --sport $port -j MARK --set-mark 5
 iptables -A OUTPUT -t mangle -p tcp --sport $port -j MARK --set-mark 5
 
 iptables-save
+
+sleep $duration
+# delete existing filter rules, etc...
+tc qdisc del root dev $interface
