@@ -1,7 +1,7 @@
 #! /bin/bash
 
 pressurelevel=$(awk "BEGIN {printf \"%.2f\n\", $1/100}")
-vmbytes=$(awk "/MemFree/{printf \"%d\n\", $2 * $pressurelevel;}" < /proc/meminfo)k 
+vmbytes=$(awk "/MemFree/{printf \"%d\n\", \$2 * $pressurelevel;}" < /proc/meminfo)k 
 duration="$2"
 
 echo $duration
