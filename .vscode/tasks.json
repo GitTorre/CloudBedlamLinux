@@ -28,6 +28,14 @@
             "isBuildCommand": true,
             "echoCommand": true,
             "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "Bash to Container",
+            "command": "powershell",
+            "args":[
+                "docker exec -it $(docker ps -f \"name=cloudbedlam\" -q -n=1) bash"
+            ],
+            "echoCommand": true
         }
     ]
 }
