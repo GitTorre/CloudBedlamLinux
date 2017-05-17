@@ -20,10 +20,12 @@ namespace CloudBedlam.Operations
 
 		protected override ProcessParams CreateProcessParams()
 		{
-			var filePath = "stress-ng";
+			var filePath = "/usr/bin/bash";
 			//--vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.097;}' < /proc/meminfo)k --vm-keep -m 10
 			//--vm 4 --vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.097;}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout 10s
-			return new ProcessParams(new FileInfo(filePath), @"--vm 4 --vm-bytes $(awk '/MemFree/{printf ""%d\n"", $2 * 0." + _config.PressureLevel + ";}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout " + _config.DurationInSeconds + "s");
+			Program.Logger.Info("--vm 4 --vm-bytes $(awk \'/MemFree/{printf \"%d\\n\", $2 * 0." + _config.PressureLevel + ";}\' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout " + _config.DurationInSeconds + "s");
+			//return new ProcessParams(new FileInfo(filePath), "--vm 4 --vm-bytes $(awk \'/MemFree/{printf \"%d\\n\", $2 * 0." + _config.PressureLevel + ";}\' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout " + _config.DurationInSeconds + "s");
+			return new ProcessParams(new FileInfo(filePath), "/home/ct/Desktop/tmp/stress-mem.sh");
 		}
 		//TODO: Play with sudo...
 		// FileName = "/usr/bin/sudo";
@@ -43,9 +45,8 @@ namespace CloudBedlam.Operations
 
 			Process process = new Process();
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = @"/usr/bin/sudo";
-			processStartInfo.WorkingDirectory = @"/tmp";
-			processStartInfo.Arguments = @"/usr/bin/stress-ng --sequential 0 -t " + _config.DurationInSeconds + "s";
+			processStartInfo.FileName = "stress-ng";
+			processStartInfo.Arguments = "--vm 4 --vm-bytes $(awk '/MemFree/{printf \"%d\\n\", $2 * 0." + _config.PressureLevel + ";}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout " + _config.DurationInSeconds + "s";
 			processStartInfo.RedirectStandardOutput = true;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.UseShellExecute = false;

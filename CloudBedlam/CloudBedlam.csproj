@@ -9,7 +9,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChaosApe</RootNamespace>
     <AssemblyName>CloudBedlam</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -104,11 +103,16 @@
     </Content>
     <None Include="NLogNE.config" />
     <None Include="packages.config" />
+    <None Include="Bash\netem-ip.sh" />
+    <None Include="Bash\stress-mem.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Bash\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent Condition=" '$(OS)' != 'Unix' ">if not exist "$(TargetDir)ChaosBinaries" mkdir "$(TargetDir)ChaosBinaries"

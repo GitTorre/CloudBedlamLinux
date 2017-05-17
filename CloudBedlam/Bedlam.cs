@@ -82,8 +82,9 @@ namespace CloudBedlam
                     operation.CreateProcess();
                 }
             
+				_logger?.Info($"Starting {operation.Name}.");
                 var  isStarted = operation.Process?.Start();
-                _logger?.Info($"Starting {operation.Name}.");
+          
 
                 var b = !isStarted;
                 if (b != null && (bool) b)
