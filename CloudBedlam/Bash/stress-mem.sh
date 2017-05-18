@@ -1,3 +1,12 @@
 #! /bin/bash
 
-stress-ng --vm 4 --vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.80;}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout 15s
+pressurelevel=$(awk "BEGIN {printf \"%.2f\n\", $1/100}")
+vmbytes=$(awk "/MemFree/{printf \"%d\n\", \$2 * $pressurelevel;}" < /proc/meminfo)k 
+duration="$2"
+
+echo $duration
+echo $pressurelevel
+echo $vmbytes
+
+
+stress-ng --vm 4 --vm-bytes $vmbytes --mmap 2 --mmap-bytes 2G --page-in --timeout $duration
