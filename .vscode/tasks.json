@@ -14,8 +14,9 @@
                 // restore and build app (put this 2 lines for every app you want to build)
                "dotnet restore ${workspaceRoot}/CloudBedlam/CloudBedlam.csproj;",
                "dotnet publish ${workspaceRoot}/CloudBedlam/CloudBedlam.csproj -c Debug;",
+               "docker-compose -f docker-compose.yml -f docker-compose.debug.yml build;",
                 // rebuild and recreate containers from docker-compose files
-                "docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d --build --force-recreate --remove-orphans"
+                "docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d --force-recreate --remove-orphans"
             ],
             // command override for linux
             "linux": {
