@@ -1,4 +1,4 @@
-# CloudBedlam Linux (Mono)
+# CloudBedlam Linux (Mono and .NET Core)
 
 #### Simple, configurable, local (VM internal) chaotic operation orchestrator for testing resiliency of Windows-powered cloud services.
 
