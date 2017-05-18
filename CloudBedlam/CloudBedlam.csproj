@@ -106,6 +106,7 @@
     <None Include="Bash\netem-ip.sh" />
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
+    <None Include="Buildscripts\buildmono.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
