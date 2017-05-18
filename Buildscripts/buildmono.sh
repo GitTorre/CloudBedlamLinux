@@ -12,5 +12,5 @@ ls -1 $BUILD_SOURCESDIRECTORY
 echo "--------------------------------------"
 echo " Building Solution                    "
 echo "--------------------------------------"
-msbuild
+ls
 echo "Over and out."
