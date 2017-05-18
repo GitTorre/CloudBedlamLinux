@@ -50,4 +50,3 @@ We made this *very simple chaos tool* with a VM-specific approach in mind *speci
 
 Make chaos, not war!
 
-…Charles
