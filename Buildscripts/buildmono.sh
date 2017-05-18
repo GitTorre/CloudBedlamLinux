@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "--------------------------------------"
-echo "Building CloudBedLam Mono version"                       "
+echo "Building CloudBedLam Mono version     "
 echo "--------------------------------------"
 echo "AGENT_WORKFOLDER is $AGENT_WORKFOLDER"
 echo "AGENT_WORKFOLDER contents:"
@@ -14,9 +14,11 @@ ls -1 $BUILD_SOURCESDIRECTORY
 echo "--------------------------------------"
 echo " Checking Paths                       "
 echo "--------------------------------------"
-echo "Step Path:" & pwd
+echo "Step Path:"
+pwd
 cd $BUILD_SOURCESDIRECTORY
-echo "Build Path:" & pwd
+echo "Build Path:"
+pwd
 echo "--------------------------------------"
 echo " Building Solution                    "
 echo "--------------------------------------"
