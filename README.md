@@ -1,6 +1,6 @@
 # CloudBedlam Linux (Mono)
 
-#### Simple, configurable, local (VM internal) chaotic operation orchestrator for testing resiliency of Windows-powered cloud services (Linux coming soon). Works on all supported versions of NT-based Windows. Requires .NET 4.5.2. Must be run in Administrator privilege context. Target x64 when you build.
+#### Simple, configurable, local (VM internal) chaotic operation orchestrator for testing resiliency of Windows-powered cloud services.
 
 
 ### Easy to use 
