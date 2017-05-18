@@ -12,5 +12,5 @@ ls -1 $BUILD_SOURCESDIRECTORY
 echo "--------------------------------------"
 echo " Building Solution                    "
 echo "--------------------------------------"
-msbuild CloudBedlam.sln 
+msbuild
 echo "Over and out."
