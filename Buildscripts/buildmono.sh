@@ -9,4 +9,8 @@ ls -1 $AGENT_BUILDDIRECTORY
 echo "BUILD_SOURCESDIRECTORY is $BUILD_SOURCESDIRECTORY"
 echo "BUILD_SOURCESDIRECTORY contents:"
 ls -1 $BUILD_SOURCESDIRECTORY
+echo "--------------------------------------"
+echo " Building Solution                    "
+echo "--------------------------------------"
+msbuild CloudBedlam.sln 
 echo "Over and out."
