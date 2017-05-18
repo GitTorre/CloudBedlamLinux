@@ -2,6 +2,7 @@
 echo "--------------------------------------"
 echo "Creating the CloudBedLam Mono ELF     "
 echo "--------------------------------------"
+cd $BUILD_SOURCESDIRECTORY
 cd CloudBedlam/bin/Debug
 echo "CloudBedLam Bin-Debug Path:"
 pwd
