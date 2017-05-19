@@ -4,7 +4,7 @@ export GITHUB_TOKEN=$github-release
 
 echo "Creating the Release"
 
-./github-release release \
+github-release release \
     --user GitTorre \
     --repo CloudBedlamMono \
     --tag v$BuildID \
