@@ -2,28 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Linq;
 using System.Net.Sockets;
 using CloudBedlam.Config;
 using CloudBedlam.Extensions;
 
 /*
-NOTE: Linux netem sample for delay:
-sudo tc qdisc del dev wlp2s0 root netem rate 5kbit 20 100 5
-
-Start...
-charles@charles-HP-ZBook-Studio-G3:~$ sudo tc qdisc add dev wlp2s0 root netem delay 1000ms
-Stop
-charles@charles-HP-ZBook-Studio-G3:~$ sudo tc qdisc del dev wlp2s0 root
-
-
-wlp2s0 is the id of the wireless radio in my dev machine... So, we need to first query for 
-network devices (and I'd imagine there is a way to just say "all"?...) 
-
-useful commmands:
-
-ifconfig
-
-links to learn more...
+ 
+links to learn more about tc/netem...
 
 http://www.tecmint.com/linux-network-configuration-and-troubleshooting-commands/
 https://www.excentis.com/blog/use-linux-traffic-control-impairment-node-test-environment-part-1
@@ -71,35 +57,22 @@ $ tc qdisc add dev eth0 root netem loss gemodel 1% 10% 70% 0.1%
     move-to-burstmode (p) of 1%, move-to-gapmode (r) of 10%, \
     drop-in-burstmode (1-h) of 70% and drop-in-gapmode (1-k) of 0.1%>
 
-
-Specific IP filtering...
-
-#!/bin/bash
-
-interface=lo
-ip=10.0.0.1
-delay=100ms
-
-tc qdisc add dev $interface root handle 1: prio
-tc filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 2:1
-tc qdisc add dev $interface parent 1:1 handle 2: netem delay $delay
-
 */
 
 
 namespace CloudBedlam.Operations
 {
-    internal class NetworkEmulation : OperationBase
-    {
-        private readonly Config.NetworkEmulation _config;
-        
-        public NetworkEmulation(Config.NetworkEmulation config, TimeSpan testDuration) 
-            : base(config.IsValidProfile() && config.DurationInSeconds > 0,
-                  config.Duration > testDuration ? testDuration : config.Duration,
-                  config.RunOrder)
-        {
-            _config = config;
-        }
+	class NetworkEmulation : OperationBase
+	{
+		readonly Config.NetworkEmulation _config;
+
+		public NetworkEmulation(Config.NetworkEmulation config, TimeSpan testDuration)
+			: base(config.IsValidProfile() && config.DurationInSeconds > 0,
+				  config.Duration > testDuration ? testDuration : config.Duration,
+				  config.RunOrder)
+		{
+			_config = config;
+		}
 
 		/*
 			We only really care about emulating outgoing/incoming traffic for specific IPs... -CT
@@ -130,169 +103,141 @@ namespace CloudBedlam.Operations
 			 # tc qdisc add dev ifb0 root netem delay 750ms
 		*/
 
-		//TODO: Change this to support tc/netem.... CT
-        protected override ProcessParams CreateProcessParams()
-        {
-            var config = GetEmulationConfiguration(_config);
-
-            if (config == null) return null;
-
-            var args = "";
-            //Latency
-            var latencyConfig = config as LatencyConfiguration;
-            if (latencyConfig != null)
-            {
-                args = "-config latency -delay " + latencyConfig.FixedLatencyDelayMilliseconds + " -url " + GetEndpointPortString(latencyConfig.TargetEndpoints.Endpoints) + " -duration " +
-                       _config.DurationInSeconds;
-            }
-            //Bandwidth
-            var bandwidthConfig = config as BandwidthConfiguration;
-            if (bandwidthConfig != null)
-            {
-                args = "-config bandwidth -dsbandwidth " + bandwidthConfig.DownstreamBandwidth + " -usbandwidth " +
-                       bandwidthConfig.UpstreamBandwidth + " -url " + GetEndpointPortString(bandwidthConfig.TargetEndpoints.Endpoints) + " -duration " +
-                       _config.DurationInSeconds;
-            }
-            //Disconnect
-            var disconnectConfig = config as DisconnectConfiguration;
-            if (disconnectConfig != null)
-            {
-                 /*
-                 -config disconnect -connectiontime 5 -disconnectiontime 15 -disconnectionrate 0.8 -url https://www.bing.com -duration 15
-                 */
-                args = "-config disconnect -connectiontime " + disconnectConfig.ConnectionTime + " -disconnectiontime " + disconnectConfig.DisconnectionTime + " -disconnectionrate " + disconnectConfig.PeriodicDisconnectionRate + " -url " + GetEndpointPortString(disconnectConfig.TargetEndpoints.Endpoints) + " -duration " + _config.DurationInSeconds;
-            }
-            //Loss
-            var lossConfig = config as LossConfiguration;
-            if (lossConfig != null)
-            {
-                //-config loss -losstype random -lossrate 0.9 -protocol udp -url https://www.bing.com -duration 15
-                string loss = "";
-                switch (_config.LossType)
-                {
-                    case LossType.Burst:
-                        loss = " -lossrate " + lossConfig.BurstRate;
-                        break;
-                    case LossType.Random:
-                        loss = " -lossrate " + lossConfig.RandomLossRate;
-                        break;
-                    case LossType.Periodic:
-                        loss = " -lossperiod " + lossConfig.PeriodicLossPeriod;
-                        break;
-                }
-                args = "-config loss -losstype " + lossConfig.LossType + loss + " -protocol " + lossConfig.ProtocolLayerType + " -url " + GetEndpointPortString(lossConfig.TargetEndpoints.Endpoints) + " -duration " + _config.DurationInSeconds;
-            }
-
-            return new ProcessParams(null, args);
-        }
-
-        private static string GetEndpointPortString(IEnumerable<Endpoint> endpoints)
-        {
-            string value = "";
-            foreach (var endpoint in endpoints)
-            {
-                string port = "";
-                if (!string.IsNullOrEmpty(endpoint.Port))
-                {
-                    port = ":" + endpoint.Port;
-                }
-                value += endpoint.Uri + port + ",";
-            }
-            return value.TrimEnd(',');
-        }
-
-        private EmulationConfiguration GetEmulationConfiguration(Config.NetworkEmulation config)
-        {
-            EmulationConfiguration emulationConfiguration = null;
-
-            if (config.EmulationType == NetworkEmProfile.Bandwidth)
-            {
-                emulationConfiguration = new BandwidthConfiguration
-                {
-                    DownstreamBandwidth = config.BandwidthDownstreamSpeed,
-                    UpstreamBandwidth = config.BandwidthUpstreamSpeed,
-                    TargetEndpoints = config.TargetEndpoints
-                };
-            }
-            if (config.EmulationType == NetworkEmProfile.Latency)
-            {
-                emulationConfiguration = new LatencyConfiguration
-                {
-                    FixedLatencyDelayMilliseconds = _config.LatencyDelay,
-                    TargetEndpoints = config.TargetEndpoints
-                };
-            }
-            if (config.EmulationType == NetworkEmProfile.Disconnect)
-            {
-                emulationConfiguration = new DisconnectConfiguration
-                {
-                     ConnectionTime = config.ConnectionTime,
-                     DisconnectionTime = config.DisconnectionTime,
-                     PeriodicDisconnectionRate = config.PeriodicDisconnectionRate,
-                     TargetEndpoints = config.TargetEndpoints
-                };
-            }
-            if (config.EmulationType == NetworkEmProfile.Loss)
-            {
-                emulationConfiguration = new LossConfiguration
-                {
-                    BurstRate = config.BurstRate,
-                    MaximumBurst = config.MaximumBurst,
-                    MinimumBurst = config.MinimumBurst,
-                    PeriodicLossPeriod = config.PeriodicLossPeriod,
-                    RandomLossRate = config.RandomLossRate,
-                    TargetEndpoints = config.TargetEndpoints,
-                    ProtocolLayerType = config.ProtocolLayerType,
-                    NetworkLayerType = config.NetworkLayerType
-                };
-            }
-
-            return emulationConfiguration;
-        }
-
-		//TODO: Play with sudo...
-		// FileName = "/usr/bin/sudo";
-		// Arguments = "/usr/bin/tc qdisc add dev wlp2s0 root netem delay 1000ms";
-		private Tuple<string, string> RunNetworkEmulation()
+		protected override ProcessParams CreateProcessParams()
 		{
-			Process process = new Process();
-			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = "sudo";
-			processStartInfo.Arguments = "tc qdisc add dev wlp2s0 root netem delay 1000ms";
-			processStartInfo.RedirectStandardOutput = true;
-			processStartInfo.RedirectStandardError = true;
-			processStartInfo.UseShellExecute = false;
-			processStartInfo.Verb = "RunAs";
-			process.StartInfo = processStartInfo;
+			var config = GetEmulationConfiguration(_config);
 
-			process.Start();
-			string error = process?.StandardError.ReadToEnd();
-			string output = process?.StandardOutput.ReadToEnd();
-			process.WaitForExit(_config.Duration.Milliseconds);
+			if (config == null) return null;
 
-			StopNetworkEmulation();
+			var args = "";
+			//Latency
+			var latencyConfig = config as LatencyConfiguration;
+			if (latencyConfig != null)
+			{
+				args = "Bash/netem-ip-latency.sh " + latencyConfig.FixedLatencyDelayMilliseconds + " " +
+													 FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Port) + " " +
+													 FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+													 _config.DurationInSeconds + "s";
+			}
+			//Bandwidth TODO: Convert to bash commands (create sh file per emulation type....) -CT
+			var bandwidthConfig = config as BandwidthConfiguration;
+			if (bandwidthConfig != null)
+			{
+				args = "-config bandwidth -dsbandwidth " + bandwidthConfig.DownstreamBandwidth + " -usbandwidth " +
+					   bandwidthConfig.UpstreamBandwidth + " -url " + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " -duration " +
+					   _config.DurationInSeconds;
+			}
+			//Disconnect TODO: Convert to bash commands (create sh file per emulation type....) -CT
+			var disconnectConfig = config as DisconnectConfiguration;
+			if (disconnectConfig != null)
+			{
+				/*
+				-config disconnect -connectiontime 5 -disconnectiontime 15 -disconnectionrate 0.8 -url https://www.bing.com -duration 15
+				*/
+				args = "-config disconnect -connectiontime " + disconnectConfig.ConnectionTime + " -disconnectiontime " + disconnectConfig.DisconnectionTime + " -disconnectionrate " + disconnectConfig.PeriodicDisconnectionRate + " -url " + FormatEndpointsParamString(disconnectConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " -duration " + _config.DurationInSeconds;
+			}
+			//Loss TODO: Convert to bash commands (create sh file per emulation type....) -CT
+			var lossConfig = config as LossConfiguration;
+			if (lossConfig != null)
+			{
+				//-config loss -losstype random -lossrate 0.9 -protocol udp -url https://www.bing.com -duration 15
+				string loss = "";
+				switch (_config.LossType)
+				{
+					case LossType.Burst:
+						loss = " -lossrate " + lossConfig.BurstRate;
+						break;
+					case LossType.Random:
+						loss = " -lossrate " + lossConfig.RandomLossRate;
+						break;
+					case LossType.Periodic:
+						loss = " -lossperiod " + lossConfig.PeriodicLossPeriod;
+						break;
+				}
+				args = "-config loss -losstype " + lossConfig.LossType + loss + " -protocol " + lossConfig.ProtocolLayerType + " -url " + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " -duration " + _config.DurationInSeconds;
+			}
 
-			var tuple = new Tuple<string, string>(error, output);
-			return tuple;
-		}
-		//TODO: Play with sudo...
-		// FileName = "/usr/bin/sudo";
-		// Arguments = "/usr/bin/tc qdisc del dev wlp2s0 root";
-		private void StopNetworkEmulation()
-		{
-			Process process = new Process();
-			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = "sudo";
-			processStartInfo.Arguments = "tc qdisc del dev wlp2s0 root";
-			processStartInfo.RedirectStandardOutput = true;
-			processStartInfo.RedirectStandardError = true;
-			processStartInfo.UseShellExecute = false;
-			processStartInfo.Verb = "RunAs";
-			process.StartInfo = processStartInfo;
-			process.Start();
+			return new ProcessParams(null, args);
 		}
 
-		private static IEnumerable<IPAddress> GetIpAddressesForEndpoint(string hostname)
+		static string FormatEndpointsParamString(IEnumerable<Endpoint> endpoints, ParamType type)
+		{
+			string value = "";
+			string param = "";
+
+			if (type == ParamType.Port && endpoints.All(endpoint => string.IsNullOrEmpty(endpoint.Port)))
+			{
+				return "";
+			}
+
+			foreach (var endpoint in endpoints)
+			{
+				if (type == ParamType.Uri)
+				{
+					param = endpoint.Uri;
+				}
+				else
+				{
+					param = endpoint.Port;
+				}
+
+				value += param + ",";
+			}
+
+			return value.TrimEnd(',');
+		}
+
+		EmulationConfiguration GetEmulationConfiguration(Config.NetworkEmulation config)
+		{
+			EmulationConfiguration emulationConfiguration = null;
+
+			if (config.EmulationType == NetworkEmProfile.Bandwidth)
+			{
+				emulationConfiguration = new BandwidthConfiguration
+				{
+					DownstreamBandwidth = config.BandwidthDownstreamSpeed,
+					UpstreamBandwidth = config.BandwidthUpstreamSpeed,
+					TargetEndpoints = config.TargetEndpoints
+				};
+			}
+			if (config.EmulationType == NetworkEmProfile.Latency)
+			{
+				emulationConfiguration = new LatencyConfiguration
+				{
+					FixedLatencyDelayMilliseconds = _config.LatencyDelay,
+					TargetEndpoints = config.TargetEndpoints
+				};
+			}
+			if (config.EmulationType == NetworkEmProfile.Disconnect)
+			{
+				emulationConfiguration = new DisconnectConfiguration
+				{
+					ConnectionTime = config.ConnectionTime,
+					DisconnectionTime = config.DisconnectionTime,
+					PeriodicDisconnectionRate = config.PeriodicDisconnectionRate,
+					TargetEndpoints = config.TargetEndpoints
+				};
+			}
+			if (config.EmulationType == NetworkEmProfile.Loss)
+			{
+				emulationConfiguration = new LossConfiguration
+				{
+					BurstRate = config.BurstRate,
+					MaximumBurst = config.MaximumBurst,
+					MinimumBurst = config.MinimumBurst,
+					PeriodicLossPeriod = config.PeriodicLossPeriod,
+					RandomLossRate = config.RandomLossRate,
+					TargetEndpoints = config.TargetEndpoints,
+					ProtocolLayerType = config.ProtocolLayerType,
+					NetworkLayerType = config.NetworkLayerType
+				};
+			}
+
+			return emulationConfiguration;
+		}
+
+
+		static IEnumerable<IPAddress> GetIpAddressesForEndpoint(string hostname)
 		{
 			try
 			{
@@ -304,12 +249,18 @@ namespace CloudBedlam.Operations
 			}
 		}
 
-        internal override void Kill()
-        {
-            if (Process == null || !Process.IsRunning() || Process.HasExited) return;
+		internal override void Kill()
+		{
+			if (Process == null || !Process.IsRunning() || Process.HasExited) return;
 
-            System.Threading.Thread.Sleep(5000); //Give the emulator time to stop and uninstall net driver...
-            Process?.Kill();
-        }
-    }
+			System.Threading.Thread.Sleep(5000); //Give the emulator time to stop and uninstall net driver...
+			Process?.Kill();
+		}
+	}
+
+	enum ParamType
+	{
+		Port,
+		Uri
+	}
 }
