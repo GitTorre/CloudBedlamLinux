@@ -6,7 +6,7 @@ echo "--------------------------------------"
 export GITHUB_TOKEN=$GITHUB_TOKEN
 
 echo "Github Token: $GITHUB_TOKEN"
-echo "Build Number: $BUILD_NUMBER" 
+echo "Build Number: $BUILD_BUILDID" 
 
 #echo "Calling github-release"
 #github-release release \
