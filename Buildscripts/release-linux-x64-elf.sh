@@ -8,13 +8,13 @@ export GITHUB_TOKEN=$GITHUB_TOKEN
 echo "Github Token: $GITHUB_TOKEN"
 echo "Build Number: $BUILD_BUILDID" 
 
-#echo "Calling github-release"
-#github-release release \
-#    --user GitTorre \
-#    --repo CloudBedlamMono \
-#    --tag v$BuildID \
-#    --name "CloudBedlam-v$BuildID" \
-#    --description "CloudBedLam Fault Injection project. Release v0.$BuildID" \
-#    --pre-release
+echo "Calling github-release"
+github-release release \
+    --user GitTorre \
+    --repo CloudBedlamMono \
+    --tag v0.$BUILD_BUILDID \
+    --name "CloudBedlam-v0.$BUILD_BUILDID" \
+    --description "CloudBedLam Fault Injection project. Release v0.$BUILD_BUILDID" \
+    --pre-release
 
 echo "Job Completed!"
