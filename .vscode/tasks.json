@@ -31,11 +31,12 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "taskName": "Bash to Container",
+            "taskName": "Install VsDbg",
             "command": "powershell",
             "args":[
-                "docker exec -it $(docker ps -f \"name=cloudbedlam\" -q -n=1) bash"
+                ".\\.vscode\\GetVsDbg.ps1 -Version latest -RuntimeID ubuntu.16.04-x64 -InstallPath .\\vsdbg -RemoveExistingOnUpgrade"
             ],
+            "isShellCommand": true,
             "echoCommand": true
         }
     ]

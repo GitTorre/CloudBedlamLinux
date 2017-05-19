@@ -25,7 +25,7 @@ namespace CloudBedlam.Operations
 			//--vm 4 --vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.097;}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout 10s
 			Program.Logger.Info("--vm 4 --vm-bytes $(awk \'/MemFree/{printf \"%d\\n\", $2 * 0." + _config.PressureLevel + ";}\' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout " + _config.DurationInSeconds + "s");
 			//return new ProcessParams(new FileInfo(filePath), "--vm 4 --vm-bytes $(awk \'/MemFree/{printf \"%d\\n\", $2 * 0." + _config.PressureLevel + ";}\' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout " + _config.DurationInSeconds + "s");
-			return new ProcessParams(new FileInfo(filePath), "/home/ct/Desktop/tmp/stress-mem.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
+			return new ProcessParams(new FileInfo(filePath), "./Bash/stress-mem.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
 		}
 		//TODO: Play with sudo...
 		// FileName = "/usr/bin/sudo";

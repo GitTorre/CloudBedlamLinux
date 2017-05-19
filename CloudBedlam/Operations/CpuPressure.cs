@@ -83,7 +83,7 @@ namespace CloudBedlam.Operations
     {
         private readonly ChaosOperation _config;
 
-        public CpuPressure(ChaosOperation config, TimeSpan testDuration) 
+        public CpuPressure(ChaosOperation config, TimeSpan testDuration)
             : base(config.PressureLevel > 0 && config.DurationInSeconds > 0,
                   config.Duration > testDuration ? testDuration : config.Duration,
                   config.RunOrder)
@@ -93,36 +93,36 @@ namespace CloudBedlam.Operations
 
         protected override ProcessParams CreateProcessParams()
         {
-			var filePath = "/usr/bin/bash";
-			return new ProcessParams(new FileInfo(filePath), "/home/ct/Desktop/tmp/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
+            var filePath = "/usr/bin/bash";
+            return new ProcessParams(new FileInfo(filePath), "./Bash/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
         }
 
-		//TODO: Play with sudo...
-		private Tuple<string, string> RunCpuStress(EmulationConfiguration config)
-		{
-			Process process = new Process();
-			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = "stress-ng";
-			processStartInfo.Arguments = "--cpu 0 --cpu-method all -t " + _config.DurationInSeconds + "s";
-			processStartInfo.RedirectStandardOutput = true;
-			processStartInfo.RedirectStandardError = true;
-			processStartInfo.UseShellExecute = false;
-			//processStartInfo.Verb = "RunAs";
-			process.StartInfo = processStartInfo;
+        //TODO: Play with sudo...
+        private Tuple<string, string> RunCpuStress(EmulationConfiguration config)
+        {
+            Process process = new Process();
+            ProcessStartInfo processStartInfo = new ProcessStartInfo();
+            processStartInfo.FileName = "stress-ng";
+            processStartInfo.Arguments = "--cpu 0 --cpu-method all -t " + _config.DurationInSeconds + "s";
+            processStartInfo.RedirectStandardOutput = true;
+            processStartInfo.RedirectStandardError = true;
+            processStartInfo.UseShellExecute = false;
+            //processStartInfo.Verb = "RunAs";
+            process.StartInfo = processStartInfo;
 
-			process.Start();
-			string error = process?.StandardError.ReadToEnd();
-			string output = process?.StandardOutput.ReadToEnd();
-			process.WaitForExit(_config.Duration.Milliseconds);
+            process.Start();
+            string error = process?.StandardError.ReadToEnd();
+            string output = process?.StandardOutput.ReadToEnd();
+            process.WaitForExit(_config.Duration.Milliseconds);
 
-			var tuple = new Tuple<string, string>(error, output);
+            var tuple = new Tuple<string, string>(error, output);
 
-			return tuple;
+            return tuple;
 
-		}
+        }
 
 
-		internal override void Kill()
+        internal override void Kill()
         {
             if (Process != null && Process.IsRunning() && !Process.HasExited)
             {

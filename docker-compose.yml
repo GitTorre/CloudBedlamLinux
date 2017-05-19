@@ -7,5 +7,5 @@ services:
       dockerfile: Dockerfile
       context: ./CloudBedlam
       args:
-        source: ./bin/Debug/netcoreapp1.1/publish
+        source: ./bin/Release/netcoreapp1.1/publish
     

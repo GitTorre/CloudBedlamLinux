@@ -5,7 +5,6 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <PackageReference Include="NLog" Version="5.0.0-beta07"/>
     <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0"/>
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0"/>
@@ -15,23 +14,6 @@
     <None Include="NLog.config" CopyToOutputDirectory="Always"/>
     <None Include="NLogNE.config" CopyToOutputDirectory="Always" />
     <None Include="Bash\*" CopyToOutputDirectory="Always" />
-=======
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Chaos.config">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="NLogNE.config" />
-    <None Include="packages.config" />
-    <None Include="Bash\netem-ip.sh" />
-    <None Include="Bash\stress-mem.sh" />
-    <None Include="Bash\stress-cpu.sh" />
->>>>>>> master
   </ItemGroup>
 
 </Project>
