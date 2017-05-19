@@ -20,7 +20,7 @@ echo "--------------------------------------"
 echo "Uploading the Release Files           "
 echo "--------------------------------------"
 
-./github-release upload \
+github-release upload \
     --user GitTorre \
     --repo CloudBedLamMono \
     --tag v0.$BUILD_BUILDID \
