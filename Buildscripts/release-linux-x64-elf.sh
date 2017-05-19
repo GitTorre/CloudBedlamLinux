@@ -1,9 +1,14 @@
 #!/bin/bash
 
-export GITHUB_TOKEN=$github-release
+echo "--------------------------------------"
+echo "Creating Release in GitHub Repo       "
+echo "--------------------------------------"
+export GITHUB_TOKEN=$GITHUB_TOKEN
 
-echo "Creating the Release"
+echo "Github Token: $GITHUB_TOKEN"
+echo "Build Number: $BuildID" 
 
+echo "Calling github-release"
 github-release release \
     --user GitTorre \
     --repo CloudBedlamMono \
