@@ -114,6 +114,7 @@ namespace CloudBedlam.Operations
 			var latencyConfig = config as LatencyConfiguration;
 			if (latencyConfig != null)
 			{
+				//NOTE: This is incomplete and not reflected in the target script yet... -CT
 				args = "Bash/netem-ip-latency.sh " + latencyConfig.FixedLatencyDelayMilliseconds + " " +
 													 FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Port) + " " +
 													 FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
