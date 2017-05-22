@@ -116,17 +116,18 @@ namespace CloudBedlam.Operations
 			{
 				//NOTE: This is incomplete and not reflected in the target script yet... -CT
 				args = "Bash/netem-ip-latency.sh " + latencyConfig.FixedLatencyDelayMilliseconds + " " +
-													 FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Port) + " " +
-													 FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
-													 _config.DurationInSeconds + "s";
+				        FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Port) + " " +
+					    FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+					    _config.DurationInSeconds + "s";
 			}
 			//Bandwidth TODO: Convert to bash commands (create sh file per emulation type....) -CT
 			var bandwidthConfig = config as BandwidthConfiguration;
 			if (bandwidthConfig != null)
 			{
 				args = "-config bandwidth -dsbandwidth " + bandwidthConfig.DownstreamBandwidth + " -usbandwidth " +
-					   bandwidthConfig.UpstreamBandwidth + " -url " + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " -duration " +
-					   _config.DurationInSeconds;
+					   bandwidthConfig.UpstreamBandwidth + " -url " +
+		               FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + 
+				       " -duration " + _config.DurationInSeconds;
 			}
 			//Disconnect TODO: Convert to bash commands (create sh file per emulation type....) -CT
 			var disconnectConfig = config as DisconnectConfiguration;
@@ -135,7 +136,10 @@ namespace CloudBedlam.Operations
 				/*
 				-config disconnect -connectiontime 5 -disconnectiontime 15 -disconnectionrate 0.8 -url https://www.bing.com -duration 15
 				*/
-				args = "-config disconnect -connectiontime " + disconnectConfig.ConnectionTime + " -disconnectiontime " + disconnectConfig.DisconnectionTime + " -disconnectionrate " + disconnectConfig.PeriodicDisconnectionRate + " -url " + FormatEndpointsParamString(disconnectConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " -duration " + _config.DurationInSeconds;
+				args = "-config disconnect -connectiontime " + disconnectConfig.ConnectionTime + " -disconnectiontime " + 
+				       disconnectConfig.DisconnectionTime + " -disconnectionrate " + disconnectConfig.PeriodicDisconnectionRate + 
+				       " -url " + FormatEndpointsParamString(disconnectConfig.TargetEndpoints.Endpoints, ParamType.Uri) + 
+				       " -duration " + _config.DurationInSeconds;
 			}
 			//Loss TODO: Convert to bash commands (create sh file per emulation type....) -CT
 			var lossConfig = config as LossConfiguration;
@@ -155,7 +159,9 @@ namespace CloudBedlam.Operations
 						loss = " -lossperiod " + lossConfig.PeriodicLossPeriod;
 						break;
 				}
-				args = "-config loss -losstype " + lossConfig.LossType + loss + " -protocol " + lossConfig.ProtocolLayerType + " -url " + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " -duration " + _config.DurationInSeconds;
+				args = "-config loss -losstype " + lossConfig.LossType + loss + " -protocol " + lossConfig.ProtocolLayerType + 
+				       " -url " + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) + 
+				       " -duration " + _config.DurationInSeconds;
 			}
 
 			return new ProcessParams(null, args);
@@ -165,7 +171,7 @@ namespace CloudBedlam.Operations
 		{
 			string value = "";
 			string param = "";
-
+			//if Port type, check to see if all Endpoint Port properties are empty. If so, then return an empty string...
 			if (type == ParamType.Port && endpoints.All(endpoint => string.IsNullOrEmpty(endpoint.Port)))
 			{
 				return "";
@@ -252,9 +258,11 @@ namespace CloudBedlam.Operations
 
 		internal override void Kill()
 		{
-			if (Process == null || !Process.IsRunning() || Process.HasExited) return;
+			if (Process == null || !Process.IsRunning() || Process.HasExited)
+			{
+				return;
+			}
 
-			System.Threading.Thread.Sleep(5000); //Give the emulator time to stop and uninstall net driver...
 			Process?.Kill();
 		}
 	}
