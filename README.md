@@ -43,9 +43,9 @@ Feel free to supply feedback directly to ctorre@microsoft.com
 
 Of course, please help make this better 😊 – and add whatever you need around and inside the core chaos engine (which is what this is, really). It may be useful for you to develop a way to deploy configs to local CloudBedlam instances from some remote trusted service (where each side of the secure (443) connection provably trusts the other (shared public key, etc...)). CloudBedlam "agents" would communicate and authenticate with a central Bedlam service which would send down configs that define specific chaos operations for specific sets of VMs in your service(s). Push-based (reactive) interaction with agents would be very cool. 
 
-Obviousy, having a remote-controlled chaotic orchestrator where you can run different tests on different VMs from a central service would be a scalable approach. Like all things in engineering, it comes with a cost, across security and complextity... 
+Obviousy, having a remote-controlled chaotic orchestrator where you can run different tests on different VMs from a central service would be a scalable approach. Like all things in engineering, it comes with a cost, across security and complexity... 
 
-We made this *very simple chaos tool* with a VM-specific approach in mind *specifically to remove the overhead of a distributed secure server-agent model*. The focus for us was on making a *very easy to use, simple to configure, lightweight solution for chaos engineering and experimentation inside virtual machines*.
+We made this *very simple chaos tool* with a VM-specific approach in mind *specifically to remove the overhead of a distributed secure server-client-agent model*. The focus for us is on making a *very easy to use, simple to configure, lightweight solution for chaos engineering and experimentation inside virtual machines*.
 
 
 Make chaos, not war!
