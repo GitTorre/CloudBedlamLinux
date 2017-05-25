@@ -25,8 +25,12 @@
       <CustomCommands>
         <Command>
           <type>AfterBuild</type>
-          <command>cp -a ${ProjectDir}/Bash ${TargetDir}/Bash</command>
+          <command>cp -a ${ProjectDir}/Bash ${TargetDir}</command>
           <workingdir>${TargetDir}</workingdir>
+        </Command>
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp ${ProjectDir}/Chaos.config ${TargetDir}</command>
         </Command>
       </CustomCommands>
     </CustomCommands>
@@ -115,6 +119,7 @@
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
     <None Include="Bash\netem-ip-bandwidth.sh" />
+    <None Include="Bash\netem-ip-bandwidth-multi.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
