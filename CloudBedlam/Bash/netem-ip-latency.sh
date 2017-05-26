@@ -24,14 +24,16 @@ declare -a ips
 ips=(${ipstring//,/ })
 # clear existing qdiscs... reinit... suppress error if file doesn't exist...
 $TC qdisc del dev $interface root    2> /dev/null > /dev/null
+# create the qdisc for interface
 $TC qdisc add dev $interface root handle 1: prio
-# loop through ips array and set shaping filters per ip, bound to dst/src cbq rl classes above...
+# loop through ips array and set shaping filters per ip...
 for ip in "${ips[@]}"
 do
 	$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 2:1
 	$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $ip flowid 2:1
 	echo "Traffic to/from IP $ip is delayed by $delay"
 done
+# create the qdisc under existing root qdisc... establishing delay using netem delay...
 $TC qdisc add dev $interface parent 1:1 handle 2: netem delay $delay
 # keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
