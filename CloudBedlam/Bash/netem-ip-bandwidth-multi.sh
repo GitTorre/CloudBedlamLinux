@@ -36,5 +36,4 @@ do
 done
 # keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
-# clear existing qdiscs...
 $TC qdisc del dev $interface root    2> /dev/null > /dev/null

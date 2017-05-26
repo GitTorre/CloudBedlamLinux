@@ -30,11 +30,9 @@ for ip in "${ips[@]}"
 do
 	$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 2:1
 	$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $ip flowid 2:1
-    echo "Traffic to/from IP $ip is delayed by $delay"
+	echo "Traffic to/from IP $ip is delayed by $delay"
 done
-tc qdisc add dev $interface parent 1:1 handle 2: netem delay $delay
-#tc filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dport $port flowid 2:1
-#tc filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip sport $port flowid 2:1
+$TC qdisc add dev $interface parent 1:1 handle 2: netem delay $delay
+# keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
-# delete existing filter rules, etc...
 $TC qdisc del dev $interface root    2> /dev/null > /dev/null
