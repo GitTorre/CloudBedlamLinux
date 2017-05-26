@@ -115,19 +115,18 @@ namespace CloudBedlam.Operations
 			if (latencyConfig != null)
 			{
 				//NOTE: This is incomplete and not reflected in the target script yet... -CT
-				args = "Bash/netem-ip-latency.sh " + latencyConfig.FixedLatencyDelayMilliseconds + " " +
-				        FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Port) + " " +
-					    FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+				args = "Bash/netem-ip-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " + 
+						latencyConfig.FixedLatencyDelayMilliseconds + "ms " +
+				        //FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Port) + " " +
+					    " " +
 					    _config.DurationInSeconds + "s";
 			}
 			//Bandwidth TODO: Convert to bash commands (create sh file per emulation type....) -CT
 			var bandwidthConfig = config as BandwidthConfiguration;
 			if (bandwidthConfig != null)
 			{
-				args = "-config bandwidth -dsbandwidth " + bandwidthConfig.DownstreamBandwidth + " -usbandwidth " +
-					   bandwidthConfig.UpstreamBandwidth + " -url " +
-		               FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + 
-				       " -duration " + _config.DurationInSeconds;
+				args = "Bash/netem-ip-bandwidth-multi.sh -ips=" + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+					   bandwidthConfig.DownstreamBandwidth + " " + _config.DurationInSeconds + "s";
 			}
 			//Disconnect TODO: Convert to bash commands (create sh file per emulation type....) -CT
 			var disconnectConfig = config as DisconnectConfiguration;
@@ -164,7 +163,7 @@ namespace CloudBedlam.Operations
 				       " -duration " + _config.DurationInSeconds;
 			}
 
-			return new ProcessParams(null, args);
+			return new ProcessParams(new System.IO.FileInfo("/usr/bin/bash"), args);
 		}
 
 		static string FormatEndpointsParamString(IEnumerable<Endpoint> endpoints, ParamType type)
@@ -181,14 +180,18 @@ namespace CloudBedlam.Operations
 			{
 				if (type == ParamType.Uri)
 				{
-					param = endpoint.Uri;
+					var uri = new Uri(endpoint.Uri);
+					var endpointHostName = uri.DnsSafeHost;
+					var ips = GetIpAddressesForEndpoint(endpointHostName);
+					foreach (var ip in ips)
+					{
+						value += IPAddress.Parse(string.Join(".", ip)).ToString() + ",";
+					}
 				}
 				else
 				{
 					param = endpoint.Port;
 				}
-
-				value += param + ",";
 			}
 
 			return value.TrimEnd(',');
@@ -262,7 +265,7 @@ namespace CloudBedlam.Operations
 			{
 				return;
 			}
-
+			System.Threading.Thread.Sleep(4000);
 			Process?.Kill();
 		}
 	}

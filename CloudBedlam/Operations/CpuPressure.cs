@@ -94,7 +94,7 @@ namespace CloudBedlam.Operations
         protected override ProcessParams CreateProcessParams()
         {
 			var filePath = "/usr/bin/bash";
-			return new ProcessParams(new FileInfo(filePath), "/home/ct/Desktop/tmp/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
+			return new ProcessParams(new FileInfo(filePath), "Bash/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
         }
 
 		//TODO: Play with sudo...

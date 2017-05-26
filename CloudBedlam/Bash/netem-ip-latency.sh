@@ -15,7 +15,7 @@ echo "$ip"
 echo "$delay"
 echo "$port"
 
-tc qdisc del root dev $interface
+#tc qdisc del root dev $interface
 
 tc qdisc add dev $interface root handle 1: prio
 tc filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 2:1

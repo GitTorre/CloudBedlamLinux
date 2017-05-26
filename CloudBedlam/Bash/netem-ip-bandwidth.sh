@@ -7,6 +7,7 @@ interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; su
 
 ip=$(host "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" -m 1)
 
+
 #rate is in Kbit, duration in seconds
 
 port="$2"

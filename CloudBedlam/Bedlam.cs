@@ -11,10 +11,10 @@ namespace CloudBedlam
 {
     public class Bedlam
     {
-        private readonly ChaosConfiguration _config;
-        private readonly ILogger _logger;
-        private readonly List<OperationBase> _operations = new List<OperationBase>();
-        private readonly Dictionary<Orchestration, Action> _runModes;
+        readonly ChaosConfiguration _config;
+        readonly ILogger _logger;
+        readonly List<OperationBase> _operations = new List<OperationBase>();
+        readonly Dictionary<Orchestration, Action> _runModes;
 
         internal Bedlam(ChaosConfiguration configuration)
         {
@@ -71,7 +71,7 @@ namespace CloudBedlam
             }
         }
 
-        private bool RunOperation(OperationBase operation)
+        bool RunOperation(OperationBase operation)
         {
             if (operation == null) return false;
 
@@ -108,7 +108,7 @@ namespace CloudBedlam
             return true;
         }
 
-        private void Kill(OperationBase operation)
+        void Kill(OperationBase operation)
         {
             if (!operation.IsProcessCreated || !operation.Process.IsRunning() || operation.Process.HasExited)
             {
@@ -119,7 +119,7 @@ namespace CloudBedlam
             operation.Kill();
         }
 
-        private void RunConcurrent()
+        void RunConcurrent()
         {
             if (_config.DurationInSeconds <= 0)
             {
@@ -141,13 +141,13 @@ namespace CloudBedlam
             }
         }
 
-        private void RunSequential()
+        void RunSequential()
         {
             var operations = _operations.OrderBy(o => o.RunOrderId).DefaultIfEmpty();
             RunSequential(operations);
         }
 
-        private void RunSequential(IEnumerable<OperationBase> operations)
+        void RunSequential(IEnumerable<OperationBase> operations)
         {
             foreach (var operation in operations)
             {
@@ -164,7 +164,7 @@ namespace CloudBedlam
             }
         }
 
-        private void RunRandom()
+        void RunRandom()
         {
             //http://stackoverflow.com/a/4651405/294804
             var operations = _operations.OrderBy(o => Guid.NewGuid());

@@ -1,55 +1,40 @@
-﻿#! /bin/bash
-
+#!/bin/bash
+# get the currently up and running network device...
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
-
-ip=$(host "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" -m 1) # this will be taken care of in Bedlam... passed in as ip,ip,ip,etc... as a param... -CT
-
-MAXBANDWIDTH=100000
-
-port="$2"
-rate="$3"
-duration="$4"
-
-echo "$interface"
-echo "$ip"
-echo "$rate"
-echo "$port"
-
-# reinit
-tc qdisc add dev $interface root handle 1: htb default 9999
-
-# create the default class
-tc class add dev $interface parent 1:0 classid 1:9999 htb rate $(( $MAXBANDWIDTH ))kbit ceil $(( $MAXBANDWIDTH ))kbit burst 5k prio 9999
-
-# control bandwidth per IP
-declare -A ipctrl
-# define list of IP and bandwidth (in kilo bits per seconds) below - this will be passed in by Bedlam as a common-separated param of ips... -CT
-ipctrl[192.168.1.1]="256"
-ipctrl[192.168.1.2]="128"
-ipctrl[192.168.1.3]="512"
-ipctrl[192.168.1.4]="32"
-
-mark=0
-for ip in "${!ipctrl[@]}"
+# vars
+rate="$2"
+duration="$3"
+TC=/sbin/tc 
+# Get the comma-delimited ip param value, set to var ipstring... 
+for i in "$@"
 do
-    mark=$(( mark + 1 ))
-    bandwidth=${ipctrl[$ip]}
-
-    # traffic shaping rule
-    tc class add dev $interface parent 1:0 classid 1:$mark htb rate $(( $bandwidth ))kbit ceil $(( $bandwidth ))kbit burst 5k prio $mark
-
-    # netfilter packet marking rule
-    iptables -t mangle -A INPUT -i $interface -s $ip -j CONNMARK --set-mark $mark
-
-    # filter that bind the two
-    tc filter add dev $interface parent 1:0 protocol ip prio $mark handle $mark fw flowid 1:$mark
-
-    echo "IP $ip is attached to mark $mark and limited to $bandwidth kbps"
+	case $i in
+		-ips=*)
+		ipstring="${i#*=}"
+		shift # past argument=value
+		;;
+		*)
+		        # unknown option
+		;;
+	esac
 done
-
-#propagate netfilter marks on connections
-iptables -t mangle -A POSTROUTING -j CONNMARK --restore-mark
-
+# Split ipstring, store into array ips
+declare -a ips
+ips=(${ipstring//,/ })
+# clear existing qdiscs... reinit... suppress error if file doesn't exist...
+$TC qdisc del dev $interface root    2> /dev/null > /dev/null
+# qdisc and dst/src rate limiting cbq classes
+$TC qdisc add dev $interface root handle 1: cbq avpkt 1000 bandwidth 10mbit 
+$TC class add dev $interface parent 1:0 classid 1:1 cbq rate $rate allot 1500 prio 1 bounded isolated 
+$TC class add dev $interface parent 1:0 classid 1:2 cbq rate $rate allot 1500 prio 1 bounded isolated
+# loop through ips array and set shaping filters per ip, bound to dst/src cbq rl classes above...
+for ip in "${ips[@]}"
+do
+   $TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 1:1
+   $TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $ip flowid 1:2
+   echo "IP $ip is limited to $rate kbit"
+done
+# keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
-# delete existing filter rules, etc...
-tc qdisc del root dev $interface
+# clear existing qdiscs...
+$TC qdisc del dev $interface root    2> /dev/null > /dev/null
