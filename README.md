@@ -9,7 +9,7 @@ Step 0.
 
 Just change XML settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation or remove Network and just do CPU/Mem. It's configurable, so do what you want! 
 
-For example, the below configuration XML runs a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified endpoints only..., 2 times successively (Repeat=”1”).
+For example, the below configuration XML sequentially runs (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). See Chaos.config for more info on available configuration settings. CloudBedlam will execute (and log) the orchestration of these chaos operations. You just need to modify some XML and then test away. Enjoy!
 <pre><code>
 &lt;ChaosConfiguration Orchestration="Sequential" Duration="60" RunDelay="0" Repeat="1"&gt;
 	&lt;CpuPressure RunOrder="0"&gt;
