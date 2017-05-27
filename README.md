@@ -17,7 +17,7 @@ For example, the below configuration XML sequentially runs (according to specifi
         	&lt;Duration&gt;15&lt;/Duration&gt;
 	&lt;/CpuPressure&gt;
 	&lt;MemoryPressure RunOrder="1"&gt;
-        	&lt;PressureLevel&gt;70&lt;/PressureLevel&gt;
+        	&lt;PressureLevel&gt;90&lt;/PressureLevel&gt;
         	&lt;Duration&gt;15&lt;/Duration&gt;
 	&lt;/MemoryPressure&gt;
 	&lt;NetworkEmulation RunOrder="2"&gt;
