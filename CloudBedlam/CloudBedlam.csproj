@@ -32,6 +32,10 @@
           <type>AfterBuild</type>
           <command>cp ${ProjectDir}/Chaos.config ${TargetDir}</command>
         </Command>
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp ${ProjectDir}/CrunchMem  ${TargetDir}</command>
+        </Command>
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -120,6 +124,7 @@
     <None Include="Bash\stress-cpu.sh" />
     <None Include="Bash\netem-ip-bandwidth.sh" />
     <None Include="Bash\netem-ip-bandwidth-multi.sh" />
+    <None Include="CrunchMem" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
