@@ -115,7 +115,7 @@ namespace CloudBedlam.Operations
 			if (latencyConfig != null)
 			{
 				//NOTE: This is incomplete and not reflected in the target script yet... -CT
-				args = "Bash/netem-ip-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " + 
+				args = "Bash/netem-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " + 
 						latencyConfig.FixedLatencyDelayMilliseconds + "ms " +
 				        //FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Port) + " " +
 					    " " +
@@ -125,7 +125,7 @@ namespace CloudBedlam.Operations
 			var bandwidthConfig = config as BandwidthConfiguration;
 			if (bandwidthConfig != null)
 			{
-				args = "Bash/netem-ip-bandwidth-multi.sh -ips=" + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+				args = "Bash/netem-bandwidth.sh -ips=" + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
 					   bandwidthConfig.DownstreamBandwidth + " " + _config.DurationInSeconds + "s";
 			}
 			//Disconnect TODO: Convert to bash commands (create sh file per emulation type....) -CT

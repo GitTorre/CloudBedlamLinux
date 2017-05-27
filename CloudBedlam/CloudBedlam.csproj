@@ -115,11 +115,10 @@
     </Content>
     <None Include="NLogNE.config" />
     <None Include="packages.config" />
-    <None Include="Bash\netem-ip-latency.sh" />
+    <None Include="Bash\netem-latency.sh" />
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
-    <None Include="Bash\netem-ip-bandwidth.sh" />
-    <None Include="Bash\netem-ip-bandwidth-multi.sh" />
+    <None Include="Bash\netem-bandwidth.sh" />
     <None Include="Bash\CrunchMem" />
   </ItemGroup>
   <ItemGroup>
