@@ -9,16 +9,16 @@ Step 0.
 
 Just change XML settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation or remove Network and just do CPU/Mem. It's configurable, so do what you want! 
 
-For example, the below configuration XML runs a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault for 30 seconds for specified endpoints only..., 2 times successively (Repeat=”1”).
+For example, the below configuration XML runs a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified endpoints only..., 2 times successively (Repeat=”1”).
 <pre><code>
 &lt;ChaosConfiguration Orchestration="Sequential" Duration="60" RunDelay="0" Repeat="1"&gt;
 	&lt;CpuPressure RunOrder="0"&gt;
         	&lt;PressureLevel&gt;90&lt;/PressureLevel&gt;
-        	&lt;Duration&gt;5&lt;/Duration&gt;
+        	&lt;Duration&gt;15&lt;/Duration&gt;
 	&lt;/CpuPressure&gt;
 	&lt;MemoryPressure RunOrder="1"&gt;
         	&lt;PressureLevel&gt;70&lt;/PressureLevel&gt;
-        	&lt;Duration&gt;5&lt;/Duration&gt;
+        	&lt;Duration&gt;15&lt;/Duration&gt;
 	&lt;/MemoryPressure&gt;
 	&lt;NetworkEmulation RunOrder="2"&gt;
 		&lt;EmulationType&gt;Latency&lt;/EmulationType&gt;
@@ -28,7 +28,7 @@ For example, the below configuration XML runs a CPU pressure fault of 90% CPU ut
 			&lt;Endpoint Port="80" Uri="http://www.msn.com" /&gt;
 			&lt;Endpoint Port="443" Uri="https://www.google.com" /&gt;
 		&lt;/TargetEndpoints&gt;
-		&lt;Duration&gt;60&lt;/Duration&gt;
+		&lt;Duration&gt;30&lt;/Duration&gt;
 	&lt;/NetworkEmulation&gt;
 &lt;/ChaosConfiguration&gt;
 </code></pre>
