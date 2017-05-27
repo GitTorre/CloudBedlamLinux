@@ -7,7 +7,9 @@
 
 Step 0.
 
-Just change XML settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation. For example, the below configuration XML runs Network emulation (Disconnect) for 60 seconds, 2 times successively (Repeat=”1”).
+Just change XML settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation or remove Network and just do CPU/Mem. It's configurable, so do what you want! 
+
+For example, the below configuration XML runs a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault for 30 seconds for specified endpoints only..., 2 times successively (Repeat=”1”).
 <pre><code>
 &lt;ChaosConfiguration Orchestration="Sequential" Duration="60" RunDelay="0" Repeat="1"&gt;
 	&lt;CpuPressure RunOrder="0"&gt;
