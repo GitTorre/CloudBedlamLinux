@@ -10,11 +10,17 @@ Step 0.
 Just change XML settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation. For example, the below configuration XML runs Network emulation (Disconnect) for 60 seconds, 2 times successively (Repeat=”1”).
 <pre><code>
 &lt;ChaosConfiguration Orchestration="Sequential" Duration="60" RunDelay="0" Repeat="1"&gt;
-	&lt;NetworkEmulation RunOrder="0"&gt;
-		&lt;EmulationType&gt;Disconnect&lt;/EmulationType&gt;
-		&lt;PeriodicDisconnectionRate&gt;0.7&lt;/PeriodicDisconnectionRate&gt;
-		&lt;ConnectionTime&gt;5&lt;/ConnectionTime&gt;
-		&lt;DisconnectionTime&gt;15&lt;/DisconnectionTime&gt;
+	&lt;CpuPressure RunOrder="0"&gt;
+        	&lt;PressureLevel&gt;90&lt;/PressureLevel&gt;
+        	&lt;Duration&gt;5&lt;/Duration&gt;
+	&lt;/CpuPressure&gt;
+	&lt;MemoryPressure RunOrder="1"&gt;
+        	&lt;PressureLevel&gt;70&lt;/PressureLevel&gt;
+        	&lt;Duration&gt;5&lt;/Duration&gt;
+	&lt;/MemoryPressure&gt;
+	&lt;NetworkEmulation RunOrder="2"&gt;
+		&lt;EmulationType&gt;Latency&lt;/EmulationType&gt;
+		&lt;LatencyDelay&gt;3000&lt;/LatencyDelay&gt;
 		&lt;TargetEndpoints&gt;
 			&lt;Endpoint Port="443" Uri="https://www.bing.com" /&gt;
 			&lt;Endpoint Port="80" Uri="http://www.msn.com" /&gt;
