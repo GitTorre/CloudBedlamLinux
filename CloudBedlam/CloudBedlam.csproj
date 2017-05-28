@@ -106,10 +106,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Chaos.config">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -119,8 +115,14 @@
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
     <None Include="Bash\netem-bandwidth.sh" />
-    <None Include="Bash\eatmem" />
     <None Include="eatmem\eatmem.c" />
+    <Content Include="Chaos.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bash\eatmem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
