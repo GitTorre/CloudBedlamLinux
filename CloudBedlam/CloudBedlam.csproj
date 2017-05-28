@@ -120,6 +120,7 @@
     <None Include="Bash\stress-cpu.sh" />
     <None Include="Bash\netem-bandwidth.sh" />
     <None Include="Bash\eatmem" />
+    <None Include="eatmem\eatmem.c" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
@@ -127,6 +128,7 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Bash\" />
+    <Folder Include="eatmem\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
