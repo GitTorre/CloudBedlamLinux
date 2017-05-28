@@ -119,7 +119,7 @@
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
     <None Include="Bash\netem-bandwidth.sh" />
-    <None Include="Bash\CrunchMem" />
+    <None Include="Bash\eatmem" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
