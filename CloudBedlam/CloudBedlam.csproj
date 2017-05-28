@@ -134,31 +134,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent Condition=" '$(OS)' != 'Unix' ">if not exist "$(TargetDir)ChaosBinaries" mkdir "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)CrunchDisk.exe" "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)procdump.exe" "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)StressTool.exe" "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)testlimit64.exe" "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)NLog.dll" "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)NLog.xml" "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)chaos.config" "$(TargetDir)"
-copy "$(ProjectDir)nlogcd.config" "$(TargetDir)"
-copy "$(ProjectDir)nlogne.config" "$(TargetDir)"
-copy "$(ProjectDir)nlogcd.config" "$(TargetDir)ChaosBinaries"
-copy "$(ProjectDir)packages.config" "$(TargetDir)"
-if not exist "$(TargetDir)ChaosBinaries\NetEm" mkdir "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)NetworkEmulator.exe" "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)NetworkEmulator.dll" "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)nlogne.config" "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)newcom.dll" "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)newcom.tlb" "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)userapi.dll" "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)NLog.dll" "$(TargetDir)ChaosBinaries\NetEm"
-copy "$(ProjectDir)NLog.xml" "$(TargetDir)ChaosBinaries\NetEm"
-if not exist "$(TargetDir)ChaosBinaries\NetEm\NetEmDriver" mkdir "$(TargetDir)ChaosBinaries\NetEm\NetEmDriver"
-copy "$(ProjectDir)NetEmDriver\*" "$(TargetDir)ChaosBinaries\NetEm\NetEmDriver"</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
