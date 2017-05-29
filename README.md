@@ -43,9 +43,7 @@ Launch CloudBedlam running as sudo:
 ===
 
 
-Have fun and hopefully this proves useful to you in your service resiliency testing. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance. 
-
-Feel free to supply feedback directly to ctorre@microsoft.com 
+Have fun and hopefully this proves useful to you in your service resiliency testing. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance.
 
 ## Contributing
 
