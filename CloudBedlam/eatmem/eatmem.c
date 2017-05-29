@@ -111,7 +111,6 @@ int main(int argc, char *argv[])
                 else
 		{
                     printf("Invalid size format\n");
-		    free(buffer);
                     exit(0);
                 }
             }
