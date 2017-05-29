@@ -1,13 +1,14 @@
 /*
  * File:   eatmem.c
- * Original Author: Julio Viera <julio.viera@gmail.com>
+ * Author: Julio Viera <julio.viera@gmail.com>
  *
  * Created on August 27, 2012, 2:23 PM
  *
- * Modified by CTorre <torre_charles@hotmail.com>: Added sleep to support duration, 
- * explicit freeing, error handling (sigint), user specified duration (seconds), 
- * code formatting, file rename) on May 28, 2017, 11:03 AM PST
- *
+ * Modified by CTorre: Added explicit freeing, error handling (sigint), user specified duration (seconds), 
+ * code formatting, file rename on May 28, 2017
+ * build, run:
+ * gcc eatmem.c -o eatmem
+ * ./eatmem 90% 30 # eat 90% of free memory (non-swap) for 30 seconds
  */
 
 #include <stdio.h>
@@ -55,6 +56,7 @@ bool eat(long total, int chunk)
        }
        memset(buffer, 0, chunk);
     }
+
     return true;
 }
 
@@ -123,8 +125,8 @@ int main(int argc, char *argv[])
             
 	    if(eat(size, chunk))
 	    {
-		sleep(sleeptime); 
-	 	free(buffer);               
+	 	sleep(sleeptime); 
+	        free(buffer);
 		exit(0);
             }
 	    else
