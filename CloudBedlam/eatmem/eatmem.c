@@ -4,8 +4,8 @@
  *
  * Created on August 27, 2012, 2:23 PM
  *
- * Modified by CTorre: Added explicit freeing, error handling (sigint), user specified duration (seconds) support(taking into account time consumed by eat function), 
- * code formatting, file rename on May 28, 2017
+ * Modified by CTorre: Added explicit freeing, error handling (sigint), user specified duration (seconds) support
+ * (taking into account time consumed by eat function), code formatting, file rename on May 28, 2017
  * build, run:
  * gcc eatmem.c -o eatmem
  * ./eatmem 90% 30 # eat 90% of free memory (non-swap) for 30 seconds
@@ -47,7 +47,7 @@ unsigned long sleeptime = 0;
 
 unsigned long double_to_rounded_long(double x) 
 {
-    if (x >= 0) //negative values don't make sense in context, ignore, return 0...
+    if (x >= 0)
     {
         return (long)(x + 0.5);
     }
@@ -73,9 +73,9 @@ bool eat(long total, int chunk)
     clock_t end = clock();
 
     exec_time = (double)(end - begin) / CLOCKS_PER_SEC;	
-    printf("Took %lf seconds\n", exec_time);
+    //printf("Took %lf seconds\n", exec_time);
     sleeptime = sleeptime - double_to_rounded_long(exec_time);
-    printf("Adjusted sleep time=%ld seconds\n", sleeptime);
+    //printf("Adjusted sleep time=%ld seconds\n", sleeptime);
     return true;
 }
 
