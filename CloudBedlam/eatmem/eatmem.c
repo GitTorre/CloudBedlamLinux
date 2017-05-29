@@ -4,7 +4,7 @@
  *
  * Created on August 27, 2012, 2:23 PM
  *
- * Modified by CTorre: Added explicit freeing, error handling (sigint), user specified duration (seconds), 
+ * Modified by CTorre: Added explicit freeing, error handling (sigint), user specified duration (seconds) support(taking into account time consumed by eat function), 
  * code formatting, file rename on May 28, 2017
  * build, run:
  * gcc eatmem.c -o eatmem
@@ -18,6 +18,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <signal.h>
+#include <time.h>
 
 #if defined(_SC_PHYS_PAGES) && defined(_SC_AVPHYS_PAGES) && defined(_SC_PAGE_SIZE)
 #define MEMORY_PERCENTAGE
@@ -41,11 +42,24 @@ size_t getFreeSystemMemory()
 
 short *buffer = NULL;
 void sigint_handler(int);
+double exec_time = 0.0;
+unsigned long sleeptime = 0;
+
+unsigned long double_to_rounded_long(double x) 
+{
+    if (x >= 0) //negative values don't make sense in context, ignore, return 0...
+    {
+        return (long)(x + 0.5);
+    }
+
+    return 0;
+}
 
 bool eat(long total, int chunk)
 {
     long i;
-
+    
+    clock_t begin = clock();
     for(i = 0; i < total; i += chunk)
     {
        buffer = malloc(sizeof(char)*chunk);
@@ -56,9 +70,15 @@ bool eat(long total, int chunk)
        }
        memset(buffer, 0, chunk);
     }
+    clock_t end = clock();
 
+    exec_time = (double)(end - begin) / CLOCKS_PER_SEC;	
+    printf("Took %lf seconds\n", exec_time);
+    sleeptime = sleeptime - double_to_rounded_long(exec_time);
+    printf("Adjusted sleep time=%ld seconds\n", sleeptime);
     return true;
 }
+
 
 void sigint_handler(int status)
 {
@@ -66,9 +86,9 @@ void sigint_handler(int status)
     exit(1);
 }
 
+
 int main(int argc, char *argv[])
 {
-    unsigned int sleeptime = 0;
     int i;
     sleeptime = atoi(argv[2]);
 
