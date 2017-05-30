@@ -96,13 +96,13 @@ break;
 			{
 				if (type == ParamType.Uri)
 				{
-					 var endpointHostName = endpoint; //user can supply Url or domain in Chaos.config...
-					 if (endpoint.StartsWith("https") || endpoint.StartsWith("http"))
-                    			 {
-						var uri = new Uri(endpoint);
+					var endpointHostName = endpoint.Uri; //user can supply Url or domain in Chaos.config...
+					if (endpoint.Uri.StartsWith("https", StringComparison.Ordinal) || endpoint.Uri.StartsWith("http", StringComparison.Ordinal))
+					{
+						var uri = new Uri(endpoint.Uri);
 						endpointHostName = uri.DnsSafeHost;
 					}
-					
+
 					var ips = GetIpAddressesForEndpoint(endpointHostName);
 					foreach (var ip in ips)
 					{
