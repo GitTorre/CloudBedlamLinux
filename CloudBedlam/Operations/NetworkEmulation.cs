@@ -65,7 +65,8 @@ namespace CloudBedlam.Operations
 				{
 					case LossType.Burst:
 						loss = " -lossrate " + lossConfig.BurstRate;
-						break;
+
+break;
 					case LossType.Random:
 						loss = " -lossrate " + lossConfig.RandomLossRate;
 						break;
@@ -95,8 +96,13 @@ namespace CloudBedlam.Operations
 			{
 				if (type == ParamType.Uri)
 				{
-					var uri = new Uri(endpoint.Uri);
-					var endpointHostName = uri.DnsSafeHost;
+					 var endpointHostName = endpoint; //user can supply Url or domain in Chaos.config...
+					 if (endpoint.StartsWith("https") || endpoint.StartsWith("http"))
+                    			 {
+						var uri = new Uri(endpoint);
+						endpointHostName = uri.DnsSafeHost;
+					}
+					
 					var ips = GetIpAddressesForEndpoint(endpointHostName);
 					foreach (var ip in ips)
 					{
