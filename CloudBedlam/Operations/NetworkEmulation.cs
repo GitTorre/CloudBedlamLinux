@@ -92,7 +92,7 @@ break;
 				return "";
 			}
 
-			foreach (var endpoint in endpoints)
+			foreach (Endpoint endpoint in endpoints)
 			{
 				if (type == ParamType.Uri)
 				{
@@ -106,10 +106,10 @@ break;
 					var ips = GetIpAddressesForEndpoint(endpointHostName);
 					foreach (var ip in ips)
 					{
-						value += IPAddress.Parse(string.Join(".", ip)).ToString() + ",";
+						value += IPAddress.Parse(string.Join(".", ip)) + ",";
 					}
 				}
-				else
+				else //TODO...
 				{
 					param = endpoint.Port;
 				}

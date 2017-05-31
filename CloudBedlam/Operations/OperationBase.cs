@@ -88,12 +88,16 @@ namespace CloudBedlam.Operations
 
             process.OutputDataReceived += (o, e) =>
             {
-                _logger?.Debug($"{parameters.File?.Name}: {e?.Data}");
+                _logger?.Info($"{parameters.File?.Name}: {e?.Data}");
             };
 
             process.ErrorDataReceived += (o, e) => 
             {
-                _logger?.Error(new Exception($"{parameters.File?.Name}: {e?.Data}"));
+				if (string.IsNullOrEmpty(e?.Data))
+				{
+					return;
+				}
+				_logger?.Error(new Exception($"{parameters.File?.Name}: {e?.Data}"));
             };
 
 			process.Exited += (o, e) =>

@@ -1,5 +1,5 @@
 #!/bin/bash
-# sh netem-ip-latency.sh -ips=... 3000ms 30
+# bash netem-ip-latency.sh -ips=... 3000ms 30
 # get the currently up and running network device...
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 # vars
@@ -27,11 +27,14 @@ $TC qdisc del dev $interface root    2> /dev/null > /dev/null
 # create the qdisc for interface
 $TC qdisc add dev $interface root handle 1: prio
 # loop through ips array and set shaping filters per ip...
-for ip in "${ips[@]}"
+for address in "${ips[@]}"
 do
-	$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 2:1
-	$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $ip flowid 2:1
-	echo "Traffic to/from IP $ip is delayed by $delay"
+	if [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $address flowid 1:1
+		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 2:1
+		echo "Traffic to/from IP $address is delayed by $delay"
+	fi
+
 done
 # create the qdisc under existing root qdisc... establishing delay using netem delay...
 $TC qdisc add dev $interface parent 1:1 handle 2: netem delay $delay

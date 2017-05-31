@@ -30,9 +30,11 @@ $TC class add dev $interface parent 1:0 classid 1:2 cbq rate $rate allot 1500 pr
 # loop through ips array and set shaping filters per ip, bound to dst/src cbq rl classes above...
 for ip in "${ips[@]}"
 do
-   $TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 1:1
-   $TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $ip flowid 1:2
-   echo "IP $ip is limited to $rate kbit"
+	if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 1:1
+		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $ip flowid 1:2
+		echo "IP $ip is up/down rate limited to $rate kbit"
+	fi
 done
 # keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
