@@ -109,7 +109,6 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="NLogNE.config" />
     <None Include="Bash\netem-latency.sh" />
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
