@@ -123,7 +123,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <None Include="NLog.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
