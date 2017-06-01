@@ -1,6 +1,6 @@
 # CloudBedlam for Linux (Mono or .NET Core)
 
-#### Simple, configurable, local (VM internal) chaotic operation orchestrator for measuring the resiliency of cloud services by injecting bedlam (physical resource pressure and network faults via emulation) into underlying virtual machines. This version is meant to run inside Linux VMs (and containers).
+#### Simple, configurable, local (VM) chaotic operation orchestrator for measuring the resiliency of cloud services by injecting bedlam (machine resource and networking chaos) into underlying virtual machines. This version is meant to run inside Linux VMs (and containers).
 
 
 ### Easy to use 
