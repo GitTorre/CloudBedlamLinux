@@ -39,9 +39,9 @@ Launch CloudBedlam running as sudo:
 
       sudo mono CloudBedlam.exe
 
+A bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output will contain INFO and ERROR lines (ERROR lines will include error messages and stack traces).
 
 ===
-
 
 Have fun and hopefully this proves useful to you in your service resiliency testing. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance.
 
