@@ -54,5 +54,5 @@ Obviousy, having a remote-controlled chaotic orchestrator where you can run diff
 We made this *very simple chaos tool* with a VM-specific approach in mind *specifically to remove the overhead of a distributed secure server-client-agent model*. The focus for us is on making a *very easy to use, simple to configure, lightweight solution for chaos engineering and experimentation inside virtual machines*.
 
 
-Make chaos, not war!
+Make bedlam, not war!
 
