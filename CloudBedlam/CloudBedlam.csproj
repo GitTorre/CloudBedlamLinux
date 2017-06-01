@@ -90,8 +90,6 @@
     <Compile Include="Config\NetworkEmulation.cs" />
     <Compile Include="Config\Orchestration.cs" />
     <Compile Include="DisposeService.cs" />
-    <Compile Include="Extensions\DirectoryInfoExtensions.cs" />
-    <Compile Include="Extensions\PathEx.cs" />
     <Compile Include="Extensions\ProcessExtensions.cs" />
     <Compile Include="Operations\CpuPressure.cs" />
     <Compile Include="Operations\MemoryPressure.cs" />
