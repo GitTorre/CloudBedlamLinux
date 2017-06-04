@@ -11,11 +11,11 @@ Just change XML settings to meet your specific chaotic needs. The default config
 
 Currently supported network emulation operations:
 
-Packet Corruption
-Packet Loss
-Packet Reordering
-Bandwidth Rate Limiting
-Latency
+Packet Corruption.
+Packet Loss.
+Packet Reordering.
+Bandwidth Rate Limiting.
+Latency.
 
 For example, the below configuration XML sequentially runs (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). See Chaos.config for more info on available configuration settings. CloudBedlam will execute (and log) the orchestration of these chaos operations. You just need to modify some XML and then test away. Enjoy!
 <pre><code>
