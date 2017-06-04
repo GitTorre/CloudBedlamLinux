@@ -5,7 +5,7 @@
 # be delayed by 10ms.
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 # vars
-delay="$2"ms
+delay="$2ms"
 ptpackets="$3%"
 ptcorrelation="$4%"
 duration="$5"
