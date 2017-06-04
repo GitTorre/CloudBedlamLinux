@@ -1,6 +1,6 @@
 #! /bin/bash
 # Care of http://www.cs.unm.edu/~crandall/netsfall13/TCtutorial.pdf 
-# bash netem-loss.sh -ips=... 5 30 # Random, 5% loss for specified ips for 30s...
+# bash netem-loss.sh -ips=... 5 30s # Random, 5% loss for specified ips for 30s...
 # The above causes 1/10th of a percent (i.e., 1 out of 1000) packets to be randomly dropped
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 # vars

@@ -1,5 +1,5 @@
 #!/bin/bash
-# bash netem-ip-latency.sh -ips=... 3000ms 30
+# bash netem-ip-latency.sh -ips=... 3000ms 30s
 # get the currently up and running network device...
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 # vars

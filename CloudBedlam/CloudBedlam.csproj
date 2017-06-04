@@ -99,6 +99,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Config\NetEmProfileAttribute.cs" />
     <Compile Include="Config\NetworkEmProfile.cs" />
+    <Compile Include="Config\ReorderConfiguration.cs" />
+    <Compile Include="Config\CorruptionConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -117,6 +119,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="Bash\netem-corrupt.sh" />
+    <None Include="Bash\netem-loss.sh" />
+    <None Include="Bash\netem-reorder.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />

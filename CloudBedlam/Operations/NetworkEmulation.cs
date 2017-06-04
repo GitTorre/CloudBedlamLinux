@@ -32,14 +32,6 @@ namespace CloudBedlam.Operations
 
 			var args = "";
 
-			//Latency
-			var latencyConfig = config as LatencyConfiguration;
-			if (latencyConfig != null)
-			{
-				args = "Bash/netem-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " + 
-						latencyConfig.FixedLatencyDelayMilliseconds + "ms " + " " + _config.DurationInSeconds + "s";
-			}
-
 			//Bandwidth
 			var bandwidthConfig = config as BandwidthConfiguration;
 			if (bandwidthConfig != null)
@@ -47,7 +39,14 @@ namespace CloudBedlam.Operations
 				args = "Bash/netem-bandwidth.sh -ips=" + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
 					   bandwidthConfig.DownstreamBandwidth + " " + _config.DurationInSeconds + "s";
 			}
-
+			//Corruption
+			var corruptionConfig = config as CorruptionConfiguration;
+			if (corruptionConfig != null)
+			{
+				var pt = corruptionConfig.PacketPercentage * 100; //e.g., 0.05 * 100 = 5...
+				args = "Bash/netem-corrupt.sh -ips=" + FormatEndpointsParamString(corruptionConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+					   pt + " " + _config.DurationInSeconds + "s";
+			}
 			/*/Disconnect TODO -CT
 			var disconnectConfig = config as DisconnectConfiguration;
 			if (disconnectConfig != null)
@@ -55,29 +54,33 @@ namespace CloudBedlam.Operations
 				args = "Bash/netem-disconnect -ips= " + FormatEndpointsParamString(disconnectConfig.TargetEndpoints.Endpoints, ParamType.Uri) + 
 				       " " + _config.DurationInSeconds + "s";
 			}
-
-			//Loss TODO -CT
+			*/
+			//Latency
+			var latencyConfig = config as LatencyConfiguration;
+			if (latencyConfig != null)
+			{
+				args = "Bash/netem-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+						latencyConfig.FixedLatencyDelayMilliseconds + "ms " + " " + _config.DurationInSeconds + "s";
+			}
+			//Loss
 			var lossConfig = config as LossConfiguration;
 			if (lossConfig != null)
 			{
-				string loss = "";
-				switch (_config.LossType)
-				{
-					case LossType.Burst:
-						loss = " -lossrate " + lossConfig.BurstRate;
+				var lossRate = lossConfig.RandomLossRate * 100; //e.g., 0.05 * 100 = 5...
 
-break;
-					case LossType.Random:
-						loss = " -lossrate " + lossConfig.RandomLossRate;
-						break;
-					case LossType.Periodic:
-						loss = " -lossperiod " + lossConfig.PeriodicLossPeriod;
-						break;
-				}
-				args = "Bash/netem-loss.h -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) + 
-				       " " +  loss + " " + _config.DurationInSeconds;
+				args = "Bash/netem-loss.h -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
+					   " " + lossRate + " " + _config.DurationInSeconds;
 			}
-			*/
+			//Reorder
+			var reorderConfig = config as ReorderConfiguration;
+			if (reorderConfig != null)
+			{
+				var correlationpt = reorderConfig.CorrelationPercentage * 100; //e.g., 0.05 * 100 = 5...
+				var packetpt = reorderConfig.PacketPercentage * 100;
+
+				args = "Bash/netem-reorder.h -ips=" + FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
+					   " " + packetpt + " " + " " + correlationpt + " " + _config.DurationInSeconds;
+			}
 
 			return new ProcessParams(new System.IO.FileInfo("/usr/bin/bash"), args);
 		}
@@ -131,6 +134,14 @@ break;
 					TargetEndpoints = config.TargetEndpoints
 				};
 			}
+			if (config.EmulationType == NetworkEmProfile.Corruption)
+			{
+				emulationConfiguration = new CorruptionConfiguration
+				{
+					PacketPercentage = config.PacketPercentage,
+					TargetEndpoints = config.TargetEndpoints
+				};
+			}
 			if (config.EmulationType == NetworkEmProfile.Latency)
 			{
 				emulationConfiguration = new LatencyConfiguration
@@ -139,6 +150,7 @@ break;
 					TargetEndpoints = config.TargetEndpoints
 				};
 			}
+			/* TODO -CT
 			if (config.EmulationType == NetworkEmProfile.Disconnect)
 			{
 				emulationConfiguration = new DisconnectConfiguration
@@ -149,18 +161,25 @@ break;
 					TargetEndpoints = config.TargetEndpoints
 				};
 			}
-			if (config.EmulationType == NetworkEmProfile.Loss)
+			*/
+			if (config.EmulationType == NetworkEmProfile.Loss) //Random support implemented...
 			{
 				emulationConfiguration = new LossConfiguration
 				{
-					BurstRate = config.BurstRate,
-					MaximumBurst = config.MaximumBurst,
-					MinimumBurst = config.MinimumBurst,
-					PeriodicLossPeriod = config.PeriodicLossPeriod,
+					//BurstRate = config.BurstRate,
+					//MaximumBurst = config.MaximumBurst,
+					//MinimumBurst = config.MinimumBurst,
+					//PeriodicLossPeriod = config.PeriodicLossPeriod,
 					RandomLossRate = config.RandomLossRate,
-					TargetEndpoints = config.TargetEndpoints,
-					ProtocolLayerType = config.ProtocolLayerType,
-					NetworkLayerType = config.NetworkLayerType
+					TargetEndpoints = config.TargetEndpoints
+				};
+			}
+			if (config.EmulationType == NetworkEmProfile.Reorder)
+			{
+				emulationConfiguration = new ReorderConfiguration
+				{
+					CorrelationPercentage = config.CorrelationPercentage,
+					PacketPercentage = config.PacketPercentage
 				};
 			}
 

@@ -1,6 +1,6 @@
 #! /bin/bash
 # Care of http://www.cs.unm.edu/~crandall/netsfall13/TCtutorial.pdf 
-# bash netem-corrupt.sh -ips=... 5 30
+# bash netem-corrupt.sh -ips=... 5 30s
 # Random noise can be emulated with the corrupt option. This introduces a single bit error at a
 # random offset in the packet.
 # get the currently up and running network device...

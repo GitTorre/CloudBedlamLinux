@@ -1,6 +1,6 @@
 #! /bin/bash
 # Care of http://www.cs.unm.edu/~crandall/netsfall13/TCtutorial.pdf 
-# bash netem-reorder.sh -ips=... 10 25 50 30
+# bash netem-reorder.sh -ips=... 10 25 50 30s
 # In this example, 25% of packets (with a correlation of 50%) will get sent immediately, others will
 # be delayed by 10ms.
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
