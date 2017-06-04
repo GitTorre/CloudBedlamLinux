@@ -40,7 +40,7 @@ do
 	fi
 
 done
-# create the qdisc under existing root qdisc... establishing delay using netem delay...
+# create the qdisc under existing root qdisc... establishing delay using netem corrupt...
 $TC qdisc change dev $interface root netem corrupt $ptcorruption
 # keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
