@@ -4,9 +4,7 @@
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 # vars
 lossrate="$2%"
-echo "$lossrate"
 duration="$3"
-echo "$duration"
 TC=/sbin/tc 
 # Get the comma-delimited ip param value, set to var ipstring... 
 for i in "$@"
