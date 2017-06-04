@@ -68,7 +68,7 @@ namespace CloudBedlam.Operations
 			{
 				var lossRate = lossConfig.RandomLossRate * 100; //e.g., 0.05 * 100 = 5...
 
-				args = "Bash/netem-loss.h -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
+				args = "Bash/netem-loss.sh -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
 					   " " + lossRate + " " + _config.DurationInSeconds;
 			}
 			//Reorder
@@ -78,7 +78,7 @@ namespace CloudBedlam.Operations
 				var correlationpt = reorderConfig.CorrelationPercentage * 100; //e.g., 0.05 * 100 = 5...
 				var packetpt = reorderConfig.PacketPercentage * 100;
 
-				args = "Bash/netem-reorder.h -ips=" + FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
+				args = "Bash/netem-reorder.sh -ips=" + FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
 					   " " + packetpt + " " + " " + correlationpt + " " + _config.DurationInSeconds;
 			}
 

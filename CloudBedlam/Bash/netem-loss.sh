@@ -5,7 +5,9 @@
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 # vars
 lossrate="$2%"
+echo "$lossrate"
 duration="$3"
+echo "$duration"
 TC=/sbin/tc 
 # Get the comma-delimited ip param value, set to var ipstring... 
 for i in "$@"
@@ -39,7 +41,8 @@ do
 
 done
 # create the qdisc under existing root qdisc... establishing delay using netem loss...
-$TC qdisc change dev $interface root netem loss $lossrate
+$TC qdisc add dev $interface parent 1:1 handle 2: netem loss $lossrate
+
 # keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
 $TC qdisc del dev $interface root    2> /dev/null > /dev/null

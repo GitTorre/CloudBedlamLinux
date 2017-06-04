@@ -42,7 +42,7 @@ do
 
 done
 # create the qdisc under existing root qdisc... establishing reordering using netem delay...
-$TC qdisc change dev $interface root netem delay $delay reorder $ptpackets $ptcorrelation 
+$TC qdisc add dev $interface parent 1:1 handle 2: netem delay $delay reorder $ptpackets $ptcorrelation 
 # keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
 $TC qdisc del dev $interface root    2> /dev/null > /dev/null
