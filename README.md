@@ -17,7 +17,7 @@ Packet Reordering
 Bandwidth Rate Limiting  
 Latency  
 
-For example, the below configuration XML sequentially runs (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). See Chaos.config for more info on available configuration settings. CloudBedlam will execute (and log) the orchestration of these chaos operations. You just need to modify some XML and then test away. Enjoy!
+For example, the below configuration XML sequentially runs (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). See Chaos.config for more info on available configuration settings, including samples. CloudBedlam will execute (and log) the orchestration of these bedlam operations. You just need to modify some XML and then test away. Enjoy!
 <pre><code>
 &lt;ChaosConfiguration Orchestration="Sequential" Duration="60" RunDelay="0" Repeat="1"&gt;
 	&lt;CpuPressure RunOrder="0"&gt;
