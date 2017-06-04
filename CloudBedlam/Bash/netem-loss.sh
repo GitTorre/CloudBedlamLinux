@@ -38,7 +38,7 @@ do
 	fi
 
 done
-# create the qdisc under existing root qdisc... establishing delay using netem delay...
+# create the qdisc under existing root qdisc... establishing delay using netem loss...
 $TC qdisc change dev $interface root netem loss $lossrate
 # keep configuration for the allotted time, then delete the qdiscs for $interface
 sleep $duration
