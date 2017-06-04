@@ -39,7 +39,7 @@ Launch CloudBedlam running as sudo:
 
       sudo mono CloudBedlam.exe
 
-A bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output will contain INFO and ERROR lines (ERROR lines will include error messages and stack traces).
+A bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output file will contain INFO and ERROR lines (ERROR lines will include error messages and stack traces).
 
 ===
 
