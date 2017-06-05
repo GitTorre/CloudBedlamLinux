@@ -73,11 +73,13 @@ When running CloudBedlam, a bedlamlogs folder will be created in the folder wher
 
 Of course, please help make this better 😊 – and add whatever you need around and inside the core bedlam engine (which is what this is, really). The focus for us is on making a *very easy to use, simple to configure, lightweight solution for chaos engineering and experimentation inside virtual machines*.
 
-Have fun and hopefully this proves useful to you in your service resiliency experimentation. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance. 
-
 ## Feedback
 
 Any and all feedback very welcome. Let us know if you use this and it helps uncover resiliency/fault tolerance issues in your service implemenation. You can send mail to ctorre@microsoft.com and/or create Issues here. Thank you! This will continue to evolve and your contributions, in whatever form (words or code) will be greatly appreciated!
+
+
+
+Have fun and hopefully this proves useful to you in your service resiliency experimentation. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance. 
 
 Make bedlam, not war!
 
