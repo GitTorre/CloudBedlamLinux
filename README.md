@@ -43,6 +43,15 @@ For example, the below configuration XML sequentially runs (according to specifi
 
 Step 1. (Mono)
 
+Install MonoDevelop: http://www.monodevelop.com/download/linux/
+
+Clone project: git clone https://github.com/GitTorre/CloudBedlamMono.git
+
+Open sln in MonoDevelop, build.
+
+Step 2.
+
+Navigate to build output folder.
 Launch CloudBedlam running as sudo:
 
       sudo mono CloudBedlam.exe
