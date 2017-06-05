@@ -43,9 +43,11 @@ For example, the below configuration XML sequentially runs (according to specifi
 
 ## Building 
 
-Step 1. (Mono)
+Step 1. (Mono)  
 
 Install MonoDevelop: http://www.monodevelop.com/download/linux/
+
+Step 2:  
 
 Clone project: 
 
@@ -53,30 +55,24 @@ Clone project:
 
 Open sln in MonoDevelop, build.
 
-Step 2.
-
-Navigate to build output folder.
-Launch CloudBedlam running as sudo:
-
-      sudo mono CloudBedlam.exe
-
 ## Installing binaries 
 
 If you don't want to install the dependencies and build CloudBedlam, then just grab the latest release and install CloudBedlam and dependencies from a package:
 
 https://github.com/GitTorre/CloudBedlamLinux/releases
 
+## Running
+
+CloudBedlam must run as sudo:
+
+      sudo mono CloudBedlam.exe
 
 When running CloudBedlam, a bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output file will contain INFO and ERROR lines (ERROR lines will include error messages and stack traces).
-
-===
-
-Have fun and hopefully this proves useful to you in your service resiliency experimentation. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance.
 
 ## Contributing
 
 Of course, please help make this better 😊 – and add whatever you need around and inside the core bedlam engine (which is what this is, really). The focus for us is on making a *very easy to use, simple to configure, lightweight solution for chaos engineering and experimentation inside virtual machines*.
 
+Have fun and hopefully this proves useful to you in your service resiliency experimentation. It should be clear that this is a development tool at this stage and not a DevOps workflow orchestrator. You should run this in individual VMs to vet the quality of your code in terms of resiliency and fault tolerance.
 
 Make bedlam, not war!
-
