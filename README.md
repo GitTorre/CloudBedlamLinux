@@ -41,6 +41,8 @@ For example, the below configuration XML sequentially runs (according to specifi
 &lt;/ChaosConfiguration&gt;
 </code></pre>
 
+## Building 
+
 Step 1. (Mono)
 
 Install MonoDevelop: http://www.monodevelop.com/download/linux/
@@ -58,7 +60,14 @@ Launch CloudBedlam running as sudo:
 
       sudo mono CloudBedlam.exe
 
-A bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output file will contain INFO and ERROR lines (ERROR lines will include error messages and stack traces).
+## Installing binaries 
+
+If you don't want to install the dependencies and build CloudBedlam, then just grab the latest release and install CloudBedlam and dependencies from a package:
+
+https://github.com/GitTorre/CloudBedlamLinux/releases
+
+
+When running CloudBedlam, a bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output file will contain INFO and ERROR lines (ERROR lines will include error messages and stack traces).
 
 ===
 
