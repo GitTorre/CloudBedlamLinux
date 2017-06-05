@@ -45,7 +45,9 @@ Step 1. (Mono)
 
 Install MonoDevelop: http://www.monodevelop.com/download/linux/
 
-Clone project: git clone https://github.com/GitTorre/CloudBedlamMono.git
+Clone project: 
+
+<pre><code>git clone https://github.com/GitTorre/CloudBedlamMono.git</code></pre>
 
 Open sln in MonoDevelop, build.
 
