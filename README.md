@@ -75,7 +75,7 @@ Of course, please help make this better 😊 – and add whatever you need aroun
 
 ## Feedback
 
-Any and all feedback very welcome. Let us know if you use this and it helps uncover resiliency/fault tolerance issues in your service implemenation. You can send mail to ctorre@microsoft.com and/or create Issues here. Thank you! This will continue to evolve and your contributions, in whatever form (words or code) will be greatly appreciated!
+Any and all feedback very welcome. Let us know if you use this and it helps uncover resiliency/fault tolerance issues in your service implementation. You can send mail to ctorre@microsoft.com and/or create Issues here. Thank you! This will continue to evolve and your contributions, in whatever form (words or code) will be greatly appreciated!
 
 
 
