@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 echo "--------------------------------------"
 echo "Creating Release in GitHub Repo       "
@@ -10,10 +10,10 @@ echo "Build Number: $BUILD_BUILDID"
 
 github-release release \
     --user GitTorre \
-    --repo CloudBedLamMono \
+    --repo CloudBedlamMono \
     --tag v0.$BUILD_BUILDID \
     --name "CloudBedlam-v0.$BUILD_BUILDID" \
-    --description "CloudBedlam Fault Injection project. Release v0.$BUILD_BUILDID" \
+    --description "CloudBedLam Fault Injection project. Release v0.$BUILD_BUILDID" \
     --pre-release
 
 echo "--------------------------------------"
