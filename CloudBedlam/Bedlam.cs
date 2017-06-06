@@ -68,7 +68,7 @@ namespace CloudBedlam
             catch (Exception e)
             {
                 _logger?.Error(e);
-		//throwing here will kill the app... log and continue... app will exit anyway in short order...
+		        //throwing here will kill the app... log and continue... app will exit anyway in short order...
             }
         }
 
@@ -104,7 +104,8 @@ namespace CloudBedlam
             catch (Exception e)
             {
                 _logger?.Error(e);
-                return false;//throwing here will kill the app, just move on to next operation, error is logged...
+                return false;
+				//throwing here will kill the app, just move on to next operation, error is logged...
             }
             return true;
         }
