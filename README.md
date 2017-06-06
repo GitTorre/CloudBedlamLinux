@@ -1,4 +1,4 @@
-# CloudBedlam for Linux (Mono or .NET Core)
+ # CloudBedlam for Linux (Mono or .NET Core)
 
 #### Simple, configurable, local (VM) chaotic operation orchestrator for measuring the resiliency of cloud services by injecting bedlam (machine resource and networking faults) into underlying virtual machines. This version is meant to run inside Linux VMs (and containers).
 
@@ -57,7 +57,7 @@ Open sln in MonoDevelop, build.
 
 ## Installing binaries 
 
-If you don't want to install the dependencies and build CloudBedlam, then just grab the latest release and install CloudBedlam and dependencies from a package:
+If you don't want to install the dependencies and build CloudBedlam, then just grab the latest release and install CloudBedlam and dependencies from a package (file name will be CloudBedlam-linux-amd64):
 
 https://github.com/GitTorre/CloudBedlamLinux/releases
 
