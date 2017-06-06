@@ -113,7 +113,6 @@
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
     <None Include="Bash\netem-bandwidth.sh" />
-    <None Include="eatmem\eatmem.c" />
     <Content Include="Chaos.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -129,7 +128,6 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Bash\" />
-    <Folder Include="eatmem\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
