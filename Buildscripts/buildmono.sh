@@ -22,4 +22,4 @@ echo "--------------------------------------"
 echo " Building Solution                    "
 echo "--------------------------------------"
 msbuild CloudBedlam.sln
-echo "Build completed!"
+echo "Build completed! - Automated Builds!"
