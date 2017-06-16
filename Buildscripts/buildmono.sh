@@ -22,4 +22,4 @@ echo "--------------------------------------"
 echo " Building Solution                    "
 echo "--------------------------------------"
 msbuild CloudBedlam.sln
-echo "Over and out."
+echo "Build completed!"
