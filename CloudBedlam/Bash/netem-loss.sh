@@ -38,11 +38,11 @@ do
 		then
 			$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $address flowid 1:1
 			$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 1:1
-			echo "Packets to/from IP $address set for random loss with $lossrate drop rate (random means random...)"
-	#else
-			#$TC filter add dev $interface parent 1:0 protocol ipv6 prio 1 u32 match ip6 dst $address flowid 1:1
-			#$TC filter add dev $interface parent 1:0 protocol ipv6 prio 1 u32 match ip6 dst $address flowid 1:1
-			#echo "Packets to/from IP $address set for random loss with $lossrate drop rate (random means random...)"
+			echo "IPv4 Packets to/from IP $address set for random loss with $lossrate drop rate (random means random...)"
+	else
+			$TC filter add dev $interface parent 1:0 protocol ipv6 prio 3 u32 match ip6 dst $address flowid 1:1
+			$TC filter add dev $interface parent 1:0 protocol ipv6 prio 4 u32 match ip6 src $address flowid 1:1
+			echo "IPv6 Packets to/from IP $address set for random loss with $lossrate drop rate (random means random...)"
 	fi
 
 done
