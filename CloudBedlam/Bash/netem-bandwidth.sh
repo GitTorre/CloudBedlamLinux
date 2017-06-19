@@ -28,12 +28,17 @@ $TC qdisc add dev $interface root handle 1: cbq avpkt 1000 bandwidth 10mbit
 $TC class add dev $interface parent 1:0 classid 1:1 cbq rate $rate allot 1500 prio 1 bounded isolated 
 $TC class add dev $interface parent 1:0 classid 1:2 cbq rate $rate allot 1500 prio 1 bounded isolated
 # loop through ips array and set shaping filters per ip, bound to dst/src cbq rl classes above...
-for ip in "${ips[@]}"
+for address in "${ips[@]}"
 do
-	if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $ip flowid 1:1
-		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $ip flowid 1:2
-		echo "IP $ip is up/down rate limited to $rate kbit"
+	if [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; 
+	then
+		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $address flowid 1:1
+		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 1:2
+		echo "IP address $address rate limited to $rate kbit"
+	else
+		$TC filter add dev $interface parent 1:0 protocol ipv6 prio 3 u32 match ip6 dst $address flowid 1:1
+		$TC filter add dev $interface parent 1:0 protocol ipv6 prio 4 u32 match ip6 src $address flowid 1:2
+		echo "IPv6 address $address rate limited to $rate kbit"
 	fi
 done
 # keep configuration for the allotted time, then delete the qdiscs for $interface

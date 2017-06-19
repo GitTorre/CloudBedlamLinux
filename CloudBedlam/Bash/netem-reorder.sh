@@ -33,8 +33,12 @@ do
 	if [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; #ipv4
 	then
 		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $address flowid 1:1
-		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 2:1
-	    echo "$ptpackets of packets to/from IP $address set for reordering at $ptcorrelation correlation at a delay of $delay"
+		$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 1:1
+	    echo "$ptpackets of IPv4 packets to/from IP address $address set for reordering at $ptcorrelation correlation at a delay of $delay"
+    else
+		$TC filter add dev $interface parent 1:0 protocol ipv6 prio 3 u32 match ip6 dst $address flowid 1:1
+		$TC filter add dev $interface parent 1:0 protocol ipv6 prio 4 u32 match ip6 src $address flowid 1:1
+		echo "$ptpackets of packets to/from IPv6 address $address set for reordering at $ptcorrelation correlation at a delay of $delay"
 	fi
 
 done

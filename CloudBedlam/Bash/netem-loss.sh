@@ -35,7 +35,7 @@ $TC qdisc add dev $interface root handle 1: prio
 for address in "${ips[@]}"
 do
 	if [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; #ipv4
-		then
+	then
 			$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $address flowid 1:1
 			$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 1:1
 			echo "IPv4 Packets to/from IP $address set for random loss with $lossrate drop rate (random means random...)"
