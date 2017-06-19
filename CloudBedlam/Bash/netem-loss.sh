@@ -37,8 +37,12 @@ do
 	if [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; #ipv4
 		then
 			$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip dst $address flowid 1:1
-			$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 2:1
+			$TC filter add dev $interface parent 1:0 protocol ip prio 1 u32 match ip src $address flowid 1:1
 			echo "Packets to/from IP $address set for random loss with $lossrate drop rate (random means random...)"
+	#else
+			#$TC filter add dev $interface parent 1:0 protocol ipv6 prio 1 u32 match ip6 dst $address flowid 1:1
+			#$TC filter add dev $interface parent 1:0 protocol ipv6 prio 1 u32 match ip6 dst $address flowid 1:1
+			#echo "Packets to/from IP $address set for random loss with $lossrate drop rate (random means random...)"
 	fi
 
 done
