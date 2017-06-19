@@ -25,7 +25,7 @@
       <CustomCommands>
         <Command>
           <type>AfterBuild</type>
-          <command>cp -a ${ProjectDir}/Bash ${TargetDir}</command>
+          <command>cp -a ${ProjectDir}/Bash ${TargetDir}/</command>
           <workingdir>${TargetDir}</workingdir>
         </Command>
         <Command>
@@ -73,7 +73,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="NLog">
-      <HintPath>..\packages\NLog.4.4.10\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.11\lib\net40\NLog.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +109,6 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Bash\netem-latency.sh" />
     <None Include="Bash\stress-mem.sh" />
     <None Include="Bash\stress-cpu.sh" />
     <None Include="Bash\netem-bandwidth.sh" />
@@ -117,10 +116,11 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
     <None Include="Bash\netem-corrupt.sh" />
     <None Include="Bash\netem-loss.sh" />
     <None Include="Bash\netem-reorder.sh" />
+    <Content Include="Bash\netem-latency.sh" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
