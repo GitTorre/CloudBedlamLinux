@@ -25,7 +25,7 @@ github-release upload \
     --repo CloudBedLamMono \
     --tag v0.$BUILD_BUILDID \
     --name "CloudBedlam-linux-amd64" \
-    --file /home/patrick/_work/1/s/CloudBedlam/bin/Debug/CloudBedlam
+    --file /home/patrick/myagent/_work/1/s/CloudBedlam/bin/Debug/CloudBedlam
 
 
 echo "Job Completed!"
