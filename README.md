@@ -7,7 +7,7 @@
 
 Step 0.
 
-Just change XML settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation or remove Network and just do CPU/Mem. It's configurable, so do what you want! 
+Just change JSON settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation or remove Network and just do CPU/Mem. It's configurable, so do what you want! 
 
 Currently supported network emulation operations:
 
@@ -17,28 +17,37 @@ Packet Reordering
 Bandwidth Rate Limiting  
 Latency  
 
-For example, the below configuration XML sequentially runs (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). See Chaos.config for more info on available configuration settings, including samples. CloudBedlam will execute (and log) the orchestration of these bedlam operations. You just need to modify some XML and then experiment away. Enjoy!
+For example, the below configuration JSON sequentially runs (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation fault of 3000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). See Chaos.config for more info on available configuration settings, including samples. CloudBedlam will execute (and log) the orchestration of these bedlam operations. You just need to modify some JSON and then experiment away. Enjoy!
 <pre><code>
-&lt;ChaosConfiguration Orchestration="Sequential" Duration="60" RunDelay="0" Repeat="1"&gt;
-	&lt;CpuPressure RunOrder="0"&gt;
-        	&lt;PressureLevel&gt;90&lt;/PressureLevel&gt;
-        	&lt;Duration&gt;15&lt;/Duration&gt;
-	&lt;/CpuPressure&gt;
-	&lt;MemoryPressure RunOrder="1"&gt;
-        	&lt;PressureLevel&gt;90&lt;/PressureLevel&gt;
-        	&lt;Duration&gt;15&lt;/Duration&gt;
-	&lt;/MemoryPressure&gt;
-	&lt;NetworkEmulation RunOrder="2"&gt;
-		&lt;EmulationType&gt;Latency&lt;/EmulationType&gt;
-		&lt;LatencyDelay&gt;3000&lt;/LatencyDelay&gt;
-		&lt;TargetEndpoints&gt;
-			&lt;Endpoint Port="443" Uri="https://www.bing.com" /&gt;
-			&lt;Endpoint Port="80" Uri="http://www.msn.com" /&gt;
-			&lt;Endpoint Port="443" Uri="https://www.google.com" /&gt;
-		&lt;/TargetEndpoints&gt;
-		&lt;Duration&gt;30&lt;/Duration&gt;
-	&lt;/NetworkEmulation&gt;
-&lt;/ChaosConfiguration&gt;
+{
+  "Orchestration": "Sequential",
+  "Duration": "60",
+  "RunDelay": "0",
+  "Repeat": "1",
+  "CpuPressure": {
+    "RunOrder": "0",
+    "PressureLevel": "90",
+    "Duration": "15"
+  },
+  "MemoryPressure": {
+    "RunOrder": "1",
+    "PressureLevel": "90",
+    "Duration": "15"
+  },
+  "NetworkEmulation": {
+    "RunOrder": "2",
+    "EmulationType": "Latency",
+    "LatencyDelay" : "3000",
+    "TargetEndpoints": {
+      "Endpoints": [
+        { "Port": "443", "Uri": "https://www.bing.com" },
+        { "Port": "80", "Uri": "http://www.msn.com" },
+        { "Port": "443", "Uri": "https://www.google.com" }
+      ]
+    },
+    "Duration": "30"
+  }
+}
 </code></pre>
 
 ## Building 
