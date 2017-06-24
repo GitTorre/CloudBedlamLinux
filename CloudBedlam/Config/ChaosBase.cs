@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace CloudBedlam.Config
 {
-    [Serializable]
-    public class ChaosBase
-    {
-        [XmlAttribute("RunOrder")]
-        public int RunOrder { get; set; }
+	public class ChaosBase
+	{
+		public int RunOrder { get; set; }
 
-        [XmlElement("Duration")]
-        public int DurationInSeconds { get; set; }
+		[JsonProperty("Duration")]
+		public int DurationInSeconds { get; set; }
 
-        [XmlIgnore]
-        public TimeSpan Duration => new TimeSpan(0, 0, DurationInSeconds);
-    }
+		[JsonIgnore]
+		public TimeSpan Duration => new TimeSpan(0, 0, DurationInSeconds);
+	}
 }

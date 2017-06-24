@@ -75,6 +75,9 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.4.11\lib\net40\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bedlam.cs" />
@@ -121,6 +124,7 @@
     <None Include="Bash\netem-reorder.sh" />
     <Content Include="Bash\netem-latency.sh" />
     <None Include="packages.config" />
+    <None Include="Chaos.config.old" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />

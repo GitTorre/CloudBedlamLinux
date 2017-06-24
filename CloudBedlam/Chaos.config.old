@@ -1,0 +1,160 @@
+﻿﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+
+     Duration:
+     
+     The duration (in seconds) setting at the top level (ChaosConfiguration element) overrides individual settings if:
+     
+     a) They exceed the top level value...
+     b) Orchestration is set to Concurrent...  
+     
+     Orchestration:
+     
+     Sequential -> Run specified chaos operations sequentially, based on RunOrder
+     Concurrent -> Run specified chaos operations at the same time
+     Random -> Run specified chaos operations in random order
+     
+     RunDelay: the time (in seconds) to wait before beginning the specified chaos operation(s).
+     
+     Repeat: the number of times to repeat the specified chaos operation(s).
+     
+     CPU pressure: stress the CPU(s) to the specified level (as a % of total available CPU...)
+     
+		<CpuPressure RunOrder="0">
+			<PressureLevel>90</PressureLevel>
+			<Duration>5</Duration>
+		</CpuPressure>
+     
+     Memory pressure: eat physical memory to the specified % value...
+
+		<MemoryPressure RunOrder="1">
+			<PressureLevel>70</PressureLevel>
+			<Duration>5</Duration>
+		</MemoryPressure>
+    
+     You can supply just the chaos operation(s) you want to run versus specifying multiple with some run order, for example. 
+     E.g., If you only want to run disconnection network emulation for 3 endpoints, for example, you can author the config like this:
+     TODO -CT....
+		<ChaosConfiguration Duration="30" RunDelay="10" Repeat="1">
+			<NetworkEmulation>
+				<EmulationType>Disconnect</EmulationType>
+				<PeriodicDisconnectionRate>0.7</PeriodicDisconnectionRate>
+				<ConnectionTime>5</ConnectionTime>
+				<DisconnectionTime>15</DisconnectionTime>
+				<TargetEndpoints>
+					<Endpoint Port="443" Uri="https://www.bing.com" />
+					<Endpoint Port="80" Uri="http://www.msn.com" />
+					<Endpoint Port="443" Uri="https://www.google.com" />
+				</TargetEndpoints>
+				<Duration>25</Duration>
+			</NetworkEmulation>
+		</ChaosConfiguration>
+
+     Network Emulation:
+   
+      EmulationProfile: The type of emulation -> Bandwidth, Corruption, Disconnect(TODO), Latency, Loss, Reorder
+          
+	- Bandwidth requires upstream/downstream kb/s settings (e.g., 56 and 33.5) ->
+		<NetworkEmulation RunOrder="0">
+			<EmulationType>Bandwidth</EmulationType>
+			<BandwidthDownstreamSpeed>56</BandwidthDownstreamSpeed>
+			<BandwidthUpstreamSpeed>33.5</BandwidthUpstreamSpeed>
+			<TargetEndpoints>
+				<Endpoint Port="443" Uri="https://www.bing.com" />
+				<Endpoint Port="80" Uri="http://www.msn.com" />
+				<Endpoint Port="443" Uri="https://www.google.com" />
+			</TargetEndpoints>
+			<Duration>25</Duration>
+		</NetworkEmulation>
+        
+	- Corruption...
+		<NetworkEmulation RunOrder="0">
+			<EmulationType>Corruption</EmulationType>
+			<PacketPercentage>5</PacketPercentage>
+			<TargetEndpoints>
+				<Endpoint Port="443" Uri="https://www.bing.com" />
+				<Endpoint Port="80" Uri="http://www.msn.com" />
+				<Endpoint Port="443" Uri="https://www.google.com" />
+			</TargetEndpoints>
+			<Duration>25</Duration>
+		</NetworkEmulation>
+		
+	- Disconnect...
+		<NetworkEmulation RunOrder="0">
+			<EmulationType>Disconnect</EmulationType>
+			<PeriodicDisconnectionRate>0.9</PeriodicDisconnectionRate>
+			<ConnectionTime>5</ConnectionTime>
+			<DisconnectionTime>15</DisconnectionTime>
+			<TargetEndpoints>
+				<Endpoint Port="443" Uri="https://www.bing.com" />
+				<Endpoint Port="80" Uri="http://www.msn.com" />
+				<Endpoint Port="443" Uri="https://www.google.com" />
+			</TargetEndpoints>
+			<Duration>25</Duration>
+		</NetworkEmulation>
+		
+	- Latency requires a delay (in milliseconds that represents the latency, in this case, FIXED latency...)
+		<NetworkEmulation RunOrder="0">
+			<EmulationType>Latency</EmulationType>
+			<LatencyDelay>2000</LatencyDelay>
+			<TargetEndpoints>
+				<Endpoint Port="443" Uri="https://www.bing.com" />
+				<Endpoint Port="80" Uri="http://www.msn.com" />
+				<Endpoint Port="443" Uri="https://www.google.com" />
+			</TargetEndpoints>
+			<Duration>25</Duration>
+		</NetworkEmulation>
+
+	- Loss...
+		<NetworkEmulation RunOrder="0">
+			<EmulationType>Loss</EmulationType>
+			<LossType>Random</LossType>
+			<RandomLossRate>0.05</RandomLossRate>
+			<TargetEndpoints>
+				<Endpoint Port="443" Uri="https://www.bing.com" />
+				<Endpoint Port="80" Uri="http://www.msn.com" />
+				<Endpoint Port="443" Uri="https://www.google.com" />
+			</TargetEndpoints>
+			<Duration>25</Duration>
+		</NetworkEmulation>
+
+	- Reorder...
+		<NetworkEmulation RunOrder="0">
+			<EmulationType>Reorder</EmulationType>
+			<LatencyDelay>10/LatencyDelay>
+			<PacketPercentage>25</PacketPercentage>
+			<CorrelationPercentage>50</CorrelationPercentage>
+			<TargetEndpoints>
+				<Endpoint Port="443" Uri="https://www.bing.com" />
+				<Endpoint Port="80" Uri="http://www.msn.com" />
+				<Endpoint Port="443" Uri="https://www.google.com" />
+			</TargetEndpoints>
+			<Duration>25</Duration>
+		</NetworkEmulation>
+            
+     If you want to run all tests, ordered in the fashion you choose (if not Random orchestration...), 
+     with each test having its own duration, then you can specify a configuration like the default one below:
+     -->
+
+	<ChaosConfiguration Duration="30" RunDelay="0" Repeat="1">
+		<CpuPressure RunOrder="0">
+			<PressureLevel>90</PressureLevel>
+			<Duration>5</Duration>
+		</CpuPressure>
+		<MemoryPressure RunOrder="1">
+			<PressureLevel>70</PressureLevel>
+			<Duration>5</Duration>
+		</MemoryPressure>
+		<NetworkEmulation RunOrder="2">
+			<EmulationType>Disconnect</EmulationType>
+			<PeriodicDisconnectionRate>0.7</PeriodicDisconnectionRate>
+			<ConnectionTime>5</ConnectionTime>
+			<DisconnectionTime>15</DisconnectionTime>
+			<TargetEndpoints>
+				<Endpoint Port="443" Uri="https://www.bing.com" />
+				<Endpoint Port="80" Uri="http://www.msn.com" />
+				<Endpoint Port="443" Uri="https://www.google.com" />
+			</TargetEndpoints>
+			<Duration>30</Duration>
+		</NetworkEmulation>
+	</ChaosConfiguration>

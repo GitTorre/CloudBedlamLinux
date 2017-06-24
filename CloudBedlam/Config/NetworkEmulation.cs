@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace CloudBedlam.Config
 {
-    [Serializable]
     public class NetworkEmulation : ChaosBase
     {
-        public NetworkEmProfile EmulationType { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+		public NetworkEmProfile EmulationType { get; set; }
         public uint LatencyDelay { get; set; }
         public TargetEndpoints TargetEndpoints { get; set; }
 		//-> Bandwidth
@@ -14,6 +15,7 @@ namespace CloudBedlam.Config
         public string ProtocolLayerType { get; set; } = "tcp";
         public string NetworkLayerType { get; set; } = "ipv4";
         /*** Loss (packet drop/decay) ***/
+		[JsonConverter(typeof(StringEnumConverter))]
         public LossType LossType { get; set; }
         //-> periodic loss
         public uint PeriodicLossPeriod { get; set; } = 10;

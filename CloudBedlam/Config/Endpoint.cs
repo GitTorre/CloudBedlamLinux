@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 
 namespace CloudBedlam.Config
 {
 
-    [Serializable]
-    public class TargetEndpoints
-    {
-        [XmlElement("Endpoint")]
-        public List<Endpoint> Endpoints { get; set; }
-    }
+	public class TargetEndpoints
+	{
+		public List<Endpoint> Endpoints { get; set; }
+	}
 
-    [Serializable]
-    public class Endpoint
-    {
-        [XmlAttribute("Port")]
-        public string Port { get; set; }
-        [XmlAttribute("Uri")]
-        public string Uri { get; set; }
-    }
+	public class Endpoint
+	{
+		public string Port { get; set; }
+		public string Uri { get; set; }
+	}
 }

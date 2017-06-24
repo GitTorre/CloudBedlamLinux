@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using System.Xml.Serialization;
+using Newtonsoft.Json;
 using CloudBedlam.Config;
 using NLog;
 
@@ -73,25 +73,21 @@ namespace CloudBedlam
         /// <param name="configPath">full path to Chaos.config file</param>
         /// <returns>ChaosConfguration</returns>
         private static ChaosConfiguration GetChaosConfiguration(string configPath)
-        {
-           if (!File.Exists(configPath)) return null;
+		{
+			if (!File.Exists(configPath)) return null;
 
-           try
-           {
-               var serializer = new XmlSerializer(typeof(ChaosConfiguration));
-               using (var reader = new StringReader(File.ReadAllText(configPath)))
-               {
-                   _chaosConfiguration = (ChaosConfiguration)serializer.Deserialize(reader);
-               }
-
-               return _chaosConfiguration;
-           }
-           catch(Exception e)
-           {
-               Logger?.Error(e);
-               return null;
-           }
-       }
+			try
+			{
+				var config = File.ReadAllText(configPath);
+				_chaosConfiguration = JsonConvert.DeserializeObject<ChaosConfiguration>(config);
+				return _chaosConfiguration;
+			}
+			catch (Exception e)
+			{
+				Logger?.Error(e);
+				return null;
+			}
+		}
    }
 }
  
