@@ -9,7 +9,7 @@ Step 0.
 
 Just change JSON settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory nodes and just do Network emulation or remove Network and just do CPU/Mem. It's configurable, so do what you want! 
 
-Currently supported network emulation operations:
+Currently supported IPv4/IPV6 network emulation operations:
 
 Packet Corruption  
 Packet Loss  
