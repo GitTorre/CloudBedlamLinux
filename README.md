@@ -1,9 +1,8 @@
-"Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production." 
--From Netflix's Principles of Chaos Engineering Manifesto => http://principlesofchaos.org 
-
-
-
 # What? Why? How?
+
+"Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production." 
+
+-From Netflix's Principles of Chaos Engineering Manifesto => http://principlesofchaos.org 
 
 CloudBedlam is a simple, configurable, local chaotic operation orchestrator for resiliency experimentation inside cloud services - chaos, or bedlam as we call it, runs inside individual VMs. At it's core, CloudBedlam causes chaotic conditions by injecting "bedlam" faults (today these are machine resource pressure and network emulation (latency, bandwidth, loss, reorder, disconnection...) into underlying virtual machines that power a service or cluster of services... It is useful for exercising your resiliency design and implementation in an effort to find bugs. It’s also useful for, say, testing your alerting system (e.g., CPU and Memory Azure Alerts) to ensure you set them up correctly or didn’t break them with a new deployment. Network emulation inside the VM enables you to verify that your Internet-facing code handles network faults correctly and/or verify that your solution to latent or disconnection network traffic states work correctly (and help you to refine your thinking or even establish for the first time how you react to and recover from to transient networking problems in the cloud…).
 
