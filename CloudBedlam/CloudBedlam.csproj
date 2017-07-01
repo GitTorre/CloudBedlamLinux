@@ -125,6 +125,7 @@
     <Content Include="Bash\netem-latency.sh" />
     <None Include="packages.config" />
     <None Include="Chaos.config.old" />
+    <None Include="Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.dll" />
