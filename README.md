@@ -101,7 +101,7 @@ Have fun and hopefully this proves useful to you in your service resiliency expe
 
 ## Feedback
 
-Any and all feedback very welcome. Let us know if you use this and if it helps uncover resiliency/fault tolerance issues in your service implementation. You can send mail to ctorre@microsoft.com and/or <a href="https://github.com/GitTorre/CloudBedlamLinux/issues">create Issues here</a>. Thank you! This will continue to evolve and your contributions, in whatever form (words or code), will be greatly appreciated!
+Any and all feedback very welcome. Let us know if you use this and if it helps uncover resiliency/fault tolerance issues in your service implementation. Please <a href="https://github.com/GitTorre/CloudBedlamLinux/issues">create Issues/provide feedback here</a>. Thank you! This will continue to evolve and your contributions, in whatever form (words or code), will be greatly appreciated!
 
 
 
