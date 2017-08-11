@@ -26,7 +26,16 @@ Bandwidth Rate Limiting
 Latency  
 
 #### NOTE: 
-Network emulation requires iproute2 tools (tc specifically). This should be present on most mainline distros already, but make sure...
+Network emulation requires iproute2 tools (tc and ip, particularly, in CB's case...). This should be present on most mainline distros already, but make sure...
+
+Description: networking and traffic control tools
+ The iproute2 suite is a collection of utilities for networking and
+ traffic control.
+
+ These tools communicate with the Linux kernel via the (rt)netlink
+ interface, providing advanced features not available through the
+ legacy net-tools commands 'ifconfig' and 'route'.
+Homepage: http://www.linux-foundation.org/en/Net:Iproute2
 
 ### Example configuration:
 
