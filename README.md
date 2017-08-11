@@ -25,7 +25,12 @@ Packet Reordering
 Bandwidth Rate Limiting  
 Latency  
 
-For example, the JSON configuration below sequentially runs (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation of 3000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). See [TODO] for more info on available configuration settings, including samples. CloudBedlam will execute (and log) the orchestration of these bedlam operations. You just need to modify some JSON and then experiment away. Enjoy!
+#### NOTE: 
+Network emulation requires iproute2 tools (tc specifically). This should be present on most mainline distros already, but make sure...
+
+### Example configuration:
+
+The JSON below instructs CloudBedlam to sequentially run (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation of 1000ms delay for 30 seconds for specified target endpoints (by default, emulation affects up/downtream connections, so total latency will be 2000ms...). The experiment runs 2 times successively (Repeat=”1”). See [TODO] for more info on available configuration settings, including samples. CloudBedlam will execute (and log) the orchestration of these bedlam operations. You just need to modify some JSON and then experiment away. Enjoy!
 <pre><code>
 {
   "Orchestration": "Sequential",
@@ -45,7 +50,7 @@ For example, the JSON configuration below sequentially runs (according to specif
   "NetworkEmulation": {
     "RunOrder": "2",
     "EmulationType": "Latency",
-    "LatencyDelay" : "3000",
+    "LatencyDelay" : "1000",
     "TargetEndpoints": {
       "Endpoints": [
         { "Port": "443", "Uri": "https://www.bing.com" },
@@ -59,7 +64,8 @@ For example, the JSON configuration below sequentially runs (according to specif
 </code></pre>
 
 # C++ Version
-If you don't want to program in C# and use the Mono runtime and libraries, you don't have to! :) C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. In it's current form, it's completely useful, very fast, with low working set, and the only changes needed are adding support for protocol and network type specification in the config (and related netem bash scripts) for network emulation. If you get to this before we do, then please make a pull request.
+If you don't want to program in C# and use the Mono runtime and libraries, you don't have to! :) C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. In it's current form, it's c
+ompletely useful, very fast, with low working set, and the only changes needed are adding support for protocol and network type specification in the config (and related netem bash scripts) for network emulation. If you get to this before we do, then please make a pull request.
 
 
 # .NET Version (this one...)
