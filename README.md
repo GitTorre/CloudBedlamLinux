@@ -13,7 +13,9 @@ Unlike, say, Netflix's ChaosMonkey, shooting down VM instances isn't the interes
 This is meant to run chaos experiments <i>inside</i> VMs as a way to experiment close to your code and help you identify resiliency bugs in your design and implementation.
 
 
-### Easy to use (Note: this has only been tested on Ubuntu 16.04 (Xenial Xerus)... There will be differences in some of the scripts you'll need to take into account for other distros, but for the most part, this should work on most mainline distro (that support Mono...) with only a few mods...)
+### Note: this has only been rigorously tested on Ubuntu 16.04 (Xenial Xerus)... There will be differences in some of the scripts you'll need to take into account for other Linux versions, but for the most part, this should work on most mainline distros (that support Mono and/or .NET Core...) with only a few mods... This impl employs tc for low level network emulation, so it must run as a sudo user.
+
+### Easy to Use
 
 Step 0.
 
