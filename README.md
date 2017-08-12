@@ -1,4 +1,4 @@
-# CloudBedlam for Linux -- Managed (.NET, C#) Implementation
+# CloudBedlam for Linux -- Managed (.NET, C#) Impl
 
 # What? Why? How?
 
