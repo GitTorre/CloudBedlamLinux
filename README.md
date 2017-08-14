@@ -84,9 +84,7 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 
 
 # C++ Version
-If you don't want to program in C# and use the Mono runtime and libraries, you don't have to! :) C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. In it's current form, it's c
-ompletely useful, very fast, with low working set, and the only changes needed are adding support for protocol and network type specification in the config (and related netem bash scripts) for network emulation. If you get to this before we do, then please make a pull request.
-
+### If you don't want to program in C# and use the Mono runtime and libraries or .NET Core, you don't have to! C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. 
 
 # .NET Version (this one...)
 
