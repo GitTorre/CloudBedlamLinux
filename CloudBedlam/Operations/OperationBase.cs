@@ -74,30 +74,35 @@ namespace CloudBedlam.Operations
 
         private Process CreateProcess(ProcessParams parameters)
         {
-			var process = new Process();
+	        var process = new Process
+	        {
+		        StartInfo =
+		        {
+			        FileName = parameters.File.Name,
+			        UseShellExecute = false,
+			        CreateNoWindow = true,
+			        RedirectStandardError = true,
+			        RedirectStandardOutput = true,
+			        WindowStyle = ProcessWindowStyle.Hidden,
+			        Arguments = !string.IsNullOrEmpty(parameters.Arguments) ? parameters.Arguments : string.Empty
+		        },
+		        EnableRaisingEvents = true
+	        };
 
-			process.StartInfo.FileName = parameters.File.Name;
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardError = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			process.StartInfo.Arguments = !string.IsNullOrEmpty(parameters.Arguments) ? parameters.Arguments : string.Empty;
-			process.EnableRaisingEvents = true;
-      
 
-            process.OutputDataReceived += (o, e) =>
-            {
-                if (string.IsNullOrEmpty(e?.Data))
-				{
-					return;
-				}
-				_logger?.Info($"{parameters.File?.Name}: {e?.Data}");
-            };
+
+	        process.OutputDataReceived += (o, e) =>
+	        {
+		        if (string.IsNullOrEmpty(e?.Data))
+		        {
+			        return;
+		        }
+		        _logger?.Info($"{parameters.File?.Name}: {e?.Data}");
+	        };
 
             process.ErrorDataReceived += (o, e) => 
             {
-				if (e == null || string.IsNullOrEmpty(e.Data) || e.Data.ToLower().Contains("info:"))
+				if (string.IsNullOrEmpty(e?.Data) || e.Data.ToLower().Contains("info:"))
 				{
 					return;
 				}

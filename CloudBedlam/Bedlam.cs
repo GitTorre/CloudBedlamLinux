@@ -36,9 +36,10 @@ namespace CloudBedlam
             if (_operations.Count == 0)
             {
                 _logger?.Error("No operations settings provided. Aborting....");
-                throw new Exception("Cannot execute Bedlam without an operations settings. Check your Chaos.config file...");
+                throw new Exception(
+                    "Cannot execute Bedlam without an operations setting. Check your Chaos.config file...");
             }
-
+            
             if (_operations.Count == 1)
             {
                 _config.Orchestration = Orchestration.Sequential;

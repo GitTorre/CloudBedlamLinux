@@ -7,7 +7,7 @@
     <ProjectGuid>{5D0300A3-E953-4C61-AA11-994C9265B059}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChaosApe</RootNamespace>
+    <RootNamespace>CloudBedlam</RootNamespace>
     <AssemblyName>CloudBedlam</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -22,17 +22,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp -a ${ProjectDir}/Bash ${TargetDir}/</command>
-          <workingdir>${TargetDir}</workingdir>
-        </Command>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp ${ProjectDir}/Chaos.config ${TargetDir}</command>
-        </Command>
-      </CustomCommands>
+      <Command>
+        <type>AfterBuild</type>
+        <command>cp ${ProjectDir}/Chaos.config ${TargetDir}</command>
+        <command>mkdir $(TargetDir}/Bash</command>
+        <command>cp -r ${ProjectDir}/Bash ${TargetDir}/Bash</command>
+      </Command>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -110,25 +105,43 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Bash\stress-mem.sh" />
-    <None Include="Bash\stress-cpu.sh" />
-    <None Include="Bash\netem-bandwidth.sh" />
-    <Content Include="Chaos.config">
+    <Content Include="Bash\stress-mem.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bash\stress-cpu.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bash\netem-bandwidth.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Chaos.json">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Bash\netem-corrupt.sh" />
-    <None Include="Bash\netem-loss.sh" />
-    <None Include="Bash\netem-reorder.sh" />
-    <Content Include="Bash\netem-latency.sh" />
+    <Content Include="Bash\netem-corrupt.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bash\netem-loss.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bash\netem-reorder.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bash\netem-latency.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Chaos.config.old" />
-    <None Include="Newtonsoft.Json.dll" />
+    <Content Include="Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NLog.dll" />
+    <Content Include="NLog.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

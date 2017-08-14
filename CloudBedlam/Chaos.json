@@ -16,7 +16,7 @@
   "NetworkEmulation": {
     "RunOrder": "2",
     "EmulationType": "Latency",
-    "LatencyDelay" : "3000",
+    "LatencyDelay" : "1000",
     "TargetEndpoints": {
       "Endpoints": [
         { "Port": "443", "Uri": "https://www.bing.com" },
