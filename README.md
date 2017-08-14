@@ -2,7 +2,7 @@
 
 # What? Why? How?
 
-"Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production." 
+### "Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production." 
 
 -From Netflix's Principles of Chaos Engineering Manifesto => http://principlesofchaos.org 
 
@@ -78,6 +78,10 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
   }
 }
 </code></pre>
+
+## Note: See examples of supported network emulation configurations <a href="https://github.com/GitTorre/CloudBedlamLinux/blob/master/CloudBedlam/NetemReadMe.md"> here</a>.
+
+
 
 # C++ Version
 If you don't want to program in C# and use the Mono runtime and libraries, you don't have to! :) C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. In it's current form, it's c
