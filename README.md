@@ -26,22 +26,22 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
 
 #### Operational Orchestration (Orchestration setting):  
 
-#### Concurrent (run all operations at the same time)  
-#### Random (run operations sequentially, in random order)  
-#### Sequential (run operations sequentially, based on specified run order (RunOrder))  
+       Concurrent (run all operations at the same time)  
+       Random (run operations sequentially, in random order)  
+       Sequential (run operations sequentially, based on specified run order (RunOrder))  
 
 #### Currently supported machine resource pressure operations:  
 
-#### CPU (all CPUs) - CpuPressure setting (0 - 100)  
-#### Memory (non-swap.. TODO) - MemoryPressure setting (0 - 100)  
+       CPU (all CPUs) - CpuPressure setting (0 - 100)  
+       Memory (non-swap.. TODO) - MemoryPressure setting (0 - 100)  
 
 #### Currently<a href="https://github.com/GitTorre/CloudBedlamLinux/blob/master/CloudBedlam/NetemReadMe.md" target="new"> supported IPv4/IPV6 network emulation operations</a> - NetworkEmulation - EmulationType setting:
 
-#### Packet Corruption  
-#### Packet Loss  
-#### Packet Reordering  
-#### Bandwidth Rate Limiting  
-#### Latency 
+       Packet Corruption  
+       Packet Loss  
+       Packet Reordering  
+       Bandwidth Rate Limiting  
+       Latency 
 
 #### Network emulation is done for specific endpoints (specified as hostnames) only - Enpoints object (array of Endpoint). CloudBedlam figures out Network type (IPv4 or IPv6) and IPs from hostnames. 
 
