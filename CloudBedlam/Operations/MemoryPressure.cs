@@ -21,18 +21,18 @@ namespace CloudBedlam.Operations
 
 		protected override ProcessParams CreateProcessParams()
 		{
-			var filePath = "/usr/bin/bash";
+			const string filePath = "/usr/bin/bash";
 			return new ProcessParams(new FileInfo(filePath), "Bash/stress-mem.sh " + _config.PressureLevel + " " + _config.DurationInSeconds);
 		}
 
 
         internal override void Kill()
         {
-            if (Process != null && Process.IsRunning() && !Process.HasExited)
-            {
-				Thread.Sleep(4000);
-				Process?.Kill();
-            }
+	        if (Process == null || !Process.IsRunning() || Process.HasExited) 
+		        return;
+	        
+	        Thread.Sleep(4000);
+	        Process?.Kill();
         }
     }
 }

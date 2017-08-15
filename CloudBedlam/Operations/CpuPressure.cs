@@ -21,18 +21,18 @@ namespace CloudBedlam.Operations
 
         protected override ProcessParams CreateProcessParams()
         {
-			var filePath = "/usr/bin/bash";
-			return new ProcessParams(new FileInfo(filePath), "Bash/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
+            const string filePath = "/usr/bin/bash";
+            return new ProcessParams(new FileInfo(filePath), "Bash/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
         }
 
 
 		internal override void Kill()
         {
-            if (Process != null && Process.IsRunning() && !Process.HasExited)
-            {
-				Thread.Sleep(4000);
-				Process?.Kill();
-            }
+            if (Process == null || !Process.IsRunning() || Process.HasExited) 
+                return;
+            
+            Thread.Sleep(4000);
+            Process?.Kill();
         }
     }
 }

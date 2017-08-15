@@ -25,8 +25,10 @@ namespace CloudBedlam.Operations
 
             DisposeService = new DisposeService<OperationBase>(this, ps =>
             {
-                if (Process == null) return;
-                DestroyProcess();
+                if (Process == null) 
+	                return;
+                
+	            DestroyProcess();
             });
         }
 
@@ -88,8 +90,6 @@ namespace CloudBedlam.Operations
 		        },
 		        EnableRaisingEvents = true
 	        };
-
-
 
 	        process.OutputDataReceived += (o, e) =>
 	        {

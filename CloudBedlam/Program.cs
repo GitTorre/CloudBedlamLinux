@@ -50,18 +50,21 @@ namespace CloudBedlam
 
             try
             {
-                //Must initialize Bedlam instance with ChaosConfiguration instance...
+                //Must initialize Bedlam with a ChaosConfiguration...
                 _bedlam = new Bedlam(_chaosConfiguration);
             }
             catch (Exception e) 
             {
                 Logger?.Info("Error initializing Bedlam: " + e.Message + "\n Exiting...");
+                Logger?.Error(e);
                 Environment.Exit(-1);
             }
 
             for (int i = 0; i < _repeat + 1; i++)
             {
-                if (_runDelay > 0) Thread.Sleep(_runDelay * 1000);
+                if (_runDelay > 0) 
+                    Thread.Sleep(_runDelay * 1000);
+                
                 _bedlam.Run();
             }
 

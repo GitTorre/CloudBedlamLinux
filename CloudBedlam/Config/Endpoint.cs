@@ -2,7 +2,6 @@
 
 namespace CloudBedlam.Config
 {
-
 	public class TargetEndpoints
 	{
 		public List<Endpoint> Endpoints { get; set; }

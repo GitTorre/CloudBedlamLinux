@@ -90,12 +90,13 @@ namespace CloudBedlam.Operations
 			string value = "";
 			string param = "";
 			//if Port type, check to see if all Endpoint Port properties are empty. If so, then return an empty string...
-			if (type == ParamType.Port && endpoints.All(endpoint => string.IsNullOrEmpty(endpoint.Port)))
+			var enumerable = endpoints as IList<Endpoint> ?? endpoints.ToList();
+			if (type == ParamType.Port && enumerable.All(endpoint => string.IsNullOrEmpty(endpoint.Port)))
 			{
 				return "";
 			}
 
-			foreach (Endpoint endpoint in endpoints)
+			foreach (var endpoint in enumerable)
 			{
 				if (type == ParamType.Uri)
 				{
@@ -107,10 +108,7 @@ namespace CloudBedlam.Operations
 					}
 
 					var ips = GetIpAddressesForEndpoint(endpointHostName);
-					foreach (var ip in ips)
-					{
-						value += IPAddress.Parse(string.Join(".", ip)) + ",";
-					}
+					value = ips.Aggregate(value, (current, ip) => current + (IPAddress.Parse(string.Join(".", ip)) + ","));
 				}
 				else //TODO...
 				{
@@ -185,7 +183,6 @@ namespace CloudBedlam.Operations
 
 			return emulationConfiguration;
 		}
-
 
 		static IEnumerable<IPAddress> GetIpAddressesForEndpoint(string hostname)
 		{
