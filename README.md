@@ -2,13 +2,13 @@
 
 # What? Why? How?
 
-"Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production." 
+### "Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production." 
 
 -From Netflix's Principles of Chaos Engineering Manifesto => http://principlesofchaos.org 
 
 CloudBedlam is a simple, configurable, vm-local chaotic operation orchestrator for resiliency experimentation inside cloud services - chaos, or bedlam as we call it, runs inside individual VMs. At it's core, CloudBedlam causes chaotic conditions by injecting "bedlam" faults (today these are machine resource pressure and network emulation (latency, bandwidth, loss, reorder, disconnection...) into underlying virtual machines that power a service or cluster of services... It is useful for exercising your resiliency design and implementation in an effort to find bugs. It’s also useful for, say, testing your alerting system (e.g., CPU and Memory Azure Alerts) to ensure you set them up correctly or didn’t break them with a new deployment. Network emulation inside the VM enables you to verify that your Internet-facing code handles network faults correctly and/or verify that your solutions to latent or disconnected traffic states work correctly (and help you to refine your design or even establish for the first time how you react to and recover from transient networking problems in the cloud…).
 
-Unlike, say, Netflix's ChaosMonkey, shooting down VM instances isn't the interesting chaos we create with CloudBedlam (though it is definitely interesting chaos – just different from what CloudBedlam is designed to help you experiment with…). Instead, we want to add conditions to an otherwise happy VM that make it sad and troubled, turbulent and angry - not just killing it. We believe that there is a useful difference between a VM that is running in a configurably chaotic state versus a VM that suddenly disappears from the map...
+Unlike, say, Netflix's ChaosMonkey, shooting down VM instances isn't the interesting chaos we create with CloudBedlam (though it is definitely interesting, incredibly useful chaos! – just different from what CloudBedlam is designed to help you experiment with…). Instead, we want to add conditions to an otherwise happy VM that make it sad and troubled, turbulent and angry - not just killing it. We believe that there is a useful difference between VMs that are running in configurably chaotic states versus VMs that pseudo-randomly suddenly disappear from the map (again, that is excellent chaos for systems composed of many instances, just not what this tool is designed for. Please add Chaos Monkey to your Chaos Engineering toolset. Netflix are the leaders in this domain and most of their tools are open source, even if baked into Spinnaker today (their open source CI/CD pipeline technology)), you can find very nice non-Spinnaker-embedded versions right here on GitHub...).
 
 This is meant to run chaos experiments <i>inside</i> VMs as a way to experiment close to your code and help you identify resiliency bugs in your design and implementation.
 
@@ -24,13 +24,36 @@ Step 0.
 
 Just change JSON settings to meet your specific chaotic needs. The default config will run CPU, Memory and Networking chaos. You can remove the CPU and Memory objects and just do Network emulation or remove Network and just do CPU/Mem. It's configurable, so do what you want! 
 
-Currently supported IPv4/IPV6 network emulation operations:
+#### Operational Orchestration (Orchestration setting):  
 
-Packet Corruption  
-Packet Loss  
-Packet Reordering  
-Bandwidth Rate Limiting  
-Latency  
+       Concurrent (run all operations at the same time)  
+       Random (run operations sequentially, in random order)  
+       Sequential (run operations sequentially, based on specified run order (RunOrder))  
+
+#### Currently supported machine resource pressure operations:  
+
+       CPU (all CPUs) - CpuPressure setting (0 - 100)  
+       Memory (non-swap.. TODO) - MemoryPressure setting (0 - 100)  
+
+#### Currently<a href="https://github.com/GitTorre/CloudBedlamLinux/blob/master/CloudBedlam/NetemReadMe.md" target="new"> supported IPv4/IPV6 network emulation operations</a> - (NetworkEmulation EmulationType settings)
+
+       Bandwidth 
+       Corruption
+       Latency 
+       Loss  
+       Reorder 
+       
+#### Supported Network Protocols:  
+
+       ALL
+       ICMP
+       TCP
+       UDP
+       ESP
+       AH
+       ICMPv6
+
+#### Network emulation is done for specific endpoints (specified as hostnames) only - Endpoints object. CloudBedlam determines currrent Network type (IPv4 or IPv6) and IPs from hostnames. 
 
 #### NOTE: 
 Network emulation requires iproute2 tools (tc and ip, particularly, in CB's case...). This should be present on most mainline distros already, but make sure...
@@ -46,7 +69,7 @@ Homepage: http://www.linux-foundation.org/en/Net:Iproute2
 
 ### Example configuration:
 
-The JSON below instructs CloudBedlam to sequentially run (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation of 1000ms delay for 30 seconds for specified target endpoints (by default, emulation affects both up/downstream connections, so total latency will be 2000ms...). The experiment runs 2 times successively (Repeat=”1”). See [TODO] for more info on available configuration settings, including samples. CloudBedlam will execute (and log) the orchestration of these bedlam operations. You just need to modify some JSON and then experiment away. Enjoy!
+The JSON below instructs CloudBedlam to sequentially run (according to specified run order) a CPU pressure fault of 90% CPU utilization across all CPUs for 15 seconds, Memory pressure fault eating 90% of available memory for 15 seconds, and Network Latency emulation of 1000ms delay for 30 seconds for specified target endpoints. The experiment runs 2 times successively (Repeat=”1”). CloudBedlam will execute (and log) the orchestration of these bedlam operations. You just need to modify some JSON and then experiment away. Enjoy!
 <pre><code>
 {
   "Orchestration": "Sequential",
@@ -79,10 +102,9 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 }
 </code></pre>
 
-# C++ Version
-If you don't want to program in C# and use the Mono runtime and libraries, you don't have to! :) C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. In it's current form, it's c
-ompletely useful, very fast, with low working set, and the only changes needed are adding support for protocol and network type specification in the config (and related netem bash scripts) for network emulation. If you get to this before we do, then please make a pull request.
 
+# C++ Version
+### If you don't want to program in C# and use the Mono runtime and libraries or .NET Core, you don't have to! C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. 
 
 # .NET Version (this one...)
 
@@ -100,11 +122,7 @@ Clone project:
 
 Open sln in MonoDevelop, build.
 
-## Installing binaries 
-
-If you don't want to install the dependencies and build CloudBedlam, then just grab the latest release and install CloudBedlam and dependencies from a package (file name will be CloudBedlam-linux-amd64):
-
-https://github.com/GitTorre/CloudBedlamLinux/releases [XML config currently]
+### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
 
 ## Running
 
