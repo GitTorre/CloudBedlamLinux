@@ -53,7 +53,7 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
        AH
        ICMPv6
 
-#### Network emulation is done for specific endpoints (specified as hostnames) only - Enpoints object (array of Endpoint). CloudBedlam figures out Network type (IPv4 or IPv6) and IPs from hostnames. 
+#### Network emulation is done for specific endpoints (specified as hostnames) only - Endpoints object. CloudBedlam determines currrent Network type (IPv4 or IPv6) and IPs from hostnames. 
 
 #### NOTE: 
 Network emulation requires iproute2 tools (tc and ip, particularly, in CB's case...). This should be present on most mainline distros already, but make sure...
