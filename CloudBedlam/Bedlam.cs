@@ -69,7 +69,7 @@ namespace CloudBedlam
             catch (Exception e)
             {
                 _logger?.Error(e);
-		        //throwing here will kill the app... log and continue... app will exit anyway in short order...
+		        //Don't die here. It's OK...
             }
         }
 

@@ -88,6 +88,7 @@ namespace CloudBedlam
 			catch (Exception e)
 			{
 				Logger?.Error(e);
+			    //Main will exit, OK not to die here...
 				return null;
 			}
 		}
