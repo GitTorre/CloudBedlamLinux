@@ -35,13 +35,13 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
        CPU (all CPUs) - CpuPressure setting (0 - 100)  
        Memory (non-swap.. TODO) - MemoryPressure setting (0 - 100)  
 
-#### Currently<a href="https://github.com/GitTorre/CloudBedlamLinux/blob/master/CloudBedlam/NetemReadMe.md" target="new"> supported IPv4/IPV6 network emulation operations</a> - NetworkEmulation - EmulationType setting:
+#### Currently<a href="https://github.com/GitTorre/CloudBedlamLinux/blob/master/CloudBedlam/NetemReadMe.md" target="new"> supported IPv4/IPV6 network emulation operations</a> - (NetworkEmulation EmulationType settings)
 
-       Packet Corruption  
-       Packet Loss  
-       Packet Reordering  
-       Bandwidth Rate Limiting  
+       Bandwidth 
+       Corruption
        Latency 
+       Loss  
+       Reorder 
        
 #### Supported Network Protocols:  
 
