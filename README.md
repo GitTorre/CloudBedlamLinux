@@ -122,11 +122,7 @@ Clone project:
 
 Open sln in MonoDevelop, build.
 
-## Installing binaries 
-
-If you don't want to install the dependencies and build CloudBedlam, then just grab the latest release and install CloudBedlam and dependencies from a package (file name will be CloudBedlam-linux-amd64):
-
-https://github.com/GitTorre/CloudBedlamLinux/releases [XML config currently]
+### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
 
 ## Running
 
