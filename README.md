@@ -42,6 +42,16 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
        Packet Reordering  
        Bandwidth Rate Limiting  
        Latency 
+       
+#### Supported Network Protocols:  
+
+       ALL
+       ICMP
+       TCP
+       UDP
+       ESP
+       AH
+       ICMPv6
 
 #### Network emulation is done for specific endpoints (specified as hostnames) only - Enpoints object (array of Endpoint). CloudBedlam figures out Network type (IPv4 or IPv6) and IPs from hostnames. 
 
