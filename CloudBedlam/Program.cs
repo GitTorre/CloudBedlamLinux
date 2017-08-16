@@ -21,6 +21,9 @@ namespace CloudBedlam
         private static void Main()
         {
             Logger = LogManager.GetLogger(nameof(Program));
+            
+            //This is for one log file per run (based on start time...)
+            NLog.GlobalDiagnosticsContext.Set("StartTime", DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss"));
 
             var configPath = Path.Combine(Environment.CurrentDirectory, "Chaos.json");
 
