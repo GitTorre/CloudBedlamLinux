@@ -83,7 +83,7 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
   },
   "MemoryPressure": {
     "RunOrder": "1",
-    "PressureLevel": "90",
+    "PressureLevel": "80",
     "Duration": "15"
   },
   "NetworkEmulation": {
@@ -91,13 +91,25 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
     "EmulationType": "Latency",
     "LatencyDelay" : "1000",
     "TargetEndpoints": {
+      "Duration": "30",
       "Endpoints": [
-        { "Port": "443", "Uri": "https://www.bing.com" },
-        { "Port": "80", "Uri": "http://www.msn.com" },
-        { "Port": "443", "Uri": "https://www.google.com" }
+        {
+          "Hostname": "www.bing.com", 
+          "Port": 443, 
+          "Protocol": "ALL" 
+        },
+        { 
+          "Hostname": "www.msn.com", 
+          "Port": 80, 
+          "Protocol": "ALL" 
+        },
+        { 
+          "Hostname": "www.google.com", 
+          "Port": 443, 
+          "Protocol": "ALL" 
+        }
       ]
-    },
-    "Duration": "30"
+    }
   }
 }
 </code></pre>
