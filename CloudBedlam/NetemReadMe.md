@@ -89,12 +89,44 @@ Examples of supported Network Emulation JSON configuration:
    }
 </code></pre>
 
-<b>Loss</b>
+<b>Loss - Random</b>
 <pre><code>
  "NetworkEmulation": {
       "Duration": 15,
       "EmulationType": "Loss",
-      "RandomLossRate" : 0.10,
+      "LossType": "Random",
+      "LossRate" : 0.10,
+      "RunOrder": 0,
+      "TargetEndpoints": {
+         "Endpoints": [
+           {
+             "Port": 443,
+             "Hostname": "www.bing.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 80,
+             "Hostname": "www.msn.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 443,
+             "Hostname": "www.google.com",
+             "Protocol": "ALL"
+           }
+         ]
+      }
+   }
+</code></pre>
+
+<b>Loss - Burst</b>
+<pre><code>
+ "NetworkEmulation": {
+      "Duration": 15,
+      "EmulationType": "Loss",
+      "LossType": "Burst",
+      "BurstRate": 0.25,
+      "LossRate" : 0.10,
       "RunOrder": 0,
       "TargetEndpoints": {
          "Endpoints": [

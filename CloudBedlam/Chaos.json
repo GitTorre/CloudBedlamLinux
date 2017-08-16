@@ -1,39 +1,30 @@
 ﻿{
   "Orchestration": "Sequential",
-  "Duration": "60",
-  "RunDelay": "0",
-  "Repeat": "1",
-  "CpuPressure": {
-    "RunOrder": "0",
-    "PressureLevel": "90",
-    "Duration": "15"
-  },
-  "MemoryPressure": {
-    "RunOrder": "1",
-    "PressureLevel": "80",
-    "Duration": "15"
-  },
+  "Duration": 5,
+  "RunDelay": 0,
+  "Repeat": 1,
   "NetworkEmulation": {
-    "RunOrder": "2",
-    "EmulationType": "Latency",
-    "LatencyDelay" : "1000",
-    "Duration": "30",
+    "Duration": 5,
+    "EmulationType": "Loss",
+    "LossType": "Burst",
+    "BurstRate": 0.25,
+    "LossRate" : 0.20,
     "TargetEndpoints": {
       "Endpoints": [
         {
-          "Hostname": "www.bing.com", 
-          "Port": 443, 
-          "Protocol": "ALL" 
+          "Port": 443,
+          "Hostname": "www.bing.com",
+          "Protocol": "ALL"
         },
-        { 
-          "Hostname": "www.msn.com", 
-          "Port": 80, 
-          "Protocol": "ALL" 
+        {
+          "Port": 80,
+          "Hostname": "www.msn.com",
+          "Protocol": "ALL"
         },
-        { 
-          "Hostname": "www.google.com", 
-          "Port": 443, 
-          "Protocol": "ALL" 
+        {
+          "Port": 443,
+          "Hostname": "www.google.com",
+          "Protocol": "ALL"
         }
       ]
     }

@@ -66,16 +66,20 @@ namespace CloudBedlam.Operations
 			var lossConfig = config as LossConfiguration;
 			if (lossConfig != null)
 			{
-				var lossRate = lossConfig.RandomLossRate * 100; //e.g., 0.05 * 100 = 5...
-
+				double lossRate = lossConfig.LossRate * 100;
+				double burstRate = 0;
+				if (lossConfig?.BurstRate > 0)
+				{
+					burstRate = lossConfig.BurstRate * 100;
+				}
 				args = "Bash/netem-loss.sh -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Hostname) +
-					   " " + lossRate + " " + _config.DurationInSeconds;
+					   " " + lossRate + " " + burstRate + " " + _config.DurationInSeconds;
 			}
 			//Reorder
 			var reorderConfig = config as ReorderConfiguration;
 			if (reorderConfig != null)
 			{
-				var correlationpt = reorderConfig.CorrelationPercentage * 100; //e.g., 0.05 * 100 = 5...
+				var correlationpt = reorderConfig.CorrelationPercentage * 100;
 				var packetpt = reorderConfig.PacketPercentage * 100;
 
 				args = "Bash/netem-reorder.sh -ips=" + FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Hostname) +
@@ -162,17 +166,19 @@ namespace CloudBedlam.Operations
 				};
 			}
 			*/
-			if (config.EmulationType == NetworkEmProfile.Loss) //Random support implemented...
+			if (config.EmulationType == NetworkEmProfile.Loss) //Random and Burst are supported...
 			{
 				emulationConfiguration = new LossConfiguration
 				{
-					//BurstRate = config.BurstRate,
-					//MaximumBurst = config.MaximumBurst,
-					//MinimumBurst = config.MinimumBurst,
-					//PeriodicLossPeriod = config.PeriodicLossPeriod,
-					RandomLossRate = config.RandomLossRate,
+					LossRate = config.LossRate,
+					LossType = config.LossType,
 					TargetEndpoints = config.TargetEndpoints
 				};
+
+				if (config.LossType == LossType.Burst)
+				{
+					((LossConfiguration) emulationConfiguration).BurstRate = config.BurstRate;
+				}
 			}
 			if (config.EmulationType == NetworkEmProfile.Reorder)
 			{
