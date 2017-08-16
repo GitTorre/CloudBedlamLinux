@@ -6,16 +6,30 @@
 
 -From Netflix's Principles of Chaos Engineering Manifesto => http://principlesofchaos.org 
 
-CloudBedlam is a simple, configurable, vm-local chaotic operation orchestrator for resiliency experimentation inside cloud services - chaos, or bedlam as we call it, runs inside individual VMs. At it's core, CloudBedlam causes chaotic conditions by injecting "bedlam" faults (today these are machine resource pressure and network emulation (latency, bandwidth, loss, reorder, disconnection...) into underlying virtual machines that power a service or cluster of services... It is useful for exercising your resiliency design and implementation in an effort to find bugs. It’s also useful for, say, testing your alerting system (e.g., CPU and Memory Azure Alerts) to ensure you set them up correctly or didn’t break them with a new deployment. Network emulation inside the VM enables you to verify that your Internet-facing code handles network faults correctly and/or verify that your solutions to latent or disconnected traffic states work correctly (and help you to refine your design or even establish for the first time how you react to and recover from transient networking problems in the cloud…).
+CloudBedlam is a simple, configurable, vm-local chaotic operation orchestrator for resiliency experimentation inside virtual machines. Configurable chaotic conditions are induced via fault injections and run inside individual VMs. It's an easy to use Chaos Engineering tool for running chaos experiments <i>close to your service binaries</i> - in the virtual machines where your services are running. This guarantees isolation (faults will only impact your VMs and therefore only your services will be impacted).
 
-Unlike, say, Netflix's ChaosMonkey, shooting down VM instances isn't the interesting chaos we create with CloudBedlam (though it is definitely interesting, incredibly useful chaos! – just different from what CloudBedlam is designed to help you experiment with…). Instead, we want to add conditions to an otherwise happy VM that make it sad and troubled, turbulent and angry - not just killing it. We believe that there is a useful difference between VMs that are running in configurably chaotic states versus VMs that pseudo-randomly suddenly disappear from the map (again, that is excellent chaos for systems composed of many instances, just not what this tool is designed for. Please add Chaos Monkey to your Chaos Engineering toolset. Netflix are the leaders in this domain and most of their tools are open source, even if baked into Spinnaker today (their open source CI/CD pipeline technology)), you can find very nice non-Spinnaker-embedded versions right here on GitHub...).
+CloudBedam is useful for exercising your resiliency design and implementation under realistic failure conditions in an effort to find flaws and to better understand how your cloud services behave in realisitic cloud failure scenarios. It’s also useful for, say, testing your alerting system (e.g., CPU and Memory Alerts) to ensure you set them up correctly or didn’t break them with a new deployment. 
 
-This is meant to run chaos experiments <i>inside</i> VMs as a way to experiment close to your code and help you identify resiliency bugs in your design and implementation.
+Network emulation inside a VM enables you to verify that your Internet-facing code handles network faults correctly and/or verify that your solutions to latent or disconnected traffic states work correctly. This will help you to refine your design or even establish for the first time how you react to and recover from transient networking problems in the cloud….
+
+Unlike, say, Netflix's ChaosMonkey, shooting down VM instances isn't the interesting chaos you create with CloudBedlam (though it is definitely interesting, incredibly useful chaos! – just different from what CloudBedlam is designed to help you experiment with…). Instead, CloudBedlam adds conditions to an otherwise happy VM that make it sad and troubled, turbulent and angry - not just killing it. 
+
+Hypothesis:  
+
+<i>There is a useful difference between VMs that are running in configurably chaotic states versus VMs that pseudo-randomly disappear from the map.</i>  
+
+Please make sure to add Chaos Monkey to your Chaos Engineering toolset. Netflix are the leaders in the Chaos Engineering domain (they invented the discipline!) and most of their tools are open source, even if baked into Spinnaker today (their open source CI/CD pipeline technology)). You can find very nice non-Spinnaker-embedded versions right here on GitHub, including a full Simian Army that has been containerized!
+
+CloudBedlam is meant to run chaos experiments <i>inside</i> VMs as a way to experiment close to your code and help you identify resiliency bugs in your design and implementation.
 
 
 ### Note: 
 
-this has only been rigorously tested on Ubuntu 16.04 (Xenial Xerus)... There will be differences in some of the scripts you'll need to take into account for other Linux versions, but for the most part, this should work on most mainline distros (that support Mono and/or .NET Core...) with only a few mods... This impl employs tc for low level network emulation, so it must run as a sudo user.
+This has only been rigorously tested on Ubuntu 16.04 (Xenial Xerus)... There will be differences in some of the scripts you'll need to take into account for other Linux versions, but for the most part, this should work on most mainline distros (that support Mono and/or .NET Core...) with only a few mods... This impl employs tc for low level network emulation, so it must run as a sudo user.
+
+Obviously, you need to be <i><b>allowed</b></i> (so, by policy on your team...) to run non-service binaries onboard the VMs that host your cloud services. Further, due to network emulation via tc, which runs code inside the kernel, you have to run CB as a sudo user. 
+
+Currently, there is no big red button (Stop) implemented, but it will be coming as this evolves into a system that can be remote controlled over SSH by a mutually trusted service (where having a big red button really matters given in that case you'd probably have multiple VMs running CB...)... In this impl, you control lifetimes of chaotic operations via configuration settings (duration) for each operation you want to use to induce controlled, directed, deterministic chaos as part of your chaos experimentation.
 
 
 ### Easy to Use
@@ -124,7 +138,9 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 
 Step 1. (Mono)  
 
-Install MonoDevelop: http://www.monodevelop.com/download/linux/
+Install MonoDevelop: http://www.monodevelop.com/download/linux/  
+OR  
+Install Rider: https://www.jetbrains.com/rider/
 
 Step 2:  
 
@@ -132,7 +148,7 @@ Clone project:
 
 <pre><code>git clone https://github.com/GitTorre/CloudBedlamLinux.git</code></pre>
 
-Open sln in MonoDevelop, build.
+Open sln in MonoDevelop OR Rider, build.
 
 ### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
 
