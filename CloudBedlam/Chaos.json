@@ -17,8 +17,8 @@
     "RunOrder": "2",
     "EmulationType": "Latency",
     "LatencyDelay" : "1000",
+    "Duration": "30",
     "TargetEndpoints": {
-      "Duration": "30",
       "Endpoints": [
         {
           "Hostname": "www.bing.com", 
