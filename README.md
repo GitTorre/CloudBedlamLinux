@@ -88,10 +88,10 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
   },
   "NetworkEmulation": {
     "RunOrder": "2",
+    "Duration": "30",
     "EmulationType": "Latency",
     "LatencyDelay" : "1000",
     "TargetEndpoints": {
-      "Duration": "30",
       "Endpoints": [
         {
           "Hostname": "www.bing.com", 
