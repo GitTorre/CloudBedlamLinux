@@ -69,7 +69,7 @@ namespace CloudBedlam
             catch (Exception e)
             {
                 _logger?.Error(e);
-		        //Don't die here. It's OK...
+                Environment.Exit(-1);
             }
         }
 
