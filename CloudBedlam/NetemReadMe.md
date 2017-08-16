@@ -8,24 +8,26 @@ Examples of supported Network Emulation JSON configuration:
       "UpstreamSpeed" : 56,
       "DownstreamSpeed" : 33.5,
       "RunOrder": 0,
-      "Endpoints": [
-        {
-          "Port": 443,
-          "Hostname": "www.bing.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 80,
-          "Hostname": "www.msn.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 443,
-          "Hostname": "www.google.com",
-          "Protocol": "ALL"
-        }
-      ]
-    }
+      "TargetEndpoints": {
+         "Endpoints": [
+           {
+             "Port": 443,
+             "Hostname": "www.bing.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 80,
+             "Hostname": "www.msn.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 443,
+             "Hostname": "www.google.com",
+             "Protocol": "ALL"
+           }
+         ]
+      }
+  }
 </code></pre>
    
 
@@ -36,24 +38,26 @@ Examples of supported Network Emulation JSON configuration:
       "EmulationType": "Corruption",
       "PacketPercentage" : 0.10,
       "RunOrder": 0,
-      "Endpoints": [
-        {
-          "Port": 443,
-          "Hostname": "www.bing.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 80,
-          "Hostname": "www.msn.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 443,
-          "Hostname": "www.google.com",
-          "Protocol": "ALL"
-        }
-      ]
-    }
+      "TargetEndpoints": {
+         "Endpoints": [
+           {
+             "Port": 443,
+             "Hostname": "www.bing.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 80,
+             "Hostname": "www.msn.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 443,
+             "Hostname": "www.google.com",
+             "Protocol": "ALL"
+           }
+         ]
+      }
+   }
 </code></pre>
 
 <b>Latency</b>
@@ -63,24 +67,26 @@ Examples of supported Network Emulation JSON configuration:
       "EmulationType": "Latency",
       "LatencyDelay" : 1000,
       "RunOrder": 0,
-      "Endpoints": [
-        {
-          "Port": 443,
-          "Hostname": "www.bing.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 80,
-          "Hostname": "www.msn.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 443,
-          "Hostname": "www.google.com",
-          "Protocol": "ALL"
-        }
-      ]
-    }
+      "TargetEndpoints": {
+         "Endpoints": [
+           {
+             "Port": 443,
+             "Hostname": "www.bing.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 80,
+             "Hostname": "www.msn.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 443,
+             "Hostname": "www.google.com",
+             "Protocol": "ALL"
+           }
+         ]
+      }
+   }
 </code></pre>
 
 <b>Loss</b>
@@ -90,24 +96,26 @@ Examples of supported Network Emulation JSON configuration:
       "EmulationType": "Loss",
       "RandomLossRate" : 0.10,
       "RunOrder": 0,
-      "Endpoints": [
-        {
-          "Port": 443,
-          "Hostname": "www.bing.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 80,
-          "Hostname": "www.msn.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 443,
-          "Hostname": "www.google.com",
-          "Protocol": "ALL"
-        }
-      ]
-    }
+      "TargetEndpoints": {
+         "Endpoints": [
+           {
+             "Port": 443,
+             "Hostname": "www.bing.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 80,
+             "Hostname": "www.msn.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 443,
+             "Hostname": "www.google.com",
+             "Protocol": "ALL"
+           }
+         ]
+      }
+   }
 </code></pre>
 
 <b>Reorder</b>
@@ -118,22 +126,24 @@ Examples of supported Network Emulation JSON configuration:
       "CorrelationPercentage" : 0.20,
       "PacketPercentage" : 0.10,
       "RunOrder": 0,
-      "Endpoints": [
-        {
-          "Port": 443,
-          "Hostname": "www.bing.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 80,
-          "Hostname": "www.msn.com",
-          "Protocol": "ALL"
-        },
-        {
-          "Port": 443,
-          "Hostname": "www.google.com",
-          "Protocol": "ALL"
-        }
-      ]
-    }
+      "TargetEndpoints": {
+         "Endpoints": [
+           {
+             "Port": 443,
+             "Hostname": "www.bing.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 80,
+             "Hostname": "www.msn.com",
+             "Protocol": "ALL"
+           },
+           {
+             "Port": 443,
+             "Hostname": "www.google.com",
+             "Protocol": "ALL"
+           }
+         ]
+      }
+   }
 </code></pre>
