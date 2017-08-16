@@ -125,6 +125,8 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 Step 1. (Mono)  
 
 Install MonoDevelop: http://www.monodevelop.com/download/linux/
+OR
+Install Rider: https://www.jetbrains.com/rider/
 
 Step 2:  
 
@@ -132,7 +134,7 @@ Clone project:
 
 <pre><code>git clone https://github.com/GitTorre/CloudBedlamLinux.git</code></pre>
 
-Open sln in MonoDevelop, build.
+Open sln in MonoDevelop OR Rider, build.
 
 ### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
 
