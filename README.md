@@ -124,8 +124,8 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 
 Step 1. (Mono)  
 
-Install MonoDevelop: http://www.monodevelop.com/download/linux/
-OR
+Install MonoDevelop: http://www.monodevelop.com/download/linux/  
+OR  
 Install Rider: https://www.jetbrains.com/rider/
 
 Step 2:  
