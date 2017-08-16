@@ -43,7 +43,7 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
        Loss  
        Reorder 
        
-#### Supported Network Protocols:  
+#### TODO (right now, it's ALL...) Network Protocols:  
 
        ALL
        ICMP
