@@ -43,7 +43,7 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
        Loss  
        Reorder 
        
-#### Supported Network Protocols:  
+#### TODO (right now, it's ALL...) Network Protocols:  
 
        ALL
        ICMP
@@ -83,21 +83,33 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
   },
   "MemoryPressure": {
     "RunOrder": "1",
-    "PressureLevel": "90",
+    "PressureLevel": "80",
     "Duration": "15"
   },
   "NetworkEmulation": {
     "RunOrder": "2",
+    "Duration": "30",
     "EmulationType": "Latency",
     "LatencyDelay" : "1000",
     "TargetEndpoints": {
       "Endpoints": [
-        { "Port": "443", "Uri": "https://www.bing.com" },
-        { "Port": "80", "Uri": "http://www.msn.com" },
-        { "Port": "443", "Uri": "https://www.google.com" }
+        {
+          "Hostname": "www.bing.com", 
+          "Port": 443, 
+          "Protocol": "ALL" 
+        },
+        { 
+          "Hostname": "www.msn.com", 
+          "Port": 80, 
+          "Protocol": "ALL" 
+        },
+        { 
+          "Hostname": "www.google.com", 
+          "Port": 443, 
+          "Protocol": "ALL" 
+        }
       ]
-    },
-    "Duration": "30"
+    }
   }
 }
 </code></pre>
