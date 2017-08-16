@@ -1,6 +1,9 @@
 #! /bin/bash
 # bash netem-loss.sh -ips=... 5 30s # Random, 5% loss for specified ips for 30s...
 # To make this less random (and to emulate burst), add another percentage value after lossrate in the tc qdisc for loss... -CT
+# try and install iproute2, suppress output...
+apt install iproute  2> /dev/null > /dev/null
+# get active networking device
 interface=$(ip -o link show | awk '{print $2,$9}' | grep UP | awk '{str = $0; sub(/: UP/,"",str); print str}')
 # vars
 lossrate="$2%"
