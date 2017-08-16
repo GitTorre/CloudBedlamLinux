@@ -9,7 +9,8 @@ namespace CloudBedlam.Config
 
 	public class Endpoint
 	{
-		public string Port { get; set; }
-		public string Uri { get; set; }
+		public int Port { get; set; }
+		public string Protocol { get; set; }
+		public string Hostname { get; set; }
 	}
 }

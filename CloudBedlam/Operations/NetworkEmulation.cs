@@ -36,7 +36,7 @@ namespace CloudBedlam.Operations
 			var bandwidthConfig = config as BandwidthConfiguration;
 			if (bandwidthConfig != null)
 			{
-				args = "Bash/netem-bandwidth.sh -ips=" + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+				args = "Bash/netem-bandwidth.sh -ips=" + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Hostname) + " " +
 					   bandwidthConfig.DownstreamBandwidth + " " + _config.DurationInSeconds + "s";
 			}
 			//Corruption
@@ -44,7 +44,7 @@ namespace CloudBedlam.Operations
 			if (corruptionConfig != null)
 			{
 				var pt = corruptionConfig.PacketPercentage * 100; //e.g., 0.05 * 100 = 5...
-				args = "Bash/netem-corrupt.sh -ips=" + FormatEndpointsParamString(corruptionConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+				args = "Bash/netem-corrupt.sh -ips=" + FormatEndpointsParamString(corruptionConfig.TargetEndpoints.Endpoints, ParamType.Hostname) + " " +
 					   pt + " " + _config.DurationInSeconds + "s";
 			}
 			/*/Disconnect TODO -CT
@@ -59,7 +59,7 @@ namespace CloudBedlam.Operations
 			var latencyConfig = config as LatencyConfiguration;
 			if (latencyConfig != null)
 			{
-				args = "Bash/netem-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Uri) + " " +
+				args = "Bash/netem-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Hostname) + " " +
 						latencyConfig.FixedLatencyDelayMilliseconds + "ms " + " " + _config.DurationInSeconds + "s";
 			}
 			//Loss
@@ -68,7 +68,7 @@ namespace CloudBedlam.Operations
 			{
 				var lossRate = lossConfig.RandomLossRate * 100; //e.g., 0.05 * 100 = 5...
 
-				args = "Bash/netem-loss.sh -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
+				args = "Bash/netem-loss.sh -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Hostname) +
 					   " " + lossRate + " " + _config.DurationInSeconds;
 			}
 			//Reorder
@@ -78,7 +78,7 @@ namespace CloudBedlam.Operations
 				var correlationpt = reorderConfig.CorrelationPercentage * 100; //e.g., 0.05 * 100 = 5...
 				var packetpt = reorderConfig.PacketPercentage * 100;
 
-				args = "Bash/netem-reorder.sh -ips=" + FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Uri) +
+				args = "Bash/netem-reorder.sh -ips=" + FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Hostname) +
 					   " " + packetpt + " " + " " + correlationpt + " " + _config.DurationInSeconds;
 			}
 
@@ -89,21 +89,23 @@ namespace CloudBedlam.Operations
 		{
 			string value = "";
 			string param = "";
-			//if Port type, check to see if all Endpoint Port properties are empty. If so, then return an empty string...
+			// TODO: Add support for Port and Protocol... Right now, Protocol = All...
+			// If Port type, check to see if all Endpoint Port properties are -1 or less... 
+			// If so, then return an empty string...
 			var enumerable = endpoints as IList<Endpoint> ?? endpoints.ToList();
-			if (type == ParamType.Port && enumerable.All(endpoint => string.IsNullOrEmpty(endpoint.Port)))
+			if (type == ParamType.Port && enumerable.All(endpoint => endpoint.Port <= -1))
 			{
 				return "";
 			}
 
 			foreach (var endpoint in enumerable)
 			{
-				if (type == ParamType.Uri)
+				if (type == ParamType.Hostname)
 				{
-					var endpointHostName = endpoint.Uri; //user can supply Url or domain in Chaos.config...
-					if (endpoint.Uri.StartsWith("https", StringComparison.Ordinal) || endpoint.Uri.StartsWith("http", StringComparison.Ordinal))
+					var endpointHostName = endpoint.Hostname; //user can supply Url or domain in Chaos.config...
+					if (endpoint.Hostname.StartsWith("https", StringComparison.Ordinal) || endpoint.Hostname.StartsWith("http", StringComparison.Ordinal))
 					{
-						var uri = new Uri(endpoint.Uri);
+						var uri = new Uri(endpoint.Hostname);
 						endpointHostName = uri.DnsSafeHost;
 					}
 
@@ -112,7 +114,7 @@ namespace CloudBedlam.Operations
 				}
 				else //TODO...
 				{
-					param = endpoint.Port;
+					param = endpoint.Port.ToString();
 				}
 			}
 
@@ -209,7 +211,8 @@ namespace CloudBedlam.Operations
 
 	enum ParamType
 	{
+		Hostname,
 		Port,
-		Uri
+		Protocol
 	}
 }
