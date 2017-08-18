@@ -90,14 +90,17 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
   "Repeat": 1,
   "CpuPressure": {
     "PressureLevel": 90,
-    "Duration": 15
+    "Duration": 15,
+    "RunOrder": 0
   },
   "MemoryPressure": {
     "PressureLevel": 80,
-    "Duration": 15
+    "Duration": 15,
+     "RunOrder": 1
   },
   "NetworkEmulation": {
     "Duration": 30,
+    "RunOrder": 2,
     "EmulationType": "Latency",
     "LatencyDelay" : 1000,
     "TargetEndpoints": {
