@@ -57,7 +57,7 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
               --> Duration - Time in seconds to run the operation  
               --> RunOrder - 0 based run order specifier (for Sequential orchestration ordering)  
 
-#### Currently<a href="https://github.com/GitTorre/CloudBedlamLinux/blob/master/CloudBedlam/NetemReadMe.md" target="new"> supported IPv4/IPV6 network emulation operations</a> - (NetworkEmulation EmulationType settings)
+#### Currently<a href="https://github.com/GitTorre/CloudBedlamLinux/blob/master/CloudBedlam/NetemReadMe.md" target="new"> supported IPv4/IPV6 network emulation operations</a> - (NetworkEmulation json object settings)
 
        NetworkEmulation json object properties:  
        Duration - Time in seconds to run the operation  
@@ -79,8 +79,6 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
        ICMP
        TCP
        UDP
-       ESP
-       AH
        ICMPv6
 
 #### Network emulation is done for specific endpoints (specified as hostnames) only - Endpoints object. CloudBedlam determines currrent Network type (IPv4 or IPv6) and IPs from hostnames. 
