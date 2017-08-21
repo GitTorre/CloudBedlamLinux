@@ -86,14 +86,17 @@ Just change JSON settings to meet your specific chaotic needs. The default confi
 #### NOTE: 
 Network emulation requires iproute2 tools (tc and ip, particularly, in CB's case...). This should be present on most mainline distros already, but make sure...
 
-Description: networking and traffic control tools
+Description: networking and traffic control tools: 
+
  The iproute2 suite is a collection of utilities for networking and
  traffic control.
 
  These tools communicate with the Linux kernel via the (rt)netlink
  interface, providing advanced features not available through the
  legacy net-tools commands 'ifconfig' and 'route'.
-Homepage: http://www.linux-foundation.org/en/Net:Iproute2
+Homepage: http://www.linux-foundation.org/en/Net:Iproute2  
+
+Note: For Alpine Linux, you need to install iproute2 package and then to create a symlink pointing to distribution files ln -s /usr/lib/tc /lib/tc
 
 ### Example configuration:
 
