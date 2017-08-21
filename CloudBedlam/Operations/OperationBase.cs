@@ -25,8 +25,10 @@ namespace CloudBedlam.Operations
 
             DisposeService = new DisposeService<OperationBase>(this, ps =>
             {
-                if (Process == null) return;
-                DestroyProcess();
+                if (Process == null) 
+	                return;
+                
+	            DestroyProcess();
             });
         }
 
@@ -74,6 +76,7 @@ namespace CloudBedlam.Operations
 
         private Process CreateProcess(ProcessParams parameters)
         {
+<<<<<<< HEAD
 			var process = new Process();
 
 			process.StartInfo.FileName = parameters.File.Name;
@@ -90,10 +93,39 @@ namespace CloudBedlam.Operations
             {
                 _logger?.Debug($"{parameters.File?.Name}: {e?.Data}");
             };
+=======
+	        var process = new Process
+	        {
+		        StartInfo =
+		        {
+			        FileName = parameters.File.Name,
+			        UseShellExecute = false,
+			        CreateNoWindow = true,
+			        RedirectStandardError = true,
+			        RedirectStandardOutput = true,
+			        WindowStyle = ProcessWindowStyle.Hidden,
+			        Arguments = !string.IsNullOrEmpty(parameters.Arguments) ? parameters.Arguments : string.Empty
+		        },
+		        EnableRaisingEvents = true
+	        };
+
+	        process.OutputDataReceived += (o, e) =>
+	        {
+		        if (string.IsNullOrEmpty(e?.Data))
+		        {
+			        return;
+		        }
+		        _logger?.Info($"{parameters.File?.Name}: {e?.Data}");
+	        };
+>>>>>>> origin/master
 
             process.ErrorDataReceived += (o, e) => 
             {
-                _logger?.Error(new Exception($"{parameters.File?.Name}: {e?.Data}"));
+				if (string.IsNullOrEmpty(e?.Data) || e.Data.ToLower().Contains("info:"))
+				{
+					return;
+				}
+				_logger?.Error(new Exception($"{parameters.File?.Name}: {e?.Data}"));
             };
 
 			process.Exited += (o, e) =>

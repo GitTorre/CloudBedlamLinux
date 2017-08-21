@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using System.Xml.Serialization;
+using Newtonsoft.Json;
 using CloudBedlam.Config;
 using NLog;
 
@@ -21,8 +21,12 @@ namespace CloudBedlam
         private static void Main()
         {
             Logger = LogManager.GetLogger(nameof(Program));
+            
+            //This is for one log file per run (based on start time...)
+            NLog.GlobalDiagnosticsContext.Set("StartTime", DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss"));
 
             var configPath = Path.Combine(Directory.GetCurrentDirectory(), "Chaos.config");
+            var configPath = Path.Combine(Environment.CurrentDirectory, "Chaos.json");
 
             if (File.Exists(configPath))
             {
@@ -50,18 +54,21 @@ namespace CloudBedlam
 
             try
             {
-                //Must initialize Bedlam instance with ChaosConfiguration instance...
+                //Must initialize Bedlam with a ChaosConfiguration...
                 _bedlam = new Bedlam(_chaosConfiguration);
             }
             catch (Exception e) 
             {
                 Logger?.Info("Error initializing Bedlam: " + e.Message + "\n Exiting...");
+                Logger?.Error(e);
                 Environment.Exit(-1);
             }
 
             for (int i = 0; i < _repeat + 1; i++)
             {
-                if (_runDelay > 0) Thread.Sleep(_runDelay * 1000);
+                if (_runDelay > 0) 
+                    Thread.Sleep(_runDelay * 1000);
+                
                 _bedlam.Run();
             }
 
@@ -73,25 +80,22 @@ namespace CloudBedlam
         /// <param name="configPath">full path to Chaos.config file</param>
         /// <returns>ChaosConfguration</returns>
         private static ChaosConfiguration GetChaosConfiguration(string configPath)
-        {
-           if (!File.Exists(configPath)) return null;
+		{
+			if (!File.Exists(configPath)) return null;
 
-           try
-           {
-               var serializer = new XmlSerializer(typeof(ChaosConfiguration));
-               using (var reader = new StringReader(File.ReadAllText(configPath)))
-               {
-                   _chaosConfiguration = (ChaosConfiguration)serializer.Deserialize(reader);
-               }
-
-               return _chaosConfiguration;
-           }
-           catch(Exception e)
-           {
-               Logger?.Error(e);
-               return null;
-           }
-       }
+			try
+			{
+				var config = File.ReadAllText(configPath);
+				_chaosConfiguration = JsonConvert.DeserializeObject<ChaosConfiguration>(config);
+				return _chaosConfiguration;
+			}
+			catch (Exception e)
+			{
+				Logger?.Error(e);
+			    //Main will exit, OK not to die here...
+				return null;
+			}
+		}
    }
 }
  

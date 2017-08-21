@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 
 namespace CloudBedlam.Config
 {
+<<<<<<< HEAD
     public class TargetEndpoints
     {
         [XmlElement("Endpoint")]
@@ -18,3 +17,17 @@ namespace CloudBedlam.Config
         public string Uri { get; set; }
     }
 }
+=======
+	public class TargetEndpoints
+	{
+		public List<Endpoint> Endpoints { get; set; }
+	}
+
+	public class Endpoint
+	{
+		public int Port { get; set; }
+		public string Protocol { get; set; }
+		public string Hostname { get; set; }
+	}
+}
+>>>>>>> origin/master

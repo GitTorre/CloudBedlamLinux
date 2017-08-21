@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using CloudBedlam.Config;
 using CloudBedlam.Extensions;
 
 namespace CloudBedlam.Operations
 {
-	internal class MemoryPressure : OperationBase
+	class MemoryPressure : OperationBase
 	{
-		private readonly ChaosOperation _config;
+		readonly ChaosOperation _config;
 
 		public MemoryPressure(ChaosOperation config, TimeSpan testDuration)
 			: base(config.PressureLevel > 0,
@@ -20,6 +21,7 @@ namespace CloudBedlam.Operations
 
 		protected override ProcessParams CreateProcessParams()
 		{
+<<<<<<< HEAD
 			var filePath = "/usr/bin/bash";
 			//--vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.097;}' < /proc/meminfo)k --vm-keep -m 10
 			//--vm 4 --vm-bytes $(awk '/MemFree/{printf "%d\n", $2 * 0.097;}' < /proc/meminfo)k --mmap 2 --mmap-bytes 2G --page-in --timeout 10s
@@ -57,20 +59,20 @@ namespace CloudBedlam.Operations
 			string error = process?.StandardError.ReadToEnd();
 			string output = process?.StandardOutput.ReadToEnd();
 			process.WaitForExit(_config.Duration.Milliseconds);
-
-
-			var tuple = new Tuple<string, string>(error, output);
-
-			return tuple;
-	
+=======
+			const string filePath = "/usr/bin/bash";
+			return new ProcessParams(new FileInfo(filePath), "Bash/stress-mem.sh " + _config.PressureLevel + " " + _config.DurationInSeconds);
 		}
+>>>>>>> origin/master
+
 
         internal override void Kill()
         {
-            if (Process != null && Process.IsRunning() && !Process.HasExited)
-            {
-                Process?.Kill();
-            }
+	        if (Process == null || !Process.IsRunning() || Process.HasExited) 
+		        return;
+	        
+	        Thread.Sleep(4000);
+	        Process?.Kill();
         }
     }
 }

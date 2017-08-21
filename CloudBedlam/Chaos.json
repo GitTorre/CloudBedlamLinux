@@ -1,0 +1,32 @@
+﻿{
+  "Orchestration": "Sequential",
+  "Duration": 5,
+  "RunDelay": 0,
+  "Repeat": 1,
+  "NetworkEmulation": {
+    "Duration": 5,
+    "EmulationType": "Loss",
+    "LossType": "Burst",
+    "BurstRate": 0.25,
+    "LossRate" : 0.20,
+    "TargetEndpoints": {
+      "Endpoints": [
+        {
+          "Port": 443,
+          "Hostname": "www.bing.com",
+          "Protocol": "ALL"
+        },
+        {
+          "Port": 80,
+          "Hostname": "www.msn.com",
+          "Protocol": "ALL"
+        },
+        {
+          "Port": 443,
+          "Hostname": "www.google.com",
+          "Protocol": "ALL"
+        }
+      ]
+    }
+  }
+}

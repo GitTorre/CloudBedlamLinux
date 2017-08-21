@@ -11,10 +11,10 @@ namespace CloudBedlam
 {
     public class Bedlam
     {
-        private readonly ChaosConfiguration _config;
-        private readonly ILogger _logger;
-        private readonly List<OperationBase> _operations = new List<OperationBase>();
-        private readonly Dictionary<Orchestration, Action> _runModes;
+        readonly ChaosConfiguration _config;
+        readonly ILogger _logger;
+        readonly List<OperationBase> _operations = new List<OperationBase>();
+        readonly Dictionary<Orchestration, Action> _runModes;
 
         internal Bedlam(ChaosConfiguration configuration)
         {
@@ -36,9 +36,10 @@ namespace CloudBedlam
             if (_operations.Count == 0)
             {
                 _logger?.Error("No operations settings provided. Aborting....");
-                throw new Exception("Cannot execute Bedlam without an operations settings. Check your Chaos.config file...");
+                throw new Exception(
+                    "Cannot execute Bedlam without an operations setting. Check your Chaos.config file...");
             }
-
+            
             if (_operations.Count == 1)
             {
                 _config.Orchestration = Orchestration.Sequential;
@@ -68,10 +69,11 @@ namespace CloudBedlam
             catch (Exception e)
             {
                 _logger?.Error(e);
+                Environment.Exit(-1);
             }
         }
 
-        private bool RunOperation(OperationBase operation)
+        bool RunOperation(OperationBase operation)
         {
             if (operation == null) return false;
 
@@ -104,11 +106,12 @@ namespace CloudBedlam
             {
                 _logger?.Error(e);
                 return false;
+				//throwing here will kill the app, just move on to next operation, error is logged...
             }
             return true;
         }
 
-        private void Kill(OperationBase operation)
+        void Kill(OperationBase operation)
         {
             if (!operation.IsProcessCreated || !operation.Process.IsRunning() || operation.Process.HasExited)
             {
@@ -119,7 +122,7 @@ namespace CloudBedlam
             operation.Kill();
         }
 
-        private void RunConcurrent()
+        void RunConcurrent()
         {
             if (_config.DurationInSeconds <= 0)
             {
@@ -141,13 +144,13 @@ namespace CloudBedlam
             }
         }
 
-        private void RunSequential()
+        void RunSequential()
         {
             var operations = _operations.OrderBy(o => o.RunOrderId).DefaultIfEmpty();
             RunSequential(operations);
         }
 
-        private void RunSequential(IEnumerable<OperationBase> operations)
+        void RunSequential(IEnumerable<OperationBase> operations)
         {
             foreach (var operation in operations)
             {
@@ -164,7 +167,7 @@ namespace CloudBedlam
             }
         }
 
-        private void RunRandom()
+        void RunRandom()
         {
             //http://stackoverflow.com/a/4651405/294804
             var operations = _operations.OrderBy(o => Guid.NewGuid());
