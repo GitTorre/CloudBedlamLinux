@@ -21,41 +21,10 @@ namespace CloudBedlam.Operations
 
         protected override ProcessParams CreateProcessParams()
         {
-<<<<<<< HEAD
-            var filePath = "/usr/bin/bash";
-            return new ProcessParams(new FileInfo(filePath), "./Bash/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
-        }
-
-        //TODO: Play with sudo...
-        private Tuple<string, string> RunCpuStress(EmulationConfiguration config)
-        {
-            Process process = new Process();
-            ProcessStartInfo processStartInfo = new ProcessStartInfo();
-            processStartInfo.FileName = "stress-ng";
-            processStartInfo.Arguments = "--cpu 0 --cpu-method all -t " + _config.DurationInSeconds + "s";
-            processStartInfo.RedirectStandardOutput = true;
-            processStartInfo.RedirectStandardError = true;
-            processStartInfo.UseShellExecute = false;
-            //processStartInfo.Verb = "RunAs";
-            process.StartInfo = processStartInfo;
-
-            process.Start();
-            string error = process?.StandardError.ReadToEnd();
-            string output = process?.StandardOutput.ReadToEnd();
-            process.WaitForExit(_config.Duration.Milliseconds);
-
-            var tuple = new Tuple<string, string>(error, output);
-
-            return tuple;
-
-        }
-
-=======
             const string filePath = "/usr/bin/bash";
             return new ProcessParams(new FileInfo(filePath), "Bash/stress-cpu.sh " + _config.PressureLevel + " " + _config.DurationInSeconds + "s");
         }
 
->>>>>>> origin/master
 
         internal override void Kill()
         {
