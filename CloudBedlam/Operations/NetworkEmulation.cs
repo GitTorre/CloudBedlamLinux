@@ -127,19 +127,7 @@ namespace CloudBedlam.Operations
 
 		EmulationConfiguration GetEmulationConfiguration(Config.NetworkEmulation config)
 		{
-<<<<<<< HEAD
-			Process process = new Process();
-			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = "sudo";
-			processStartInfo.Arguments = "tc qdisc add dev wlp2s0 root netem delay 1000ms";
-			processStartInfo.RedirectStandardOutput = true;
-			processStartInfo.RedirectStandardError = true;
-			processStartInfo.UseShellExecute = false;
-			//processStartInfo.Verb = "RunAs";
-			process.StartInfo = processStartInfo;
-=======
 			EmulationConfiguration emulationConfiguration = null;
->>>>>>> origin/master
 
 			if (config.EmulationType == NetworkEmProfile.Bandwidth)
 			{
@@ -201,28 +189,7 @@ namespace CloudBedlam.Operations
 				};
 			}
 
-<<<<<<< HEAD
-			var tuple = new Tuple<string, string>(error, output);
-			return tuple;
-		}
-		//TODO: Play with sudo...
-		// FileName = "/usr/bin/sudo";
-		// Arguments = "/usr/bin/tc qdisc del dev wlp2s0 root";
-		private void StopNetworkEmulation()
-		{
-			Process process = new Process();
-			ProcessStartInfo processStartInfo = new ProcessStartInfo();
-			processStartInfo.FileName = "sudo";
-			processStartInfo.Arguments = "tc qdisc del dev wlp2s0 root";
-			processStartInfo.RedirectStandardOutput = true;
-			processStartInfo.RedirectStandardError = true;
-			processStartInfo.UseShellExecute = false;
-			//processStartInfo.Verb = "RunAs";
-			process.StartInfo = processStartInfo;
-			process.Start();
-=======
 			return emulationConfiguration;
->>>>>>> origin/master
 		}
 
 		static IEnumerable<IPAddress> GetIpAddressesForEndpoint(string hostname)

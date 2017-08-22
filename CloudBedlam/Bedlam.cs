@@ -22,7 +22,7 @@ namespace CloudBedlam
 
             if (configuration == null)
             {
-                _logger?.Error("Can't initialize Bedlam with chaos configuration settings. Check your Chaos.config file.");
+                _logger?.Error("Can't initialize Bedlam with chaos configuration settings. Check your Chaos.json file.");
                 Environment.Exit(-1);
             }
 

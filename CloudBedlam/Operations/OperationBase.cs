@@ -76,24 +76,6 @@ namespace CloudBedlam.Operations
 
         private Process CreateProcess(ProcessParams parameters)
         {
-<<<<<<< HEAD
-			var process = new Process();
-
-			process.StartInfo.FileName = parameters.File.Name;
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardError = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			//process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			process.StartInfo.Arguments = !string.IsNullOrEmpty(parameters.Arguments) ? parameters.Arguments : string.Empty;
-			process.EnableRaisingEvents = true;
-      
-
-            process.OutputDataReceived += (o, e) =>
-            {
-                _logger?.Debug($"{parameters.File?.Name}: {e?.Data}");
-            };
-=======
 	        var process = new Process
 	        {
 		        StartInfo =
@@ -117,7 +99,6 @@ namespace CloudBedlam.Operations
 		        }
 		        _logger?.Info($"{parameters.File?.Name}: {e?.Data}");
 	        };
->>>>>>> origin/master
 
             process.ErrorDataReceived += (o, e) => 
             {

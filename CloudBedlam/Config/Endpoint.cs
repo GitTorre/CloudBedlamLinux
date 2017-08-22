@@ -2,22 +2,6 @@
 
 namespace CloudBedlam.Config
 {
-<<<<<<< HEAD
-    public class TargetEndpoints
-    {
-        [XmlElement("Endpoint")]
-        public List<Endpoint> Endpoints { get; set; }
-    }
-
-    public class Endpoint
-    {
-        [XmlAttribute("Port")]
-        public string Port { get; set; }
-        [XmlAttribute("Uri")]
-        public string Uri { get; set; }
-    }
-}
-=======
 	public class TargetEndpoints
 	{
 		public List<Endpoint> Endpoints { get; set; }
@@ -30,4 +14,3 @@ namespace CloudBedlam.Config
 		public string Hostname { get; set; }
 	}
 }
->>>>>>> origin/master
