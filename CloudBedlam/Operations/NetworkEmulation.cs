@@ -36,31 +36,23 @@ namespace CloudBedlam.Operations
 			var bandwidthConfig = config as BandwidthConfiguration;
 			if (bandwidthConfig != null)
 			{
-				args = "Bash/netem-bandwidth.sh -ips=" + FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Hostname) + " " +
-					   bandwidthConfig.DownstreamBandwidth + " " + _config.DurationInSeconds + "s";
+				args =
+					$"Bash/netem-bandwidth.sh -ips={FormatEndpointsParamString(bandwidthConfig.TargetEndpoints.Endpoints, ParamType.Hostname)} {bandwidthConfig.DownstreamBandwidth} {_config.DurationInSeconds}s";
 			}
 			//Corruption
 			var corruptionConfig = config as CorruptionConfiguration;
 			if (corruptionConfig != null)
 			{
 				var pt = corruptionConfig.PacketPercentage * 100; //e.g., 0.05 * 100 = 5...
-				args = "Bash/netem-corrupt.sh -ips=" + FormatEndpointsParamString(corruptionConfig.TargetEndpoints.Endpoints, ParamType.Hostname) + " " +
-					   pt + " " + _config.DurationInSeconds + "s";
+				args =
+					$"Bash/netem-corrupt.sh -ips={FormatEndpointsParamString(corruptionConfig.TargetEndpoints.Endpoints, ParamType.Hostname)} {pt} {_config.DurationInSeconds}s";
 			}
-			/*/Disconnect TODO -CT
-			var disconnectConfig = config as DisconnectConfiguration;
-			if (disconnectConfig != null)
-			{
-				args = "Bash/netem-disconnect -ips= " + FormatEndpointsParamString(disconnectConfig.TargetEndpoints.Endpoints, ParamType.Uri) + 
-				       " " + _config.DurationInSeconds + "s";
-			}
-			*/
 			//Latency
 			var latencyConfig = config as LatencyConfiguration;
 			if (latencyConfig != null)
 			{
-				args = "Bash/netem-latency.sh -ips=" + FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Hostname) + " " +
-						latencyConfig.FixedLatencyDelayMilliseconds + "ms " + " " + _config.DurationInSeconds + "s";
+				args =
+					$"Bash/netem-latency.sh -ips={FormatEndpointsParamString(latencyConfig.TargetEndpoints.Endpoints, ParamType.Hostname)} {latencyConfig.FixedLatencyDelayMilliseconds}ms  {_config.DurationInSeconds}s";
 			}
 			//Loss
 			var lossConfig = config as LossConfiguration;
@@ -72,8 +64,8 @@ namespace CloudBedlam.Operations
 				{
 					burstRate = lossConfig.BurstRate * 100;
 				}
-				args = "Bash/netem-loss.sh -ips=" + FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Hostname) +
-					   " " + lossRate + " " + burstRate + " " + _config.DurationInSeconds;
+				args =
+					$"Bash/netem-loss.sh -ips={FormatEndpointsParamString(lossConfig.TargetEndpoints.Endpoints, ParamType.Hostname)} {lossRate} {burstRate} {_config.DurationInSeconds}";
 			}
 			//Reorder
 			var reorderConfig = config as ReorderConfiguration;
@@ -82,8 +74,8 @@ namespace CloudBedlam.Operations
 				var correlationpt = reorderConfig.CorrelationPercentage * 100;
 				var packetpt = reorderConfig.PacketPercentage * 100;
 
-				args = "Bash/netem-reorder.sh -ips=" + FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Hostname) +
-					   " " + packetpt + " " + " " + correlationpt + " " + _config.DurationInSeconds;
+				args =
+					$"Bash/netem-reorder.sh -ips={FormatEndpointsParamString(reorderConfig.TargetEndpoints.Endpoints, ParamType.Hostname)} {packetpt}  {correlationpt} {_config.DurationInSeconds}";
 			}
 
 			return new ProcessParams(new System.IO.FileInfo("/usr/bin/bash"), args);
