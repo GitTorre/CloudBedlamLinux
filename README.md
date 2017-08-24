@@ -147,7 +147,7 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 # C++ Version
 ### If you don't want to program in C# and use the Mono runtime and libraries or .NET Core, you don't have to! C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. 
 
-# .NET Version (this one...)
+# .NET (Mono and <a href="https://github.com/GitTorre/CloudBedlamLinux/tree/dotnet-core">.NET Core 2.0</a>)
 
 ## Building 
 
@@ -155,7 +155,11 @@ Step 1. (Mono)
 
 Install MonoDevelop: http://www.monodevelop.com/download/linux/  
 OR  
-Install Rider: https://www.jetbrains.com/rider/
+Install Rider: https://www.jetbrains.com/rider/  
+OR  
+Install .NET Core 2.0 and VS Code editor:  
+.NET Core -> https://www.microsoft.com/net/core  
+VS Code -> https://code.visualstudio.com/Download
 
 Step 2:  
 
@@ -163,15 +167,15 @@ Clone project:
 
 <pre><code>git clone https://github.com/GitTorre/CloudBedlamLinux.git</code></pre>
 
-Open sln in MonoDevelop OR Rider, build.
+Open sln in MonoDevelop OR Rider OR open .NET Core branch in VS Code, build.
 
 ### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
 
 ## Running
 
-CloudBedlam must run as sudo:
+CloudBedlam must run as sudo:  
 
-      sudo mono CloudBedlam.exe
+     sudo mono CloudBedlam.exe  
 
 When running CloudBedlam, a bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output file will contain INFO and ERROR data (ERROR info will include error messages and stack traces).
 
