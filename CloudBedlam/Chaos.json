@@ -3,6 +3,14 @@
   "Duration": 5,
   "RunDelay": 0,
   "Repeat": 1,
+  "CpuPressure": {
+    "Duration": 15,
+    "PressureLevel": 90
+  },
+  "MemoryPressure": {
+    "Duration": 15,
+    "PressureLevel": 90
+  },
   "NetworkEmulation": {
     "Duration": 5,
     "EmulationType": "Loss",
