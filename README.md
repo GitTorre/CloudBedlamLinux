@@ -145,7 +145,12 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 ### If you don't want to program in C# and use the Mono runtime and libraries or .NET Core, you don't have to! C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. 
 
 ## Developing with .NET Core
-1. Install .Net Core 2.0 SDK, Docker and Visual Studio Code
+1. Install .Net Core 2.0 SDK, Docker and Visual Studio Code  
+
+      .NET Core -> https://www.microsoft.com/net/core  
+       VS Code -> https://code.visualstudio.com/Download  
+       Docker -> https://docs.docker.com/engine/installation/  
+
 2. Run as administrator `c:\windows\syswow64\WindowsPowerShell\v1.0\powershell.exe -command set-executionpolicy unrestricted`
 3. Open CloudBedlamMono folder with Visual Studio Code
 4. Go to Docker Settings and enable sharing for drive with solution folder
