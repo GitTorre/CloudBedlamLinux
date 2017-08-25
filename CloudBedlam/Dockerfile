@@ -4,13 +4,15 @@ RUN apt-get update \
         ca-certificates \
         apt-transport-https \
         stress-ng \
-    && sh -c 'echo "deb [arch=amd64] http://apt-mo.trafficmanager.net/repos/dotnet-release/ xenial main" > /etc/apt/sources.list.d/dotnetdev.list' \ 
-    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893 \
+        curl \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
+    && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
+    && sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list' \ 
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        dotnet-sharedframework-microsoft.netcore.app-1.1.2 \
+        dotnet-runtime-2.0.0 \
     && rm -rf /var/lib/apt/lists/* 
-ARG source=./bin/Debug/netcoreapp1.1/publish
+ARG source=./bin/Debug/netcoreapp2.0/publish
 WORKDIR /app
 COPY $source .
 ENTRYPOINT ["dotnet", "CloudBedlam.dll"]

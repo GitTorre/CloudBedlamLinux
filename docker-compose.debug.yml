@@ -5,7 +5,7 @@ services:
     image: cloudbedlam:dev
     build:
       args:
-        source: ./bin/Debug/netcoreapp1.1/publish
+        source: ./bin/Debug/netcoreapp2.0/publish
     volumes:
-      - ~/clrdbg/vsdbg:/vsdbg:ro
+      - ./.vscode/vsdbg:/vsdbg:ro
     entrypoint: tail -f /dev/null

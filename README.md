@@ -184,4 +184,16 @@ Have fun and hopefully this proves useful to you in your service resiliency expe
 
 Any and all feedback very welcome. Let us know if you use this and if it helps uncover resiliency/fault tolerance issues in your service implementation. Please <a href="https://github.com/GitTorre/CloudBedlamLinux/issues">create Issues/provide feedback</a>. Thank you! This will continue to evolve and your contributions, in whatever form (words or code), will be greatly appreciated!
 
+<<<<<<< HEAD
+## Developing with .NET Core
+1. Install .Net Core 1.1 SDK, Docker and Visual Studio Code
+2. Run as administrator `c:\windows\syswow64\WindowsPowerShell\v1.0\powershell.exe -command set-executionpolicy unrestricted`
+3. Open CloudBedlamMono folder with Visual Studio Code
+4. Go to Docker Settings and enable sharing for drive with solution folder
+4. Install VsDbg via `F1` -> `Tasks: Run Task` -> `Install VsDbg`
+5. Run debugger and if everything is correct you will hit the breakpoint
+
+You can find more info about conteinerized .NET Core debugging [here](https://github.com/evgri243/so-samples/tree/master/dotnet-core/DockerDebugging)
+=======
 --CloudBedlam Team
+>>>>>>> origin/master
