@@ -140,12 +140,8 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 }
 </code></pre>
 
-
-# C++ Version
-### If you don't want to program in C# and use the Mono runtime and libraries or .NET Core, you don't have to! C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. 
-
 ## Developing with .NET Core
-1. Install .Net Core 2.0 SDK, Docker and Visual Studio Code  
+1. Install .Net Core 2.0 SDK, Visual Studio Code, and Docker:  
 
       .NET Core -> https://www.microsoft.com/net/core  
        VS Code -> https://code.visualstudio.com/Download  
