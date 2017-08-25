@@ -41,13 +41,13 @@ namespace CloudBedlam
             }
 
             //Repeat setting
-            if (_chaosConfiguration.Repeat > 0)
+            if (_chaosConfiguration?.Repeat > 0)
             {
                 _repeat = _chaosConfiguration.Repeat;
             }
 
             //Start delay setting
-            if (_chaosConfiguration.RunDelay > 0)
+            if (_chaosConfiguration?.RunDelay > 0)
             {
                 _runDelay = _chaosConfiguration.RunDelay;
             }
