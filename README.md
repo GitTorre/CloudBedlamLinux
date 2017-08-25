@@ -153,7 +153,7 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 4. Install VsDbg via `F1` -> `Tasks: Run Task` -> `Install VsDbg`
 5. Run debugger and if everything is correct you will hit the breakpoint
 
-You can find more info about conteinerized .NET Core debugging [here](https://github.com/evgri243/so-samples/tree/master/dotnet-core/DockerDebugging)  
+### You can find more info about containerized .NET Core debugging [here](https://github.com/evgri243/so-samples/tree/master/dotnet-core/DockerDebugging)  
 
 ### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
 
