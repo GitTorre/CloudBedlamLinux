@@ -140,35 +140,25 @@ The JSON below instructs CloudBedlam to sequentially run (according to specified
 }
 </code></pre>
 
-
-# C++ Version
-### If you don't want to program in C# and use the Mono runtime and libraries or .NET Core, you don't have to! C++ developers, please use <a href="https://github.com/GitTorre/CBLinuxN"><b>this version</b></a> and help improve/extend it. 
-
-# .NET Version (this one...)
-
-## Building 
-
-Step 1. (Mono)  
-
-Install MonoDevelop: http://www.monodevelop.com/download/linux/  
-OR  
-Install Rider: https://www.jetbrains.com/rider/
-
-Step 2:  
+## Developing with .NET Core  
 
 Clone project: 
-
 <pre><code>git clone https://github.com/GitTorre/CloudBedlamLinux.git</code></pre>
 
-Open sln in MonoDevelop OR Rider, build.
+1. Install .Net Core 2.0 SDK, Docker and Visual Studio Code
+2. Run as administrator `c:\windows\syswow64\WindowsPowerShell\v1.0\powershell.exe -command set-executionpolicy unrestricted`
+3. Open CloudBedlamMono folder with Visual Studio Code
+4. Go to Docker Settings and enable sharing for drive with solution folder
+4. Install VsDbg via `F1` -> `Tasks: Run Task` -> `Install VsDbg`
+5. Run debugger and if everything is correct you will hit the breakpoint
 
-### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
+You can find more info about conteinerized .NET Core debugging [here](https://github.com/evgri243/so-samples/tree/master/dotnet-core/DockerDebugging)   
+
+### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls... We will fix the Release system bugs soon.
 
 ## Running
 
-CloudBedlam must run as sudo:
-
-      sudo mono CloudBedlam.exe
+CloudBedlam must run as sudo user (this is due to tc requiring this security level).
 
 When running CloudBedlam, a bedlamlogs folder will be created in the folder where the CloudBedlam binary is running. Output file will contain INFO and ERROR data (ERROR info will include error messages and stack traces).
 
@@ -184,12 +174,3 @@ Have fun and hopefully this proves useful to you in your service resiliency expe
 
 Any and all feedback very welcome. Let us know if you use this and if it helps uncover resiliency/fault tolerance issues in your service implementation. Please <a href="https://github.com/GitTorre/CloudBedlamLinux/issues">create Issues/provide feedback</a>. Thank you! This will continue to evolve and your contributions, in whatever form (words or code), will be greatly appreciated!
 
-## Developing with .NET Core
-1. Install .Net Core 2.0 SDK, Docker and Visual Studio Code
-2. Run as administrator `c:\windows\syswow64\WindowsPowerShell\v1.0\powershell.exe -command set-executionpolicy unrestricted`
-3. Open CloudBedlamMono folder with Visual Studio Code
-4. Go to Docker Settings and enable sharing for drive with solution folder
-4. Install VsDbg via `F1` -> `Tasks: Run Task` -> `Install VsDbg`
-5. Run debugger and if everything is correct you will hit the breakpoint
-
-You can find more info about conteinerized .NET Core debugging [here](https://github.com/evgri243/so-samples/tree/master/dotnet-core/DockerDebugging)
