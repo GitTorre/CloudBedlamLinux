@@ -1,4 +1,4 @@
-# CloudBedlam for Linux -- Managed (.NET, C#) Impl
+# CloudBedlam for Linux -- .NET (Mono) Version
 
 # What? Why? How?
 
@@ -156,10 +156,6 @@ Step 1. (Mono)
 Install MonoDevelop: http://www.monodevelop.com/download/linux/  
 OR  
 Install Rider: https://www.jetbrains.com/rider/  
-OR  
-Install .NET Core 2.0 and VS Code editor:  
-.NET Core -> https://www.microsoft.com/net/core  
-VS Code -> https://code.visualstudio.com/Download
 
 Step 2:  
 
@@ -167,7 +163,7 @@ Clone project:
 
 <pre><code>git clone https://github.com/GitTorre/CloudBedlamLinux.git</code></pre>
 
-Open sln in MonoDevelop OR Rider OR open .NET Core branch in VS Code, build.
+Open sln in MonoDevelop OR Rider.
 
 ### NOTE: Releases are not up to date. It's best you follow the directions to build from sources in order to get the latest implementation and then keep up to date with pulls...
 
