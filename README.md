@@ -1,4 +1,4 @@
-# CloudBedlam for Linux -- Managed (.NET, C#) Impl
+# CloudBedlam for Linux -- .NET Core 2.0 (Containerized) Implementation
 
 # What? Why? How?
 
