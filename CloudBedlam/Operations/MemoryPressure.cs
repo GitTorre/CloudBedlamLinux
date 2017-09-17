@@ -7,9 +7,9 @@ using CloudBedlam.Extensions;
 
 namespace CloudBedlam.Operations
 {
-	class MemoryPressure : OperationBase
+	internal class MemoryPressure : OperationBase
 	{
-		readonly ChaosOperation _config;
+		private readonly ChaosOperation _config;
 
 		public MemoryPressure(ChaosOperation config, TimeSpan testDuration)
 			: base(config.PressureLevel > 0,

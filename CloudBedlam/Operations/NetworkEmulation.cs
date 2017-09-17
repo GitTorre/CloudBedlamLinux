@@ -9,9 +9,9 @@ using CloudBedlam.Extensions;
 
 namespace CloudBedlam.Operations
 {
-	class NetworkEmulation : OperationBase
+	internal class NetworkEmulation : OperationBase
 	{
-		readonly Config.NetworkEmulation _config;
+		private readonly Config.NetworkEmulation _config;
 
 		public NetworkEmulation(Config.NetworkEmulation config, TimeSpan testDuration)
 			: base(config.IsValidProfile() && config.DurationInSeconds > 0,
@@ -81,7 +81,7 @@ namespace CloudBedlam.Operations
 			return new ProcessParams(new System.IO.FileInfo("/usr/bin/bash"), args);
 		}
 
-		static string FormatEndpointsParamString(IEnumerable<Endpoint> endpoints, ParamType type)
+		private static string FormatEndpointsParamString(IEnumerable<Endpoint> endpoints, ParamType type)
 		{
 			string value = "";
 			string param = "";
@@ -117,7 +117,7 @@ namespace CloudBedlam.Operations
 			return value.TrimEnd(',');
 		}
 
-		EmulationConfiguration GetEmulationConfiguration(Config.NetworkEmulation config)
+		private EmulationConfiguration GetEmulationConfiguration(Config.NetworkEmulation config)
 		{
 			EmulationConfiguration emulationConfiguration = null;
 
@@ -184,7 +184,7 @@ namespace CloudBedlam.Operations
 			return emulationConfiguration;
 		}
 
-		static IEnumerable<IPAddress> GetIpAddressesForEndpoint(string hostname)
+		private static IEnumerable<IPAddress> GetIpAddressesForEndpoint(string hostname)
 		{
 			try
 			{
@@ -207,7 +207,7 @@ namespace CloudBedlam.Operations
 		}
 	}
 
-	enum ParamType
+	internal enum ParamType
 	{
 		Hostname,
 		Port,

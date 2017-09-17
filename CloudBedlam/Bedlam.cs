@@ -11,10 +11,10 @@ namespace CloudBedlam
 {
     public class Bedlam
     {
-        readonly ChaosConfiguration _config;
-        readonly ILogger _logger;
-        readonly List<OperationBase> _operations = new List<OperationBase>();
-        readonly Dictionary<Orchestration, Action> _runModes;
+        private readonly ChaosConfiguration _config;
+        private readonly ILogger _logger;
+        private readonly List<OperationBase> _operations = new List<OperationBase>();
+        private readonly Dictionary<Orchestration, Action> _runModes;
 
         internal Bedlam(ChaosConfiguration configuration)
         {
@@ -73,9 +73,10 @@ namespace CloudBedlam
             }
         }
 
-        bool RunOperation(OperationBase operation)
+        private bool RunOperation(OperationBase operation)
         {
-            if (operation == null) return false;
+            if (operation == null) 
+                return false;
 
             try
             {
@@ -111,7 +112,7 @@ namespace CloudBedlam
             return true;
         }
 
-        void Kill(OperationBase operation)
+        private void Kill(OperationBase operation)
         {
             if (!operation.IsProcessCreated || !operation.Process.IsRunning() || operation.Process.HasExited)
             {
@@ -122,7 +123,7 @@ namespace CloudBedlam
             operation.Kill();
         }
 
-        void RunConcurrent()
+        private void RunConcurrent()
         {
             if (_config.DurationInSeconds <= 0)
             {
@@ -144,13 +145,13 @@ namespace CloudBedlam
             }
         }
 
-        void RunSequential()
+        private void RunSequential()
         {
             var operations = _operations.OrderBy(o => o.RunOrderId).DefaultIfEmpty();
             RunSequential(operations);
         }
 
-        void RunSequential(IEnumerable<OperationBase> operations)
+        private void RunSequential(IEnumerable<OperationBase> operations)
         {
             foreach (var operation in operations)
             {
@@ -167,7 +168,7 @@ namespace CloudBedlam
             }
         }
 
-        void RunRandom()
+        private void RunRandom()
         {
             //http://stackoverflow.com/a/4651405/294804
             var operations = _operations.OrderBy(o => Guid.NewGuid());
